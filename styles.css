@@ -1,0 +1,67 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('fondo-utt.jpg'); /* Cambia esto por la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333; /* Color del texto */
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+    padding: 30px; /* Ajusta el padding según necesites */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    width: 350px; /* Ancho del formulario */
+    text-align: center; /* Centrar el texto */
+}
+
+h1 {
+    color: greenyellow; /* Color azul */
+    margin-bottom: 10px; /* Espaciado inferior */
+}
+
+h2 {
+    font-size: 14px;
+    margin: 0; /* Sin márgenes */
+}
+
+input[type="text"], 
+input[type="password"] {
+    width: 100%; /* Ancho completo */
+    padding: 12px; /* Más espacio interno */
+    margin: 10px 0; /* Margen entre campos */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
+button {
+    background-color: #007BFF; /* Color del botón */
+    color: white; /* Texto blanco */
+    padding: 12px; /* Espacio interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar */
+    width: 100%; /* Ancho completo */
+    font-size: 16px; /* Tamaño del texto */
+}
+
+button:hover {
+    background-color: #0056b3; /* Color del botón al pasar el mouse */
+}
+
+a {
+    display: block; /* Mostrar como bloque */
+    margin-top: 10px; /* Espaciado superior */
+    color: #007BFF; /* Color azul */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 14px; /* Tamaño del texto */
+}
+
+a:hover {
+    text-decoration: underline; /* Subrayar al pasar el mouse */
+}
