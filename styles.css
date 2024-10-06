@@ -1,7 +1,6 @@
 /* Estilo general del cuerpo */
 body {
     font-family: 'Arial', sans-serif; /* Tipografía */
-    background-image: url('fondo-utt.jpg'); /* Imagen de fondo */
     background-size: cover; /* Cubrir toda la pantalla */
     background-position: center; /* Centrar la imagen */
     display: flex; /* Usar flexbox */
