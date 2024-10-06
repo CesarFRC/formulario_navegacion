@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - UneTT</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Cambia esto por tu archivo CSS -->
+    <link rel="stylesheet" href="styles.css"> <!--archivo CSS -->
 </head>
 <body>
     <div class="container">
@@ -15,8 +15,17 @@
             <input type="text" placeholder="Ingrese su matrícula" required>
             <input type="password" placeholder="Contraseña" required>
             <button type="submit">Iniciar sesión</button>
-            <a href="#">Crear cuenta nueva</a>
+            <a href="registro.html">Crear cuenta nueva</a>
         </form>
+        <script>
+            function handleLogin(event) {
+                event.preventDefault(); // Evita el envío del formulario
+                // Aquí puedes agregar la lógica de autenticación si es necesario
+    
+                // Redirige a otra página al iniciar sesión
+                window.location.href = "pInicial.html"; // Cambia esto por la URL de la página a la que deseas redirigir
+            }
+            </script>
     </div>
 </body>
 </html>

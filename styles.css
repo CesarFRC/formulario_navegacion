@@ -1,44 +1,52 @@
+/* Estilo general del cuerpo */
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('fondo-utt.jpg'); /* Cambia esto por la ruta de tu imagen */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: 'Arial', sans-serif; /* Tipografía */
+    background-image: url('fondo-utt.jpg'); /* Imagen de fondo */
+    background-size: cover; /* Cubrir toda la pantalla */
+    background-position: center; /* Centrar la imagen */
+    display: flex; /* Usar flexbox */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    height: 100vh; /* Altura completa de la ventana */
     color: #333; /* Color del texto */
 }
 
+/* Contenedor del formulario */
 .container {
     background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
-    padding: 30px; /* Ajusta el padding según necesites */
+    padding: 30px; /* Espaciado interno */
     border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra */
     width: 350px; /* Ancho del formulario */
     text-align: center; /* Centrar el texto */
 }
 
+/* Estilo del encabezado h1 */
 h1 {
-    color: greenyellow; /* Color azul */
-    margin-bottom: 10px; /* Espaciado inferior */
+    color: greenyellow; /* Color del encabezado */
+    margin-bottom: 10px; /* Espacio debajo */
 }
 
+/* Estilo del subtítulo h2 */
 h2 {
-    font-size: 14px;
+    font-size: 14px; /* Tamaño del texto */
     margin: 0; /* Sin márgenes */
 }
 
+/* Estilo para campos de entrada */
 input[type="text"], 
-input[type="password"] {
+input[type="password"],
+input[type="email"], 
+textarea {
     width: 100%; /* Ancho completo */
-    padding: 12px; /* Más espacio interno */
+    padding: 12px; /* Espacio interno */
     margin: 10px 0; /* Margen entre campos */
     border: 1px solid #ccc; /* Borde gris */
     border-radius: 5px; /* Bordes redondeados */
-    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    box-sizing: border-box; /* Incluye padding en el ancho */
 }
 
+/* Estilo para el botón */
 button {
     background-color: #007BFF; /* Color del botón */
     color: white; /* Texto blanco */
@@ -50,10 +58,12 @@ button {
     font-size: 16px; /* Tamaño del texto */
 }
 
+/* Cambiar color del botón al pasar el mouse */
 button:hover {
-    background-color: #0056b3; /* Color del botón al pasar el mouse */
+    background-color: #0056b3; /* Color al pasar el mouse */
 }
 
+/* Estilo para enlaces */
 a {
     display: block; /* Mostrar como bloque */
     margin-top: 10px; /* Espaciado superior */
@@ -62,6 +72,7 @@ a {
     font-size: 14px; /* Tamaño del texto */
 }
 
+/* Subrayar enlaces al pasar el mouse */
 a:hover {
-    text-decoration: underline; /* Subrayar al pasar el mouse */
+    text-decoration: underline; /* Subrayar */
 }
