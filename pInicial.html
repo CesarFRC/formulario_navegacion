@@ -1,11 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pantalla de Inicio - UneTT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        img {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .icon-bar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <!-- Encabezado -->
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <p class="title">UneTT</p>
+            <!-- Barra de iconos -->
+            <div class="icon-bar">
+                <!-- Enlace del ícono del perfil a otra página -->
+                <a href="ver_perfil.html" title="Ver perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+                </a>
+                <!-- Iconos restantes -->
+                <a href="editar_perfil.html" title="Editar perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
+                </a>
+                <a href="publicaciones_de_seguidores.html" title="Ver publicaciones de seguidores">
+                    <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Seguidos">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de publicaciones -->
+    <section class="section">
+        <div class="container">
+            <!-- Subir publicación nueva -->
+            <div class="box">
+                <h2 class="title is-4">Crear nueva publicación</h2>
+                <div class="field">
+                    <label class="label">Escribe algo</label>
+                    <div class="control">
+                        <textarea class="textarea" placeholder="¿Qué estás pensando?"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Subir foto, video o archivo</label>
+                    <div class="file has-name">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="resume" multiple>
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">Elegir archivos…</span>
+                            </span>
+                            <span class="file-name">No se ha seleccionado ningún archivo</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary">Publicar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publicación 1 -->
+            <article class="media box">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                        <img src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>Usuario1</strong> <small>@usuario1</small> <small>31m ago</small>
+                            <br>
+                            ¡Esta es mi primera publicación en la red social UneTT! 🎉
+                            <br>
+                            <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Publicación de imagen"
+                                style="max-width: 300px;">
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <a class="level-item" aria-label="like">
+                                <span class="icon is-small">
+                                    <i class="fas fa-heart"></i>
+                                </span>
+                            </a>
+                            <a class="level-item" aria-label="comment">
+                                <span class="icon is-small">
+                                    <i class="fas fa-comment"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>Red Social UneTT &copy; 2024</p>
+        </div>
+    </footer>
+
+    <!-- Iconos de FontAwesome para los botones -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 </body>
+
 </html>

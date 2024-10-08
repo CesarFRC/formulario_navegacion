@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - UneTT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        img {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .icon-bar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <p class="title">Perfil de Usuario - UneTT</p>
+            <!-- Barra de iconos -->
+            <div class="icon-bar">
+                <!-- Enlace de ícono para regresar al inicio -->
+                <a href="pInicial.html" title="Volver a inicio">
+                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Inicio">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de perfil de usuario -->
+    <section class="section">
+        <div class="container">
+            <div class="box">
+                <h2 class="title is-4">Información de Perfil</h2>
+
+                <!-- Foto de perfil -->
+                <div class="field has-text-centered">
+                    <figure class="image is-128x128">
+                        <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
+                    </figure>
+                    <label class="label">Cambiar foto de perfil</label>
+                    <div class="file has-name is-centered">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="foto_perfil">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">Elegir archivo</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Matricula -->
+                <div class="field">
+                    <label class="label">Matrícula</label>
+                    <div class="control">
+                        <input class="input" type="text" value="1234567" disabled>
+                    </div>
+                </div>
+
+                <!-- Nombre de Usuario -->
+                <div class="field">
+                    <label class="label">Nombre de Usuario</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Escribe tu nombre de usuario" value="Usuario1">
+                    </div>
+                </div>
+
+                <!-- Correo Electrónico -->
+                <div class="field">
+                    <label class="label">Correo Electrónico</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="Escribe tu correo" value="usuario1@example.com">
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="field">
+                    <label class="label">Contraseña</label>
+                    <div class="control">
+                        <input class="input" type="password" placeholder="**********">
+                    </div>
+                </div>
+
+                <!-- Biografía -->
+                <div class="field">
+                    <label class="label">Biografía</label>
+                    <div class="control">
+                        <textarea class="textarea" placeholder="Escribe una breve biografía">Soy un estudiante apasionado por el desarrollo de software.</textarea>
+                    </div>
+                </div>
+
+                <!-- Fecha de creación de cuenta -->
+                <div class="field">
+                    <label class="label">Fecha de creación de cuenta</label>
+                    <div class="control">
+                        <input class="input" type="text" value="2024-10-07" disabled>
+                    </div>
+                </div>
+
+                <!-- Botón para actualizar información -->
+                <div class="field has-text-centered">
+                    <button class="button is-primary">Actualizar perfil</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>Red Social UneTT &copy; 2024</p>
+        </div>
+    </footer>
+
+    <!-- Iconos de FontAwesome para los botones -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>

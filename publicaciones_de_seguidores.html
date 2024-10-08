@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicaciones de Usuarios Seguidos - UneTT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        img {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .icon-bar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .publication-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .publication-card {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <p class="title">Publicaciones de Usuarios Seguidos - UneTT</p>
+            <!-- Barra de iconos -->
+            <div class="icon-bar">
+                <!-- Enlace de ícono para regresar al perfil -->
+                <a href="pInicial.html" title="Volver a mi perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de publicaciones de usuarios seguidos -->
+    <section class="section">
+        <div class="container">
+            <!-- Publicación 1 -->
+            <div class="box publication-card">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="User icon">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p><strong>Usuario2</strong> <small>@usuario2</small> <small>Hace 3 horas</small></p>
+                            <p>Compartiendo mi experiencia con Kotlin. ¡Ha sido muy divertido aprender este lenguaje!</p>
+                            <figure>
+                                <img class="publication-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Publicación">
+                            </figure>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Publicación 2 -->
+            <div class="box publication-card">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="User icon">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p><strong>Usuario3</strong> <small>@usuario3</small> <small>Hace 1 día</small></p>
+                            <p>Subí un video tutorial sobre cómo usar Bulma en proyectos. ¡Espero que les guste!</p>
+                            <video class="publication-image" controls>
+                                <source src="video_bulma.mp4" type="video/mp4">
+                                Tu navegador no soporta reproducción de videos.
+                            </video>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Publicación 3 -->
+            <div class="box publication-card">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="User icon">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p><strong>Usuario4</strong> <small>@usuario4</small> <small>Hace 2 días</small></p>
+                            <p>Les comparto este artículo interesante sobre el desarrollo de software. ¡No se lo pierdan!</p>
+                            <a href="https://example.com" class="button is-link">Leer artículo</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>Red Social UneTT &copy; 2024</p>
+        </div>
+    </footer>
+
+    <!-- Iconos de FontAwesome para los botones -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>
