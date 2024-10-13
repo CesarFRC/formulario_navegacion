@@ -7,118 +7,170 @@
     <title>Mi Perfil - UneTT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
-        img {
-            display: inline-block;
-            width: 3rem;
-            height: 3rem;
-        }
+            img {
+                display: inline-block;
+                width: 3rem;
+                height: 3rem;
+            }
 
-        .icon-bar {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
+            .icon-bar {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                display: flex;
+                gap: 1rem;
+            }
+
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                margin-bottom: 1rem;
+            }
+
+            .publication-image {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .publication-card {
+                margin-bottom: 2rem;
+            }
+            .hero.is-custom-height {
+                height: 75px;
+            }
+            /* Contenedor de perfil con flexbox */
+        .profile-container {
             display: flex;
-            gap: 1rem;
+            align-items: center; /* Centrar verticalmente */
+            margin-top: 1rem; /* Espaciado superior */
         }
 
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
+        /* Contenedor de la imagen de perfil */
+        .profile-pic-container {
+            margin-right: 1rem; /* Espacio entre la imagen y la información */
         }
 
-        .publication-image {
-            max-width: 100%;
-            height: auto;
+        /* Ajustar el tamaño de la imagen de perfil */
+        .image.is-96x96 {
+            margin: 0; /* Eliminar margen adicional */
         }
 
-        .publication-card {
-            margin-bottom: 2rem;
+        /* Contenedor de información de perfil */
+        .profile-info {
+            flex: 1; /* Ocupa el espacio restante */
         }
-        .hero.is-custom-height {
-            height: 75px;
+
+        /* Estilo para los campos (igual que antes) */
+        .field {
+            margin-bottom: 0.75rem;
         }
+
+        .input,
+        .textarea {
+            border: none;
+            background: none;
+            font-weight: bold;
+        }
+
+        .input.is-small,
+        .textarea.is-small {
+            font-size: 0.9rem;
+            padding: 0.25rem;
+        }
+
+        /* Centrado de título */
+        .title.is-4.has-text-centered {
+            text-align: center;
+        }
+
     </style>
 </head>
 
 <body>
-    <!-- Encabezado -->
-    <section class="hero is-small is-primary is-custom-height">
-        <div class="hero-body">
-            <p class="title">Mi Perfil - UneTT</p>
-            <!-- Barra de iconos -->
-            <div class="icon-bar">
-                <a href="pInicial.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
-                   </a>
-                  <a href="ver_perfil.html" title="Ver perfil">
-                      <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
-                  </a>
-                  <!-- Iconos restantes -->
-                  <a href="editar_perfil.html" title="Editar perfil">
-                      <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
-                  </a>
-                  <a href="publicaciones_de_seguidores.html" title="Ver publicaciones de seguidores">
-                      <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Seguidos">
-                  </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de perfil de usuario -->
-    <section class="section">
-        <div class="container">
-            <div class="box">
-                <h2 class="title is-4">Mi Información de Perfil</h2>
-
-                <!-- Foto de perfil -->
-                <div class="field has-text-centered">
-                    <figure class="image is-128x128">
-                        <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
-                    </figure>
-                </div>
-
-                <!-- Matricula -->
-                <div class="field">
-                    <label class="label">Matrícula</label>
-                    <div class="control">
-                        <input class="input" type="text" value="1234567" disabled>
+            <!-- Encabezado -->
+            <section class="hero is-small is-primary is-custom-height">
+                <div class="hero-body">
+                    <p class="title">Mi Perfil -<span style="color: white;">Une</span><span style="color: brown;">TT</span></p>
+                    <!-- Barra de iconos -->
+                    <div class="icon-bar">
+                        <a href="pInicial.html">
+                            <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
+                        </a>
+                        <a href="ver_perfil.html" title="Ver perfil">
+                            <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+                        </a>
+                        <!-- Iconos restantes -->
+                        <a href="editar_perfil.html" title="Editar perfil">
+                            <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
+                        </a>
+                        <a href="publicaciones_de_seguidores.html" title="Ver publicaciones de seguidores">
+                            <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Seguidos">
+                        </a>
                     </div>
                 </div>
+            </section>
+        <!-- Sección de perfil de usuario -->
+            <section class="section">
+                <div class="container">
+                    <div class="box">
+                        <h2 class="title is-4 has-text-centered">Mi Información de Perfil</h2>
 
-                <!-- Nombre de Usuario -->
-                <div class="field">
-                    <label class="label">Nombre de Usuario</label>
-                    <div class="control">
-                        <input class="input" type="text" value="Usuario1" disabled>
+                        <!-- Contenedor flex para imagen y contenido -->
+                        <div class="profile-container">
+                            <!-- Foto de perfil -->
+                            <div class="profile-pic-container">
+                                <figure class="image is-96x96">
+                                    <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
+                                </figure>
+                            </div>
+
+                            <!-- Información de perfil -->
+                            <div class="profile-info">
+                                <!-- Matricula -->
+                                <div class="field">
+                                    <label class="label is-small">Matrícula</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="text" value="1234567" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Nombre de Usuario -->
+                                <div class="field">
+                                    <label class="label is-small">Nombre de Usuario</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="text" value="Usuario1" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Correo Electrónico -->
+                                <div class="field">
+                                    <label class="label is-small">Correo Electrónico</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="email" value="usuario1@example.com" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Biografía -->
+                                <div class="field">
+                                    <label class="label is-small">Biografía</label>
+                                    <div class="control">
+                                        <textarea class="textarea is-small" rows="2" disabled>Soy un estudiante apasionado por el desarrollo de software.</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Fecha de creación de cuenta -->
+                                <div class="field">
+                                    <label class="label is-small">Fecha de creación de cuenta</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="text" value="2024-10-07" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Correo Electrónico -->
-                <div class="field">
-                    <label class="label">Correo Electrónico</label>
-                    <div class="control">
-                        <input class="input" type="email" value="usuario1@example.com" disabled>
-                    </div>
-                </div>
-
-                <!-- Biografía -->
-                <div class="field">
-                    <label class="label">Biografía</label>
-                    <div class="control">
-                        <textarea class="textarea" disabled>Soy un estudiante apasionado por el desarrollo de software.</textarea>
-                    </div>
-                </div>
-
-                <!-- Fecha de creación de cuenta -->
-                <div class="field">
-                    <label class="label">Fecha de creación de cuenta</label>
-                    <div class="control">
-                        <input class="input" type="text" value="2024-10-07" disabled>
-                    </div>
-                </div>
-            </div>
+            </section>
 
             <!-- Sección de publicaciones del usuario -->
             <div class="box">
@@ -189,7 +241,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="content has-text-centered">
-            <p>Red Social UneTT &copy; 2024</p>
+            <p>UneTT &copy; 2024</p>
         </div>
     </footer>
 
