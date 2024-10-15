@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario - UTT</title>
-    <link rel="stylesheet" href="registro.css"> <!-- Enlaza el CSS aquí -->
+    <link rel="stylesheet" href="../estilos/registro.css"> <!-- Enlaza el CSS aquí -->
 </head>
 <body>
     <div class="container">
         <h1>Registro de Usuario</h1>
-        <form action="insert_usuario.php" method="POST">
+        <form action="../BACKEND/insert_usuario.php" method="POST">
 
             <label for="username">Nombre de Usuario:</label>
             <input type="text" id="username"  name="UserName" required maxlength="30">
@@ -21,7 +21,7 @@
             <input type="password" id="contrasena" name="Contraseña" required maxlength="255">
 
             <button type="submit">Registrar</button>
-            <a href="inicio.html">Ya tengo cuenta. Iniciar sesión</a>
+            <a href="../HTML/inicio.html">Ya tengo cuenta. Iniciar sesión</a>
         </form>
     </div>
 </body>

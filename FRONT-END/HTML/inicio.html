@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - UneTT</title>
-    <link rel="stylesheet" href="styles.css"> <!--archivo CSS -->
+    <link rel="stylesheet" href="../estilos/styles.css"> <!--archivo CSS -->
 </head>
 <body>
     <div class="container">
-        <img src="imgs/Unettlogo.png" class="logoutt">
+        <img src="../imgs/Unettlogo.png" class="logoutt">
         <h2>La Universidad Tecnológica de Torreón te conecta con el futuro y te impulsa hacia el éxito.</h2>
-        <form action="login.php" method="post">
+        <form action="../BACKEND/login.php" method="post">
             <input type="text" placeholder="Correo electrónico" name="Correo"  required>
             <input type="text" placeholder="Ingrese su matrícula" name="Matricula" required>
             <input type="password" placeholder="Contraseña" name="Contraseña" required>
             <button type="submit">Iniciar sesión</button>
-            <a href="registro.html">Crear cuenta nueva</a>
+            <a href="../HTML/registro.html">Crear cuenta nueva</a>
         </form>
         <script>
             function handleLogin(event) {

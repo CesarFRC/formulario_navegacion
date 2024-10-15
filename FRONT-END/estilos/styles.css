@@ -1,6 +1,9 @@
 /* Estilo general del cuerpo */
 body {
-    background-image: url('imgs/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-image: url('../imgs/background.jpg');
     font-family: 'Arial', sans-serif; /* Tipografía */
     background-size: cover; /* Cubrir toda la pantalla */
     background-position: center; /* Centrar la imagen */
@@ -20,12 +23,15 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra */
     width: 350px; /* Ancho del formulario */
     text-align: center; /* Centrar el texto */
+    
 }
 
-.logoutt{
-    width: 350px;
-    height: 350px;
-}
+    .logoutt{
+        width: 350px;
+        height: 350px;
+    }
+
+
 /* Estilo del encabezado h1 */
 h1 {
     color: greenyellow; /* Color del encabezado */
