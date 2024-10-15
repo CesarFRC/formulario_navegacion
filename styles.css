@@ -1,5 +1,6 @@
 /* Estilo general del cuerpo */
 body {
+    background-image: url('imgs/background.jpg');
     font-family: 'Arial', sans-serif; /* Tipografía */
     background-size: cover; /* Cubrir toda la pantalla */
     background-position: center; /* Centrar la imagen */
@@ -12,14 +13,19 @@ body {
 
 /* Contenedor del formulario */
 .container {
-    background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
-    padding: 30px; /* Espaciado interno */
+   
+    background: rgba(189, 189, 189, 0.9); /* Fondo blanco con opacidad */
+    padding: 15px; /* Espaciado interno */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra */
     width: 350px; /* Ancho del formulario */
     text-align: center; /* Centrar el texto */
 }
 
+.logoutt{
+    width: 350px;
+    height: 350px;
+}
 /* Estilo del encabezado h1 */
 h1 {
     color: greenyellow; /* Color del encabezado */
