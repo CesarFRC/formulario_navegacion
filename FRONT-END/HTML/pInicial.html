@@ -23,6 +23,36 @@
         .hero.is-custom-height {
             height: 75px;
         }
+
+        #logoutt{
+            display: inline-block;
+            position: absolute; 
+            top: -5.6rem; 
+            height: 16rem; width: 15rem; 
+            transform: scale(0.8);
+        }
+         /* Media query para pantallas pequeñas */
+         @media (max-width: 768px) {
+            .icon-bar {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            #logoutt {
+                top: -4rem; /* Ajuste para que el logo no se superponga */
+                height: 12rem;
+                width: 12rem;
+            }
+
+            .icon-bar img {
+                width: 2rem;
+                height: 2rem;
+            }
+        }
     </style>
 </head>
 
@@ -30,7 +60,12 @@
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title"><span style="color: white;">Une</span><span style="color: brown;">TT</span></p>
+            <div class="header">
+                <img src="../imgs/Unettlogo.png" id="logoutt" style="">
+            </div>
+               
+        
+           
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <!-- Enlace del ícono del perfil a otra página -->

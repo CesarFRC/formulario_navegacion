@@ -7,48 +7,50 @@
     <title>Mi Perfil - UneTT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
-            img {
-                display: inline-block;
-                width: 3rem;
-                height: 3rem;
-            }
+        img {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+        }
 
-            .icon-bar {
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-                display: flex;
-                gap: 1rem;
-            }
+        .icon-bar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
 
-            .profile-pic {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                margin-bottom: 1rem;
-            }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 0.5rem; /* Espacio entre imagen y nombre de usuario */
+        }
 
-            .publication-image {
-                max-width: 100%;
-                height: auto;
-            }
+        .publication-image {
+            max-width: 100%;
+            height: auto;
+        }
 
-            .publication-card {
-                margin-bottom: 2rem;
-            }
-            .hero.is-custom-height {
-                height: 75px;
-            }
-            /* Contenedor de perfil con flexbox */
+        .publication-card {
+            margin-bottom: 2rem;
+        }
+
+        .hero.is-custom-height {
+            height: 75px;
+        }
+
         .profile-container {
             display: flex;
-            align-items: center; /* Centrar verticalmente */
-            margin-top: 1rem; /* Espaciado superior */
+            flex-direction: column;
+            align-items: center; /* Centra los elementos en el eje horizontal */
+            margin-bottom: 2rem; /* Espacio debajo de la imagen */
         }
 
         /* Contenedor de la imagen de perfil */
         .profile-pic-container {
-            margin-right: 1rem; /* Espacio entre la imagen y la información */
+            margin-bottom: 1rem; /* Espacio entre la imagen y el nombre */
         }
 
         /* Ajustar el tamaño de la imagen de perfil */
@@ -58,12 +60,15 @@
 
         /* Contenedor de información de perfil */
         .profile-info {
-            flex: 1; /* Ocupa el espacio restante */
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas */
+            gap: 1rem; /* Espacio entre los campos */
+            margin-top: 1rem; /* Espacio entre el nombre y los inputs */
         }
 
         /* Estilo para los campos (igual que antes) */
         .field {
-            margin-bottom: 0.75rem;
+            margin-bottom: 0; /* Eliminar margen inferior */
         }
 
         .input,
@@ -71,6 +76,7 @@
             border: none;
             background: none;
             font-weight: bold;
+            width: 100%; /* Asegura que los inputs ocupen todo el espacio disponible */
         }
 
         .input.is-small,
@@ -84,138 +90,167 @@
             text-align: center;
         }
 
+        #logoutt {
+            display: inline-block;
+            position: absolute;
+            top: -5.6rem;
+            height: 16rem;
+            width: 15rem;
+            transform: scale(0.8);
+        }
+
+        /* Media query para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.5rem;
+            }
+
+            #logoutt {
+                top: -3rem; /* Ajuste para que el logo no se superponga */
+                height: 10rem;
+                width: 10rem;
+                position: absolute;
+            }
+
+            .icon-bar {
+                gap: 1rem;
+            }
+
+            .icon-bar img {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+            }
+        }
     </style>
 </head>
 
 <body>
-            <!-- Encabezado -->
-            <section class="hero is-small is-primary is-custom-height">
-                <div class="hero-body">
-                    <p class="title">Mi Perfil -<span style="color: white;">Une</span><span style="color: brown;">TT</span></p>
-                    <!-- Barra de iconos -->
-                    <div class="icon-bar">
-                        <a href="../HTML/pInicial.html">
-                            <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
-                        </a>
-                        <a href="../HTML/ver_perfil.html" title="Ver perfil">
-                            <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
-                        </a>
-                        <!-- Iconos restantes -->
-                        <a href="../HTML/editar_perfil.html" title="Editar perfil">
-                            <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
-                        </a>
-                        <a href="../HTML/publicaciones_de_seguidores.htm" title="Ver publicaciones de seguidores">
-                            <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Seguidos">
-                        </a>
-                    </div>
-                </div>
-            </section>
-        <!-- Sección de perfil de usuario -->
-            <section class="section">
-                <div class="container">
-                    <div class="box">
-                        <h2 class="title is-4 has-text-centered">Mi Información de Perfil</h2>
-
-                        <!-- Contenedor flex para imagen y contenido -->
-                        <div class="profile-container">
-                            <!-- Foto de perfil -->
-                            <div class="profile-pic-container">
-                                <figure class="image is-96x96">
-                                    <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
-                                </figure>
-                            </div>
-
-                            <!-- Información de perfil -->
-                            <div class="profile-info">
-                                <!-- Matricula -->
-                                <div class="field">
-                                    <label class="label is-small">Matrícula</label>
-                                    <div class="control">
-                                        <input class="input is-small" type="text" value="1234567" disabled>
-                                    </div>
-                                </div>
-
-                                <!-- Nombre de Usuario -->
-                                <div class="field">
-                                    <label class="label is-small">Nombre de Usuario</label>
-                                    <div class="control">
-                                        <input class="input is-small" type="text" value="Usuario1" disabled>
-                                    </div>
-                                </div>
-
-                                <!-- Correo Electrónico -->
-                                <div class="field">
-                                    <label class="label is-small">Correo Electrónico</label>
-                                    <div class="control">
-                                        <input class="input is-small" type="email" value="usuario1@example.com" disabled>
-                                    </div>
-                                </div>
-
-                                <!-- Biografía -->
-                                <div class="field">
-                                    <label class="label is-small">Biografía</label>
-                                    <div class="control">
-                                        <textarea class="textarea is-small" rows="2" disabled>Soy un estudiante apasionado por el desarrollo de software.</textarea>
-                                    </div>
-                                </div>
-
-                                <!-- Fecha de creación de cuenta -->
-                                <div class="field">
-                                    <label class="label is-small">Fecha de creación de cuenta</label>
-                                    <div class="control">
-                                        <input class="input is-small" type="text" value="2024-10-07" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sección de publicaciones del usuario -->
+    <!-- Encabezado -->
+    <section class="hero is-small is-primary is-custom-height">
+        <div class="hero-body">
+            <p class="title">Mi Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
+            <!-- Barra de iconos -->
+            <div class="icon-bar">
+                <a href="../HTML/pInicial.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
+                </a>
+                <a href="../HTML/ver_perfil.html" title="Ver perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+                </a>
+                <a href="../HTML/editar_perfil.html" title="Editar perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
+                </a>
+                <a href="../HTML/publicaciones_de_seguidores.htm" title="Ver publicaciones de seguidores">
+                    <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Seguidos">
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Sección de perfil de usuario -->
+    <section class="section">
+        <div class="container">
             <div class="box">
-                <h2 class="title is-4">Mis Publicaciones</h2>
-
-                <!-- Publicación 1 -->
-                <div class="box publication-card">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="User icon">
-                            </figure>
+                <h2 class="title is-4 has-text-centered">Perfil de Usuario</h2>
+                <!-- Contenedor flex para imagen y contenido -->
+                <div class="profile-container has-text-centered">
+                    <!-- Foto de perfil -->
+                    <div class="profile-pic-container">
+                        <figure class="image is-96x96">
+                            <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
+                        </figure>
+                        <!-- Nombre de Usuario -->
+                        <div class="username">
+                            <p class="subtitle is-6">Usuario1</p> <!-- Aquí se coloca el nombre de usuario -->
                         </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p><strong>Usuario1</strong> <small>@usuario1</small> <small>Hace 2 horas</small></p>
-                                <p>Esta es mi primera publicación en UneTT. ¡Hola a todos!</p>
-                                <figure>
-                                    <img class="publication-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Publicación">
-                                </figure>
-                            </div>
-                        </div>
-                    </article>
+                    </div>
                 </div>
 
-                <!-- Publicación 2 -->
-                <div class="box publication-card">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="User icon">
-                            </figure>
+                <!-- Información de perfil -->
+                <div class="profile-info">
+                    <!-- Matrícula -->
+                    <div class="field">
+                        <label class="label is-small">Matrícula</label>
+                        <div class="control">
+                            <input class="input is-small" type="text" value="1234567" disabled>
                         </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p><strong>Usuario1</strong> <small>@usuario1</small> <small>Hace 1 día</small></p>
-                                <p>Subí este video tutorial para aprender a programar en Kotlin.</p>
-                                <video class="publication-image" controls>
-                                    <source src="video_tutorial.mp4" type="video/mp4">
-                                    Tu navegador no soporta reproducción de videos.
-                                </video>
-                            </div>
+                    </div>
+
+                    <!-- Correo Electrónico -->
+                    <div class="field">
+                        <label class="label is-small">Correo Electrónico</label>
+                        <div class="control">
+                            <input class="input is-small" type="email" value="usuario1@example.com" disabled>
                         </div>
-                    </article>
+                    </div>
+
+                    <!-- Biografía -->
+                    <div class="field">
+                        <label class="label is-small">Biografía</label>
+                        <div class="control">
+                            <textarea class="textarea is-small" rows="2" disabled>Soy un estudiante apasionado por el desarrollo de software.</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Fecha de creación de cuenta -->
+                    <div class="field">
+                        <label class="label is-small">Fecha de creación de cuenta</label>
+                        <div class="control">
+                            <input class="input is-small" type="text" value="2024-10-07" disabled>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de publicaciones del usuario -->
+    <div class="box">
+        <h2 class="title is-4">Mis Publicaciones</h2>
+
+        <!-- Publicación 1 -->
+        <div class="box publication-card">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="User icon">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p><strong>Usuario1</strong> <small>@usuario1</small> <small>Hace 2 horas</small></p>
+                        <p>Esta es mi primera publicación en UneTT. ¡Hola a todos!</p>
+                        <figure>
+                            <img class="publication-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Publicación">
+                        </figure>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Publicación 2 -->
+        <div class="box publication-card">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="User icon">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p><strong>Usuario1</strong> <small>@usuario1</small> <small>Hace 1 día</small></p>
+                        <p>Subí este video tutorial para aprender a programar en Kotlin.</p>
+                        <video class="publication-image" controls>
+                            <source src="video_tutorial.mp4" type="video/mp4">
+                            Tu navegador no soporta reproducción de videos.
+                        </video>
+                    </div>
+                </div>
+            </article>
+        </div>
 
                 <!-- Publicación 3 -->
                 <div class="box publication-card">

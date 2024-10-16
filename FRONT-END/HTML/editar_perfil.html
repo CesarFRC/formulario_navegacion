@@ -7,6 +7,7 @@
     <title>Perfil de Usuario - UneTT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
+      
         img {
             display: inline-block;
             width: 3rem;
@@ -30,6 +31,41 @@
         .hero.is-custom-height {
             height: 75px;
         }
+        #logoutt{
+            display: inline-block;
+            position: absolute; 
+            top: -5.6rem; 
+            height: 16rem; 
+            width: 15rem; 
+            transform: scale(0.8);
+        }
+        /* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.5rem; /* Ajusta el tamaño del texto */
+    }
+
+    #logoutt {
+        top: -2rem; /* Ajusta la posición del logo */
+        height: 8rem; /* Reduce el tamaño del logo */
+        width: 8rem;
+        left: 14.5rem;
+        position: absolute; /* Asegura que el logo esté absoluto */
+        transform: translateX(-50%); /* Ajuste para centrar el logo */
+    }
+
+    .icon-bar {
+        justify-content: center; /* Centra los íconos horizontalmente */
+        gap: 0.8rem; /* Espacio entre íconos */
+        flex-wrap: wrap; /* Permite que los íconos se ajusten en varias líneas si es necesario */
+    }
+
+    .icon-bar img {
+        width: 2rem; /* Ajusta el tamaño de los íconos */
+        height: 2rem;
+    }
+}
+
     </style>
 </head>
 
@@ -37,7 +73,7 @@
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title">Perfil de Usuario - <span style="color: white;">Une</span><span style="color: brown;">TT</span></p>
+            <p class="title" id="EPERFIL">Editar Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">

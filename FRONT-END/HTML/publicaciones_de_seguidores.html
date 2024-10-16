@@ -39,6 +39,42 @@
         .hero.is-custom-height {
             height: 75px;
         }
+
+        #logoutt{
+            display: inline-block;
+            position: absolute; 
+            top: -5.6rem; 
+            height: 16rem; 
+            width: 15rem; 
+            transform: scale(0.8);
+        }
+        
+   /* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.5rem; /* Ajusta el tamaño del texto */
+    }
+
+    #logoutt {
+        height: 8rem; /* Ajusta el tamaño del logo */
+        width: 8rem;
+        position: absolute; /* Asegura que el logo esté absoluto */
+        top: -2rem; /* Ajuste para que el logo no se superponga */
+        left: 43%; /* Centra el logo horizontalmente */
+        transform: translateX(-50%); /* Ajuste para centrar el logo */
+    }
+
+    .icon-bar {
+        display: flex; /* Asegura que los íconos se muestren en una fila */
+        gap: 1rem; /* Espacio entre íconos */
+    }
+
+    .icon-bar img {
+        width: 2rem; /* Ajusta el tamaño de los íconos */
+        height: 2rem;
+    }
+}
+
     </style>
 </head>
 
@@ -46,7 +82,7 @@
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title">Publicaciones de Usuarios Seguidos - <span style="color: white;">Une</span><span style="color: brown;">TT</span></p>
+            <p class="title" id="Seguidos">Siguiendo <img src="../imgs/Unettlogo.png" id="logoutt"> </p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">
