@@ -18,7 +18,9 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssss", $Matricula, $UserName, $Correo,$Contraseña);
 
 if ($stmt->execute()) {
-    echo "Registro insertado con éxito.";
+    //Redirigir a la pagina de exito
+    header("Location: ../HTML/inicio.html");
+    exit();
 } else {
     echo "Error al insertar el registro: " . $stmt->error;
 }
