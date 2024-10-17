@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,41 +33,52 @@ submit.addEventListener("click", function (event) {
     const username = document.getElementById('username').value;
     alert(5)
     const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
             alert("Registrado correctamente en firebase")
+
+            sendEmailVerification(user)
+                .then(() => {
+                    alert("Correo de verificación enviado.")
+                })
+                .catch((error) => {
+                    alert("Error al enviar el correo de verificación:", error)
+                });
+
+            //aqui envia los datos a la base de datos mysql    
             const datos = new FormData();
-            datos.append('email',email);
-            datos.append('username',username);
-            datos.append('password',password);
+            datos.append('email', email);
+            datos.append('username', username);
+            datos.append('password', password);
 
-            fetch('../BACKEND/insert_usuario.php',{
+            fetch('../BACKEND/insert_usuario.php', {
                 method: 'POST',
-                body : datos
+                body: datos
             })
-            .then(Response =>{
-                if(Response.ok){
-                    return Response.text();
-                }else{
-                    throw new Error('Error en la respuesta del servidor');
-                    
-                    
-                }
-            })
-            .then(data =>{
-                console.log(data);
-                alert("se registro correctamente en la base de datos")
-                window.location.href = "../HTML/inicio.html";
+                .then(Response => {
+                    if (Response.ok) {
+                        return Response.text();
+                    } else {
+                        throw new Error('Error en la respuesta del servidor');
 
 
-            })
-            .catch(error =>{
-                console.error('hubo un problema con la solicitud fetch',error);
-                alert("error")
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    alert("se registro correctamente en la base de datos")
+                    window.location.href = "../HTML/inicio.html";
 
-            });
+
+                })
+                .catch(error => {
+                    console.error('hubo un problema con la solicitud fetch', error);
+                    alert("error")
+
+                });
 
 
 
