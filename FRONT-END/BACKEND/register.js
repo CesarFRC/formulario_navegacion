@@ -27,70 +27,83 @@ const analytics = getAnalytics(app);
 const submit = document.getElementById('submit');
 submit.addEventListener("click", function (event) {
     event.preventDefault()
-    //inputs
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const username = document.getElementById('username').value;
-    alert(5)
-    const auth = getAuth();
+    //aqui verifica si el correo es de la escuela
+    let cadena = document.getElementById('email').value;
+    let keywords = "@uttcampus.edu.mx";
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed up 
-            const user = userCredential.user;
-            alert("Registrado correctamente en firebase")
+    if (cadena.includes(keywords)) {
+        //el correo si esta bien
+        //inputs
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const username = document.getElementById('username').value;
+        alert(5)
+        const auth = getAuth();
 
-            sendEmailVerification(user)
-                .then(() => {
-                    alert("Correo de verificación enviado.")
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                alert("Registrado correctamente en firebase")
+
+                sendEmailVerification(user)
+                    .then(() => {
+                        alert("Correo de verificación enviado.")
+                    })
+                    .catch((error) => {
+                        alert("Error al enviar el correo de verificación:", error)
+                    });
+
+                //aqui envia los datos a la base de datos mysql    
+                const datos = new FormData();
+                datos.append('email', email);
+                datos.append('username', username);
+                datos.append('password', password);
+
+                fetch('../BACKEND/insert_usuario.php', {
+                    method: 'POST',
+                    body: datos
                 })
-                .catch((error) => {
-                    alert("Error al enviar el correo de verificación:", error)
-                });
+                    .then(Response => {
+                        if (Response.ok) {
+                            return Response.text();
+                        } else {
+                            throw new Error('Error en la respuesta del servidor');
 
-            //aqui envia los datos a la base de datos mysql    
-            const datos = new FormData();
-            datos.append('email', email);
-            datos.append('username', username);
-            datos.append('password', password);
 
-            fetch('../BACKEND/insert_usuario.php', {
-                method: 'POST',
-                body: datos
+                        }
+                    })
+                    .then(data => {
+                        console.log(data);
+                        alert("se registro correctamente en la base de datos")
+                        window.location.href = "../HTML/inicio.html";
+
+
+                    })
+                    .catch(error => {
+                        console.error('hubo un problema con la solicitud fetch', error);
+                        alert("error")
+
+                    });
+
+
+
+
+                // ...
             })
-                .then(Response => {
-                    if (Response.ok) {
-                        return Response.text();
-                    } else {
-                        throw new Error('Error en la respuesta del servidor');
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage)
+                // ..
+            });
 
-
-                    }
-                })
-                .then(data => {
-                    console.log(data);
-                    alert("se registro correctamente en la base de datos")
-                    window.location.href = "../HTML/inicio.html";
-
-
-                })
-                .catch(error => {
-                    console.error('hubo un problema con la solicitud fetch', error);
-                    alert("error")
-
-                });
+    } else {
+        alert("el correo debe ser institucional")
+    }
 
 
 
-
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage)
-            // ..
-        });
 
 })
 
