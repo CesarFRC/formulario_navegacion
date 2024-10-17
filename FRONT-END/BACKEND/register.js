@@ -30,13 +30,48 @@ submit.addEventListener("click", function (event) {
     //inputs
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value;
     alert(5)
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
-            alert("Registrado correctamente")
+            alert("Registrado correctamente en firebase")
+            const datos = new FormData();
+            datos.append('email',email);
+            datos.append('username',username);
+            datos.append('password',password);
+
+            fetch('../BACKEND/insert_usuario.php',{
+                method: 'POST',
+                body : datos
+            })
+            .then(Response =>{
+                if(Response.ok){
+                    return Response.text();
+                }else{
+                    throw new Error('Error en la respuesta del servidor');
+                    
+                    
+                }
+            })
+            .then(data =>{
+                console.log(data);
+                alert("se registro correctamente en la base de datos")
+                window.location.href = "../HTML/inicio.html";
+
+
+            })
+            .catch(error =>{
+                console.error('hubo un problema con la solicitud fetch',error);
+                alert("error")
+
+            });
+
+
+
+
             // ...
         })
         .catch((error) => {
@@ -47,3 +82,4 @@ submit.addEventListener("click", function (event) {
         });
 
 })
+

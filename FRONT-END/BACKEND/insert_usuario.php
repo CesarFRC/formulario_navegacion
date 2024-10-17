@@ -6,10 +6,10 @@ function obtenerMatricula($Correo) {
     return substr($Correo, 0, 8); // Extrae los primeros 7 caracteres
 }
 // Recibir datos del formulario
-$Correo = $_POST['Correo'];
-$UserName = $_POST['UserName']; // Cambia esto si se agrega al formulario
+$Correo = $_POST['email'];
+$UserName = $_POST['username']; // Cambia esto si se agrega al formulario
 $Matricula = obtenerMatricula($Correo);
-$Contraseña = $_POST['Contraseña']; // Aquí puedes manejar la contraseña
+$Contraseña = $_POST['password']; // Aquí puedes manejar la contraseña
 
 // Preparar la consulta SQL
 $sql = "INSERT INTO usuario (Matricula, UserName, Correo, Contraseña,fecha, foto_perfil, biografia)
