@@ -21,8 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Comparar la contraseña
         if ($Contraseña === $usuario['Contraseña']) {
-            // Contraseña correcta, el usuario puede iniciar sesión
-            echo "Inicio de sesión exitoso. ¡Bienvenido " . $usuario['UserName'] . "!";
+            // MANDAR AL USUARIO A LA PAGINA INICIAL
+            header("Location: ../HTML/pInicial.html");
+            exit();
             // Aquí puedes iniciar la sesión usando $_SESSION y redirigir al usuario a otra página
         } else {
             // Contraseña incorrecta
