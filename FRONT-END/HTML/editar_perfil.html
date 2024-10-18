@@ -35,21 +35,26 @@
             display: inline-block;
             position: absolute; 
             top: -5.6rem; 
+            left: 1%;
             height: 16rem; 
             width: 15rem; 
             transform: scale(0.8);
         }
+        #EPERFIL{
+            margin-left: 14rem;
+        }
         /* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
-    .title {
+    #EPERFIL{
         font-size: 1.5rem; /* Ajusta el tamaño del texto */
+        margin-left: 7rem;
     }
 
     #logoutt {
         top: -2rem; /* Ajusta la posición del logo */
         height: 8rem; /* Reduce el tamaño del logo */
         width: 8rem;
-        left: 14.5rem;
+        left: 15%;
         position: absolute; /* Asegura que el logo esté absoluto */
         transform: translateX(-50%); /* Ajuste para centrar el logo */
     }
@@ -73,7 +78,7 @@
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title" id="EPERFIL">Editar Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
+            <img src="../imgs/Unettlogo.png" id="logoutt">  <p class="title" id="EPERFIL">Editar Perfil</p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">

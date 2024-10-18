@@ -94,15 +94,19 @@
             display: inline-block;
             position: absolute;
             top: -5.6rem;
+            left: 1%;
             height: 16rem;
             width: 15rem;
             transform: scale(0.8);
         }
-
+        #mis{
+            margin-left: 14rem;
+        }
         /* Media query para pantallas pequeñas */
         @media (max-width: 768px) {
-            .title {
+            #mis{
                 font-size: 1.5rem;
+                margin-left: 8rem;
             }
 
             #logoutt {
@@ -110,6 +114,7 @@
                 height: 10rem;
                 width: 10rem;
                 position: absolute;
+                left: 0%;
             }
 
             .icon-bar {
@@ -132,7 +137,7 @@
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title">Mi Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
+            <p class="title" id="mis">Mi Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">
@@ -144,7 +149,7 @@
                 <a href="../HTML/editar_perfil.html" title="Editar perfil">
                     <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
                 </a>
-                <a href="../HTML/publicaciones_de_seguidores.htm" title="Ver publicaciones de seguidores">
+                <a href="../HTML/publicaciones_de_seguidores.html" title="Ver publicaciones de seguidores">
                     <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Seguidos">
                 </a>
             </div>
