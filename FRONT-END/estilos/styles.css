@@ -12,11 +12,39 @@ body {
     align-items: center; /* Centrado vertical */
     height: 100vh; /* Altura completa de la ventana */
     color: #333; /* Color del texto */
+    transition: background-image 3s ease-in-out; /* Transición suave de 1 segundo */
+    
 }
+
+.encabezado{
+    display: inline-bloc;
+    position: absolute;
+    width: 100%;
+    height: 7rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
+
+.logoutt{
+    position: relative;
+    width: 350px;
+}
+
+.ban{
+    width: 100%;
+    height: 100%;
+    
+}
+
+
+
 
 /* Contenedor del formulario */
 .container {
-   
+    position: absolute;
+    top: 9rem;
     background: rgba(189, 189, 189, 0.7); /* Fondo blanco con opacidad */
     padding: 15px; /* Espaciado interno */
     border-radius: 10px; /* Bordes redondeados */
@@ -26,10 +54,9 @@ body {
     
 }
 
-    .logoutt{
-        width: 350px;
-        height: 350px;
-    }
+  
+
+
 
 
 /* Estilo del encabezado h1 */
@@ -127,3 +154,18 @@ a:hover {
       @include animation(wawes 7s infinite);
     }
     }
+
+    .sec{
+        position: absolute;
+        width: 100%;
+        height: 720px;
+        background-color: white;
+        bottom: -60rem;
+        
+    }
+
+   .slideimage{
+    position: absolute;
+   }
+
+   

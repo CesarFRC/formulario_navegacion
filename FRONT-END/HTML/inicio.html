@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,48 @@
     <link rel="stylesheet" href="../estilos/styles.css"> <!--archivo CSS -->
 
     <script type="module" src="../BACKEND/login.js"></script>
-    
+
+
+    <script>
+        //cambio de imagenes en el background
+        const imagenes = [
+            '../imgs/3.jpg',
+            '../imgs/utt_arcoiris.jpg',
+            '../imgs/background.jpg'
+
+
+        ];
+
+        let indiceImagen = 0;
+
+        function cambiarFondo() {
+            indiceImagen = (indiceImagen + 1) % imagenes.length;
+            document.body.style.backgroundImage = `url(${imagenes[indiceImagen]})`;
+        }
+
+        setInterval(cambiarFondo, 5000);
+
+
+    </script>
+
+
+
 </head>
+
 <body>
-    <div class="container">
+    <header class="encabezado">
+
+
+
+        <img src="../imgs/banner_2024_aniversario_logo.jpg" class="ban">
+
+    </header>
+    <div class="container hidden">
         <img src="../imgs/Unettlogo.png" class="logoutt">
+
         <h2>La Universidad Tecnológica de Torreón te conecta con el futuro y te impulsa hacia el éxito.</h2>
         <form id="login">
-            <input type="text" placeholder="Correo electrónico" name="email" id="email"  required>
+            <input type="text" placeholder="Correo electrónico" name="email" id="email" required>
             <input type="password" placeholder="Contraseña" name="password" id="password" required>
             <button type="submit" id="submit">Iniciar sesión</button>
             <a href="../HTML/registro.html">Crear cuenta nueva</a>
@@ -23,11 +58,67 @@
             function handleLogin(event) {
                 event.preventDefault(); // Evita el envío del formulario
                 // Aquí puedes agregar la lógica de autenticación si es necesario
-    
+
                 // Redirige a otra página al iniciar sesión
                 window.location.href = "pInicial"; // Cambia esto por la URL de la página a la que deseas redirigir
             }
-            </script>
+        </script>
     </div>
+    <section class="sec hidden">
+        <img src="../imgs/slidetecnology.png" class="slideimage">
+        <h1 style="position: absolute; left: 60rem; font-size: 40px; color: black;">ACERCA DE</h1>
+        <h2 style="font-size: 40px; position: absolute; top: 15rem; left: 38rem;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UneTT
+            <br> es una red social enfocada a los estudiantes de la <br> Universidad Tecnologia de Torreon <br> con el
+            fin
+            de que los estudaintes encuentren <br> una comunidad donde sea vean identificados <br> y logren compartir
+            sus ideas a los demas
+        </h2>
+
+    </section>
+
+    <style>
+        .hidden {
+            opacity: 0;
+            transform: translateY(50px);
+            /* Puedes ajustar el valor para cambiar el efecto */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .visible {
+            animation: zoomIn 0.8s ease-out forwards;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hiddenElements = document.querySelectorAll('.hidden');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');  // Añadir la clase cuando es visible
+                    } else {
+                        entry.target.classList.remove('visible'); // Eliminar la clase cuando no es visible
+                    }
+                });
+            }, { threshold: 0.1 }); // Umbral de intersección
+
+            hiddenElements.forEach(el => observer.observe(el));
+        })
+    </script>
 </body>
+
 </html>
