@@ -102,6 +102,7 @@
         #mis{
             margin-left: 14rem;
         }
+
         /* Media query para pantallas pequeñas */
         @media (max-width: 768px) {
             #mis{
@@ -129,6 +130,13 @@
             .profile-info {
                 grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
             }
+            #USUL{
+               margin-left: 30rem;
+            }
+            #editar{
+                position: relative;
+                right: 21rem;
+            }
         }
     </style>
 </head>
@@ -146,9 +154,6 @@
                 <a href="../HTML/ver_perfil.html" title="Ver perfil">
                     <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
                 </a>
-                <a href="../HTML/editar_perfil.html" title="Editar perfil">
-                    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Editar perfil">
-                </a>
                 <a href="../HTML/publicaciones_de_seguidores.html" title="Ver publicaciones de seguidores">
                     <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Seguidos">
                 </a>
@@ -156,61 +161,67 @@
         </div>
     </section>
     <!-- Sección de perfil de usuario -->
-    <section class="section">
-        <div class="container">
-            <div class="box">
-                <h2 class="title is-4 has-text-centered">Perfil de Usuario</h2>
-                <!-- Contenedor flex para imagen y contenido -->
-                <div class="profile-container has-text-centered">
-                    <!-- Foto de perfil -->
-                    <div class="profile-pic-container">
-                        <figure class="image is-96x96">
-                            <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
-                        </figure>
-                        <!-- Nombre de Usuario -->
-                        <div class="username">
-                            <p class="subtitle is-6">Usuario1</p> <!-- Aquí se coloca el nombre de usuario -->
-                        </div>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <!-- Imagen de portada -->
+            <div class="cover-banner" style="position: relative;">
+                <img src="../imgs/background.jpg" alt="Imagen de portada" style="width: 100%; height: 200px; object-fit: cover ;">
+                
+                <!-- Foto de perfil encima de la imagen de portada -->
+                <figure class="image is-96x96" style="position: absolute; bottom: -8rem; left: 10%; transform: translateX(-50%); border-radius: 50%; border: 4px solid white;">
+                    <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
+                </figure>
+            </div>
+            <!-- Contenedor flex para nombre de usuario y botón de editar perfil -->
+            <div class="profile-container has-text-centered" style="margin-top: 3rem;">
+                <!-- Nombre de Usuario -->
+                <div class="username" id="USUL">
+                    <p class="title  is-4"  style="margin-left: -33rem;">Usuario1</p> <!-- Aquí se coloca el nombre de usuario -->
+                </div>
+                <!-- Botón de Editar Perfil -->
+                 <div  id="editar">
+                    <a href="../HTML/editar_perfil.html" class="button is-small is-link" style="margin-top: -2rem; right: -31rem;">Editar Perfil</a>
+                 </div>
+            </div>
+
+            <!-- Información de perfil -->
+            <div class="profile-info">
+                <!-- Matrícula -->
+                <div class="field">
+                    <label class="label is-small">Matrícula</label>
+                    <div class="control">
+                        <input class="input is-small" type="text" value="1234567" disabled>
                     </div>
                 </div>
 
-                <!-- Información de perfil -->
-                <div class="profile-info">
-                    <!-- Matrícula -->
-                    <div class="field">
-                        <label class="label is-small">Matrícula</label>
-                        <div class="control">
-                            <input class="input is-small" type="text" value="1234567" disabled>
-                        </div>
+                <!-- Correo Electrónico -->
+                <div class="field">
+                    <label class="label is-small">Correo Electrónico</label>
+                    <div class="control">
+                        <input class="input is-small" type="email" value="usuario1@example.com" disabled>
                     </div>
+                </div>
 
-                    <!-- Correo Electrónico -->
-                    <div class="field">
-                        <label class="label is-small">Correo Electrónico</label>
-                        <div class="control">
-                            <input class="input is-small" type="email" value="usuario1@example.com" disabled>
-                        </div>
+                <!-- Biografía -->
+                <div class="field">
+                    <label class="label is-small">Biografía</label>
+                    <div class="control">
+                        <textarea class="textarea is-small" rows="2" disabled>Soy un estudiante apasionado por el desarrollo de software.</textarea>
                     </div>
+                </div>
 
-                    <!-- Biografía -->
-                    <div class="field">
-                        <label class="label is-small">Biografía</label>
-                        <div class="control">
-                            <textarea class="textarea is-small" rows="2" disabled>Soy un estudiante apasionado por el desarrollo de software.</textarea>
-                        </div>
-                    </div>
-
-                    <!-- Fecha de creación de cuenta -->
-                    <div class="field">
-                        <label class="label is-small">Fecha de creación de cuenta</label>
-                        <div class="control">
-                            <input class="input is-small" type="text" value="2024-10-07" disabled>
-                        </div>
+                <!-- Fecha de creación de cuenta -->
+                <div class="field">
+                    <label class="label is-small">Fecha de creación de cuenta</label>
+                    <div class="control">
+                        <input class="input is-small" type="text" value="2024-10-07" disabled>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Sección de publicaciones del usuario -->
     <div class="box">
