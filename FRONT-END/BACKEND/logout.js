@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,40 +23,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+const auth = getAuth();
 
 
-
-
-//sumbit button 
-const submit = document.getElementById('submit');
+const submit = document.getElementById('cerrar');
 submit.addEventListener("click", function (event) {
     event.preventDefault()
+    
+    signOut(auth).then(() => {
+        // Cierre de sesión exitoso
+        alert("Has cerrado sesión exitosamente.");
+        window.location.href = "../HTML/inicio.html"; // Redirige a la página de inicio
+    }).catch((error) => {
+        // Ocurrió un error durante el cierre de sesión
+        console.error("Error al cerrar sesión:", error);
+        alert("Error al cerrar sesión: " + error.message);
+    });
 
-    const auth = getAuth();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-
-
-            if (user.emailVerified) {
-
-                window.location.href = "../HTML/PInicial.html";
-                // Aquí puedes redirigir al usuario o realizar otras acciones
-            } else {
-                alert("Correo no verificado. Por favor, verifica tu correo.")
-
-                // ...
-            }
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage)
-            alert(errorCode)
-        });
 
 })

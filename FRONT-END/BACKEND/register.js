@@ -2,6 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,6 +24,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+const auth = getAuth();
+
+
+
 
 //submit button
 const submit = document.getElementById('submit');
@@ -37,10 +43,10 @@ submit.addEventListener("click", function (event) {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const username = document.getElementById('username').value;
-        
-        const auth = getAuth();
 
-        
+
+
+
 
 
         createUserWithEmailAndPassword(auth, email, password)
