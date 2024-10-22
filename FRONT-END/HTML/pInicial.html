@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pantalla de Inicio - UneTT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <script type="module" src="../BACKEND/post.js"></script>
     <style>
         img {
             display: inline-block;
@@ -90,7 +91,7 @@
                 <div class="field">
                     <label class="label">Escribe algo</label>
                     <div class="control">
-                        <textarea class="textarea" placeholder="¿Qué estás pensando?"></textarea>
+                        <textarea class="textarea" placeholder="¿Qué estás pensando?" id="postcontent"></textarea>
                     </div>
                 </div>
                 <div class="field">
@@ -110,47 +111,15 @@
                 </div>
                 <div class="field">
                     <div class="control">
-                        <button class="button is-primary">Publicar</button>
+                        <button class="button is-primary" id="submit">Publicar</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Publicación 1 -->
-            <article class="media box">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img src="https://bulma.io/assets/images/placeholders/128x128.png" />
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <strong>Usuario1</strong> <small>@usuario1</small> <small>31m ago</small>
-                            <br>
-                            ¡Esta es mi primera publicación en la red social UneTT! 🎉
-                            <br>
-                            <img src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Publicación de imagen"
-                                style="max-width: 300px;">
-                        </p>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item" aria-label="like">
-                                <span class="icon is-small">
-                                    <i class="fas fa-heart"></i>
-                                </span>
-                            </a>
-                            <a class="level-item" aria-label="comment">
-                                <span class="icon is-small">
-                                    <i class="fas fa-comment"></i>
-                                </span>
-                            </a>
-                        </div>
-                        <div>
-                        </div>
-                    </nav>
-                </div>
-            </article>
+            <!-- zona de publicaciones  -->
+            <div id="postList"></div>
+
+            
     </section>
 
     <!-- Footer -->
