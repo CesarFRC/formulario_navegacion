@@ -1,0 +1,66 @@
+/* Estilo general para el cuerpo */
+body {
+    font-family: Arial, sans-serif; /* Tipografía del cuerpo */
+    background-image: url('fondo.jpg'); /* Cambia esto por la ruta de tu imagen de fondo */
+    background-size: cover; /* Cubre toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    margin: 0; /* Elimina márgenes por defecto */
+    display: flex; /* Usar flexbox para centrar */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh; /* Altura completa de la ventana */
+}
+
+/* Contenedor del formulario */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra alrededor */
+    width: 300px; /* Ancho del formulario */
+    text-align: center; /* Alinear texto al centro */
+}
+
+/* Estilos para los encabezados */
+h1 {
+    color: #333; /* Color del texto del encabezado */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+/* Estilos para los campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px 0; /* Espaciado arriba y abajo */
+    border: 1px solid #ccc; /* Borde del campo */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluir padding y border en el ancho total */
+}
+
+/* Estilos para el botón */
+button {
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    width: 100%; /* Ancho completo */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+/* Cambiar color del botón al pasar el mouse */
+button:hover {
+    background-color: #45a049; /* Color al pasar el mouse */
+}
+
+/* Estilos para las etiquetas */
+label {
+    display: block; /* Hace que las etiquetas ocupen toda la línea */
+    margin: 5px 0; /* Espacio arriba y abajo de las etiquetas */
+    font-weight: bold; /* Negrita */
+    color: #555; /* Color de las etiquetas */
+}
