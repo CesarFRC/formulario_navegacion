@@ -35,12 +35,13 @@ auth.onAuthStateChanged((user) => {
         // Guarda el correo en una variable
         let userEmail = email;
 
-        let username;
+
+
 
         let matricula = userEmail.substring(0, 8); //obtner la matricula del correo consultado
-        
-        /*va a realizar una consulta a la base de datos mysql para obtener el usuario dependiendo del correo electronico 
-        SELECT UserName from user where Correo = 'UserEmail'*/
+
+        /*va a realizar una consulta a la base de datos mysql para obtener el usuario,biografia y fecha dependiendo del correo electronico 
+        SELECT UserName,biografia,fecha from user where Correo = 'UserEmail'*/
 
         fetch('../BACKEND/viewperfileuser.php', {
             method: 'POST',
@@ -53,19 +54,27 @@ auth.onAuthStateChanged((user) => {
         })
             .then(response => response.text()) // Obtener la respuesta como texto
             .then(data => {
+                
                 if (data.startsWith("Usuario no encontrado") || data.startsWith("Error") || data.startsWith("Email no proporcionado")) {
                     alert(data); // Mostrar el mensaje de error en la consola
                 } else {
-                    username = data; // Asignar el UserName a la variable
+
+                    const resultados = data.split("\n");
+                    let username = resultados[0];
+                    let biografia = resultados.length > 1 ? resultados[1] : 'No biografia';
+                    let fecha = resultados.length > 2 ? resultados[2] : 'No fecha';
+
+                    
                     document.getElementById('name').textContent = username;
                     document.getElementById('correoelectronico').value = userEmail;
                     document.getElementById('matricula').value = matricula;
-
+                    document.getElementById('bio').value = biografia;
+                    document.getElementById('fecha').value = fecha; 
 
                 }
             })
             .catch(error => {
-                alert('Error:'+ error); // Manejar cualquier error en la solicitud
+                alert('Error:' + error); // Manejar cualquier error en la solicitud
             });
 
 
