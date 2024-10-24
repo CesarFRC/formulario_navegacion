@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <script type="module" src="../BACKEND/post.js"></script>
     <style>
+        .post-media {
+            width: 1000px;
+            height: auto;
+        }
+
         img {
             display: inline-block;
             width: 3rem;
@@ -21,20 +26,23 @@
             display: flex;
             gap: 1rem;
         }
+
         .hero.is-custom-height {
             height: 75px;
         }
 
-        #logoutt{
+        #logoutt {
             display: inline-block;
-            position: absolute; 
+            position: absolute;
             top: -5.6rem;
-            left: 1%; 
-            height: 16rem; width: 15rem; 
+            left: 1%;
+            height: 16rem;
+            width: 15rem;
             transform: scale(0.8);
         }
-         /* Media query para pantallas pequeñas */
-         @media (max-width: 768px) {
+
+        /* Media query para pantallas pequeñas */
+        @media (max-width: 768px) {
             .icon-bar {
                 position: absolute;
                 top: 1rem;
@@ -67,14 +75,12 @@
             </div>
             <!-- Barra de iconos -->
             <div class="icon-bar">
-                <!-- Enlace del ícono del perfil a otra página -->
-                 <a href="../HTML/pInicial.html">
-                  <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Home">
-                 </a>
+                <a href="../HTML/pInicial.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Home">
+                </a>
                 <a href="../HTML/ver_perfil.html" title="Ver perfil">
                     <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
                 </a>
-                <!-- Iconos restantes -->
                 <a href="../HTML/publicaciones_de_seguidores.html" title="Ver publicaciones de seguidores">
                     <img src="https://cdn-icons-png.flaticon.com/512/681/681494.png" alt="Seguidos">
                 </a>
@@ -95,19 +101,20 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Subir foto, video o archivo</label>
+                    <label class="label">Subir foto, video</label>
                     <div class="file has-name">
                         <label class="file-label">
-                            <input class="file-input" type="file" name="resume" multiple>
+                            <input class="file-input" type="file" name="resume" multiple id="mediaUpload">
                             <span class="file-cta">
                                 <span class="file-icon">
                                     <i class="fas fa-upload"></i>
                                 </span>
                                 <span class="file-label">Elegir archivos…</span>
                             </span>
-                            <span class="file-name">No se ha seleccionado ningún archivo</span>
                         </label>
+                        <p id="fileName" class="file-name"></p>
                     </div>
+                    <button id="deleteButton" class="button is-danger">Eliminar archivo</button>
                 </div>
                 <div class="field">
                     <div class="control">
@@ -116,10 +123,10 @@
                 </div>
             </div>
 
-            <!-- zona de publicaciones  -->
+            <!-- Zona de publicaciones -->
             <div id="postList"></div>
 
-            
+        </div>
     </section>
 
     <!-- Footer -->
