@@ -3,91 +3,103 @@
 
 
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de Usuario - UneTT</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <style>
-      
-        img {
-            display: inline-block;
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .icon-bar {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-        }
-        .hero.is-custom-height {
-            height: 75px;
-        }
-        #logoutt{
-            display: inline-block;
-            position: absolute; 
-            top: -5.6rem; 
-            left: 1%;
-            height: 16rem; 
-            width: 15rem; 
-            transform: scale(0.8);
-        }
-        #EPERFIL{
-            margin-left: 14rem;
-        }
-        /* Media query para pantallas pequeñas */
-@media (max-width: 768px) {
-    #EPERFIL{
-        font-size: 1.5rem; /* Ajusta el tamaño del texto */
-        margin-left: 7rem;
-    }
-
-    #logoutt {
-        top: -2rem; /* Ajusta la posición del logo */
-        height: 8rem; /* Reduce el tamaño del logo */
-        width: 8rem;
-        left: 15%;
-        position: absolute; /* Asegura que el logo esté absoluto */
-        transform: translateX(-50%); /* Ajuste para centrar el logo */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil de Usuario - UneTT</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+<style>
+    img {
+        display: inline-block;
+        width: 3rem;
+        height: 3rem;
     }
 
     .icon-bar {
-        justify-content: center; /* Centra los íconos horizontalmente */
-        gap: 0.8rem; /* Espacio entre íconos */
-        flex-wrap: wrap; /* Permite que los íconos se ajusten en varias líneas si es necesario */
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        gap: 1rem;
     }
 
-    .icon-bar img {
-        width: 2rem; /* Ajusta el tamaño de los íconos */
-        height: 2rem;
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 1rem;
     }
-}
 
-    </style>
+    .hero.is-custom-height {
+        height: 75px;
+    }
+
+    #logoutt {
+        display: inline-block;
+        position: absolute;
+        top: -5.6rem;
+        left: 1%;
+        height: 16rem;
+        width: 15rem;
+        transform: scale(0.8);
+    }
+
+    #EPERFIL {
+        margin-left: 14rem;
+    }
+
+    /* Media query para pantallas pequeñas */
+    @media (max-width: 768px) {
+        #EPERFIL {
+            font-size: 1.5rem;
+            /* Ajusta el tamaño del texto */
+            margin-left: 7rem;
+        }
+
+        #logoutt {
+            top: -2rem;
+            /* Ajusta la posición del logo */
+            height: 8rem;
+            /* Reduce el tamaño del logo */
+            width: 8rem;
+            left: 15%;
+            position: absolute;
+            /* Asegura que el logo esté absoluto */
+            transform: translateX(-50%);
+            /* Ajuste para centrar el logo */
+        }
+
+        .icon-bar {
+            justify-content: center;
+            /* Centra los íconos horizontalmente */
+            gap: 0.8rem;
+            /* Espacio entre íconos */
+            flex-wrap: wrap;
+            /* Permite que los íconos se ajusten en varias líneas si es necesario */
+        }
+
+        .icon-bar img {
+            width: 2rem;
+            /* Ajusta el tamaño de los íconos */
+            height: 2rem;
+        }
+    }
+</style>
 </head>
 
 <body>
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <img src="../imgs/Unettlogo.png" id="logoutt">  <p class="title" id="EPERFIL">Editar Perfil</p>
+            <img src="../imgs/Unettlogo.png" id="logoutt">
+            <p class="title" id="EPERFIL">Editar Perfil</p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">
                     <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
-                   </a>
-                  <a href="../HTML/ver_perfil.html" title="Ver perfil">
-                      <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
-                  </a>
+                </a>
+                <a href="../HTML/ver_perfil.html" title="Ver perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+                </a>
             </div>
         </div>
     </section>
@@ -101,7 +113,8 @@
                 <!-- Foto de perfil -->
                 <div class="field has-text-centered">
                     <figure class="image is-128x128">
-                        <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil">
+                        <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+                            alt="Foto de perfil">
                     </figure>
                     <label class="label">Cambiar foto de perfil</label>
                     <div class="file has-name is-centered">
@@ -153,7 +166,8 @@
                 <div class="field">
                     <label class="label">Biografía</label>
                     <div class="control">
-                        <textarea class="textarea" placeholder="Escribe una breve biografía">Soy un estudiante apasionado por el desarrollo de software.</textarea>
+                        <textarea class="textarea"
+                            placeholder="Escribe una breve biografía">Soy un estudiante apasionado por el desarrollo de software.</textarea>
                     </div>
                 </div>
 
