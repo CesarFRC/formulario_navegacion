@@ -1,6 +1,5 @@
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"; 
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 
@@ -18,7 +17,6 @@ const firebaseConfig = {
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
@@ -48,7 +46,7 @@ submit.addEventListener("click", async function (event) {
         const storageRef = ref(storage, `posts/${user.uid}/${file.name}`);
         try {
             const snapshot = await uploadBytes(storageRef, file);
-            mediaURL = await getDownloadURL(snapshot.ref); // Obtener la URL de descarga
+            mediaURL = await getDownloadURL(snapshot.ref);
         } catch (error) {
             console.error("Error al subir el archivo:", error);
             alert("Error al subir el archivo.");
@@ -63,7 +61,7 @@ submit.addEventListener("click", async function (event) {
             likes: 0,
             likedBy: [],
             post: content,
-            mediaURL: mediaURL // URL del archivo multimedia
+            mediaURL: mediaURL
         });
 
         alert('Publicación exitosa');
@@ -72,58 +70,6 @@ submit.addEventListener("click", async function (event) {
     } catch (error) {
         console.error('Error al publicar:', error);
         alert(error);
-    }
-});
-
-// Botón para eliminar el archivo seleccionado
-const deleteButton = document.getElementById('deleteButton');
-const fileNameDisplay = document.getElementById('fileName');
-
-deleteButton.addEventListener("click", async function () {
-    const user = auth.currentUser;
-    if (!user) {
-        alert("Debes iniciar sesión para eliminar un archivo.");
-        return;
-    }
-
-    const fileInput = document.getElementById('mediaUpload');
-    const file = fileInput.files[0];
-
-    if (!file) {
-        alert("No hay ningún archivo seleccionado para eliminar.");
-        return;
-    }
-
-    const storageRef = ref(storage, `posts/${user.uid}/${file.name}`);
-    console.log(`Intentando eliminar el archivo en la ruta: posts/${user.uid}/${file.name}`); // Agregar log para depuración
-
-    try {
-        // Verificar si el archivo existe antes de intentar eliminarlo
-        await getMetadata(storageRef);
-        
-        await deleteObject(storageRef); // Llama a la función para eliminar el archivo
-        fileInput.value = ''; // Limpiar el campo de archivos después de eliminar
-        fileNameDisplay.textContent = ''; // Limpiar el nombre del archivo mostrado
-        alert("Archivo eliminado con éxito.");
-    } catch (error) {
-        if (error.code === 'storage/object-not-found') {
-            alert("El archivo no existe.");
-        } else {
-            console.error("Error al eliminar el archivo:", error);
-            alert("Error al eliminar el archivo: " + error.message);
-        }
-    }
-});
-
-// Modificar el evento del input de archivos
-const fileInput = document.getElementById('mediaUpload');
-fileInput.addEventListener('change', function () {
-    const file = fileInput.files[0];
-
-    if (file) {
-        fileNameDisplay.textContent = `Archivo seleccionado: ${file.name}`; // Mostrar el nombre del archivo
-    } else {
-        fileNameDisplay.textContent = ''; // Limpiar si no hay archivo seleccionado
     }
 });
 
@@ -151,15 +97,15 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
                         <p><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
                         <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
                         <p>${postData.post}</p>
-                        ${postData.mediaURL ? 
-                            (fileIsVideo(postData.mediaURL) ? 
-                                `<video controls class="post-media" width="400">
+                        ${postData.mediaURL ?
+                (fileIsVideo(postData.mediaURL) ?
+                    `<video controls class="post-media" width="400">
                                     <source src="${postData.mediaURL}" type="video/mp4">
                                     Tu navegador no soporta la reproducción de video.
-                                </video>` 
-                            : 
-                                `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) 
-                        : ''}
+                                </video>`
+                    :
+                    `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`)
+                : ''}
                         <p><strong>Stars:</strong> <span id="likes-${doc.id}">${postData.likes || 0}</span></p>
                         <br>
                         <button id="likeBtn-${doc.id}"><img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;"></button>
@@ -193,9 +139,9 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
 
 // Función para verificar si es un video
 function fileIsVideo(url) {
-    const videoExtensions = ['mp4', 'webm', 'ogg']; // Extensiones válidas para videos
-    const extension = url.split('.').pop().toLowerCase(); // Obtener la extensión del archivo
-    return videoExtensions.includes(extension); // Verificar si la extensión es válida
+    const videoExtensions = ['mp4', 'webm', 'ogg'];
+    const extension = url.split('.').pop().toLowerCase();
+    return videoExtensions.includes(extension);
 }
 
 // Función para manejar el "like"
@@ -205,18 +151,27 @@ async function handleLike(postId, currentLikes, likedBy) {
 
     try {
         if (likedBy && likedBy.includes(userId)) {
-            alert("Ya has dado like a esta publicación.");
-            return;
+            // Si el usuario ya ha dado like, lo quitamos
+            const updatedLikes = currentLikes > 0 ? currentLikes - 1 : 0;
+            const updatedLikedBy = likedBy.filter(id => id !== userId);
+
+            await updateDoc(postRef, {
+                likes: updatedLikes,
+                likedBy: updatedLikedBy
+            });
+
+            console.log('Like removido con éxito');
+        } else {
+            // Si no ha dado like, lo agregamos
+            await updateDoc(postRef, {
+                likes: currentLikes + 1,
+                likedBy: [...(likedBy || []), userId]
+            });
+
+            console.log('Like añadido con éxito');
         }
-
-        await updateDoc(postRef, {
-            likes: currentLikes + 1,
-            likedBy: [...(likedBy || []), userId]
-        });
-
-        console.log('Like añadido con éxito');
     } catch (error) {
-        console.error('Error al añadir el like:', error);
+        console.error('Error al manejar el like:', error);
     }
 }
 
@@ -236,11 +191,43 @@ async function handleComment(postId) {
         return;
     }
 
-    // Aquí puedes agregar la lógica para almacenar el comentario en Firestore
-    // Por ejemplo, en una colección de comentarios o directamente en el documento de la publicación
+    try {
+        // Guardar el comentario en una subcolección 'comments' dentro de la publicación
+        await addDoc(collection(db, 'post', postId, 'comments'), {
+            username: user.email,
+            comment: commentText,
+            date: serverTimestamp()
+        });
+
+        commentInput.value = ''; // Limpiar el campo de comentarios
+        alert("Comentario añadido con éxito");
+    } catch (error) {
+        console.error("Error al añadir el comentario:", error);
+        alert("Error al añadir el comentario.");
+    }
 }
 
 // Cargar los comentarios de una publicación
 async function loadComments(postId) {
-    // Implementar la lógica para cargar comentarios aquí
+    const commentsDiv = document.getElementById(`comments-${postId}`);
+
+    try {
+        const commentsQuery = query(
+            collection(db, 'post', postId, 'comments'),
+            orderBy('date', 'asc') // Ordenar por fecha ascendente
+        );
+
+        onSnapshot(commentsQuery, (snapshot) => {
+            commentsDiv.innerHTML = ''; // Limpiar los comentarios antes de mostrarlos
+
+            snapshot.forEach((doc) => {
+                const commentData = doc.data();
+                const commentElement = document.createElement('p');
+                commentElement.innerHTML = `<strong>${commentData.username}:</strong> ${commentData.comment} <em>${commentData.date ? commentData.date.toDate().toLocaleString() : ''}</em>`;
+                commentsDiv.appendChild(commentElement);
+            });
+        });
+    } catch (error) {
+        console.error("Error al cargar los comentarios:", error);
+    }
 }
