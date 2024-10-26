@@ -91,7 +91,7 @@ submit.addEventListener("click", function (event) {
                     })
                     .catch(error => {
                         console.error('hubo un problema con la solicitud fetch', error);
-                        alert("error")
+                        alert("error" + error)
 
                     });
 

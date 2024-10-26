@@ -44,7 +44,7 @@ submit.addEventListener("click", function (event) {
 
             if (user.emailVerified) {
 
-                window.location.href = "../HTML/PInicial.html";
+                window.location.href = "../HTML/pInicial.html";
                 // Aquí puedes redirigir al usuario o realizar otras acciones
             } else {
                 alert("Correo no verificado. Por favor, verifica tu correo.")

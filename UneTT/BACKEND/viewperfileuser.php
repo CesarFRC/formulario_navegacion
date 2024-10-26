@@ -24,11 +24,6 @@ if (isset($_POST['email'])) {
 }else {
     echo "Email no proporcionado."; // Mensaje si no se proporciona el email
 }
-
-
-
-
-
 // Cerrar la conexión
 $conn->close();
 ?>
