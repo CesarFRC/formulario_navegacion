@@ -8,6 +8,7 @@
 <title>Perfil de Usuario - UneTT</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 <script type="module" src="../BACKEND/vieweditar.js"></script>
+<script type="module" src="../BACKEND/updateProfile.js"></script>
 <style>
     img {
         display: inline-block;
@@ -112,7 +113,7 @@
                 <h2 class="title is-4">Información de Perfil</h2>
 
                 <!-- Foto de perfil -->
-                 <form id="perfilForm">
+                 <form id="perfilForm" method="POST" action="../BACKEND/updateProfile.php">
                 <div class="field has-text-centered">
                     <figure class="image is-128x128">
                         <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
@@ -136,7 +137,7 @@
                 <div class="field">
                     <label class="label">Matrícula</label>
                     <div class="control">
-                        <input id="matricula" class="input" type="text" value="1234567" disabled>
+                        <input id="matricula" name="matricula" class="input" type="text" value="1234567" disabled>
                     </div>
                 </div>
 
@@ -144,7 +145,7 @@
                 <div class="field">
                     <label class="label">Nombre de Usuario</label>
                     <div class="control">
-                        <input id="name"  class="input" type="text" placeholder="Escribe tu nombre de usuario" value="Usuario1">
+                        <input id="name"  name="username" class="input" type="text" placeholder="Escribe tu nombre de usuario" value="Usuario1">
                     </div>
                 </div>
 
@@ -152,7 +153,7 @@
                 <div class="field">
                     <label class="label">Correo Electrónico</label>
                     <div class="control">
-                        <input class="input" type="email" id="correoelectronico" placeholder="Escribe tu correo" value="usuario1@example.com" disabled>
+                        <input name="correoelectronico" class="input" type="email" id="correoelectronico" placeholder="Escribe tu correo" value="usuario1@example.com" disabled>
                     </div>
                 </div>
 
@@ -184,7 +185,7 @@
 
                 <!-- Botón para actualizar información -->
                 <div class="field has-text-centered">
-                    <button class="button is-primary">Actualizar perfil</button>
+                    <button class="button is-primary" id="updateProfil" type="submit">Actualizar perfil</button>
                 </div>
             </div>
         </div>
