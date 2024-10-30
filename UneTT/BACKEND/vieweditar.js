@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let userEmail = email;
             let matricula = userEmail.substring(0, 8); // Obtener la matrícula del correo consultado
 
+            alert("Correo electrónico obtenido: " + userEmail); // Alerta para verificar el correo
+
+            // Cargar datos del perfil
             fetch('../BACKEND/viewperfileuser.php', {
                 method: 'POST',
                 headers: {
@@ -57,6 +60,44 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error:", error);
                 alert("Hubo un error al cargar la información.");
             });
+
+            // Evento para actualizar el perfil
+            document.getElementById('updateProfil').addEventListener('submit', (event) => {
+                event.preventDefault(); // Evita el envío del formulario por defecto
+
+                // Obtener nuevos datos
+                const newUsername = document.getElementById('name').value;
+                const newPassword = document.getElementById('password').value;
+                const newBio = document.getElementById('bio').value;
+
+                // Imprimir el correo electrónico que se va a enviar
+                console.log("Correo electrónico a enviar:", userEmail);
+
+                // Hacer la llamada para actualizar el perfil
+                fetch('../BACKEND/updateProfile.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'correoelectronico': userEmail, // Envía el correo del usuario autenticado
+                        'username': newUsername,
+                        'password': newPassword,
+                        'bio': newBio
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data); // Maneja la respuesta de la actualización
+                    alert(data); // Mostrar mensaje de éxito o error
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Hubo un error al actualizar el perfil.");
+                });
+            });
+        } else {
+            alert("No hay usuario autenticado.");
         }
     });
 });
