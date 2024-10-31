@@ -24,9 +24,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 
-
-
-
 //sumbit button 
 const submit = document.getElementById('submit');
 submit.addEventListener("click", function (event) {
@@ -61,9 +58,7 @@ submit.addEventListener("click", function (event) {
                     // Signed in 
                     const user = userCredential.user;
 
-
                     if (user.emailVerified) {
-                        alert("se inicio session correctamente")
                         window.location.href = "../HTML/pInicial.html";
                     } else {
                         alert("Correo no verificado. Por favor, verifica tu correo.")
@@ -77,13 +72,7 @@ submit.addEventListener("click", function (event) {
                 });
         })
         .catch(error => {
-            console.error('hubo un problema con la solicitud fetch', error);
             alert("error" + error)
 
         });
-
-
-
-
-
 })

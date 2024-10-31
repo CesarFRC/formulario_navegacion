@@ -1,6 +1,8 @@
+// Importa e inicializa Firebase App y Auth
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, EmailAuthProvider, reauthenticateWithCredential, updatePassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
+// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U",
     authDomain: "unett-4074c.firebaseapp.com",
@@ -11,72 +13,54 @@ const firebaseConfig = {
     measurementId: "G-M3JLBLZX7R"
 };
 
-// Inicializar Firebase
+// Inicializar Firebase y obtener la instancia de autenticación
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
 
-// Escuchar el estado de autenticación
+// Escucha el estado de autenticación y carga el perfil
 document.addEventListener("DOMContentLoaded", () => {
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            const email = user.email; // Obtiene el correo del usuario
-            let userEmail = email;
-            let matricula = userEmail.substring(0, 8); // Obtener la matrícula del correo consultado
+            const email = user.email; 
+            const matricula = email.substring(0, 8);
 
-
-            // Cargar datos del perfil
+            // Cargar datos del perfil desde el backend
             fetch('../BACKEND/viewperfileuser.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: new URLSearchParams({
-                    'email': userEmail
-                })
+                body: new URLSearchParams({ 'email': email })
             })
             .then(response => response.text())
             .then(data => {
                 const resultados = data.split("\n");
                 if (resultados.length >= 3) {
-                    let username = resultados[0]; // Asigna el nombre de usuario
-                    let biografia = resultados[1]; // Asigna la biografía
-                    let fecha = resultados[2];      // Asigna la fecha de creación
-
-                    // Guarda el nombre de usuario en localStorage
-                    localStorage.setItem("userName", username);
-
-                    // Actualiza el DOM con los datos del usuario
-                    document.getElementById('name').value = username; // Nombre de usuario
-                    document.getElementById('bio').value = biografia;      // Biografía
-                    document.getElementById('fecha').value = fecha;        // Fecha de creación
-                    document.getElementById('correoelectronico').value = userEmail; // Email
+                    document.getElementById('name').value = resultados[0]; // Username
+                    document.getElementById('bio').value = resultados[1]; // Biografía
+                    document.getElementById('fecha').value = resultados[2]; // Fecha de creación
+                    document.getElementById('correoelectronico').value = email; // Email
                     document.getElementById('matricula').value = matricula; // Matrícula
-                } else {
                 }
             })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-
-            // Evento para actualizar el perfil
+            .catch(error => console.error("Error al cargar el perfil:", error));
+            
+            // Manejo de actualización del perfil y contraseña
             document.getElementById('updateProfil').addEventListener('submit', (event) => {
                 event.preventDefault(); // Evita el envío del formulario por defecto
 
-                // Obtener nuevos datos
                 const newUsername = document.getElementById('name').value;
                 const newPassword = document.getElementById('password').value;
                 const newBio = document.getElementById('bio').value;
 
-               
-
-                // Hacer la llamada para actualizar el perfil
+                // Llamada para actualizar el perfil en el backend
                 fetch('../BACKEND/updateProfile.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: new URLSearchParams({
-                        'correoelectronico': userEmail, // Envía el correo del usuario autenticado
+                        'correoelectronico': email,
                         'username': newUsername,
                         'password': newPassword,
                         'bio': newBio
@@ -85,16 +69,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(response => response.text())
                 .then(data => {
                     console.log(data);
-                    alert("llego hasta aqui el codigo")
-                     // Maneja la respuesta de la actualización
-                     window.location.href = "../HTML/ver_perfil.html";
-                     
+                    // Solicita la contraseña actual para la reautenticación
+                    const currentPassword = prompt("Por favor, ingresa tu contraseña actual para actualizar los datos:");
+
+                    if (currentPassword) {
+                        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+                        // Reautenticar al usuario
+                        reauthenticateWithCredential(user, credential)
+                            .then(() => {
+                                // Ahora se puede actualizar la contraseña
+                                updatePassword(user, newPassword)
+                                    .then(() => {
+                                        window.location.href = "../HTML/ver_perfil.html";
+                                    })
+                                    .catch((error) => {
+                                        alert("Error al actualizar los datos " + error.message);
+                                    });
+                            })
+                            .catch((error) => {
+                                alert("Error al reautenticar: " + error.message);
+                            });
+                    } else {
+                        alert("La contraseña actual es necesaria para actualizar tus datos");
+                    }
                 })
                 .catch(error => {
-                    alert("Error:" + error);
+                    alert("Error al actualizar perfil: " + error.message);
                 });
             });
-        } else {
-        }
+        } 
     });
 });

@@ -4,7 +4,7 @@ include 'conexion.php';
 
 // Obtener variables enviadas por JavaScript
 
-$correo = $_POST['Correo'];
+$correo = $_POST['email'];
 $password = $_POST['Contraseña'];
 
 // Consulta a la base de datos
