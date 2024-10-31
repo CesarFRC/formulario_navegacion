@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log(data);
                     alert("llego hasta aqui el codigo")
                      // Maneja la respuesta de la actualización
+                     window.location.href = "../HTML/ver_perfil.html";
                      
                 })
                 .catch(error => {
