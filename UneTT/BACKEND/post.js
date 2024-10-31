@@ -94,7 +94,7 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
                 </figure>
                 <div class="media-content">
                     <div class="content">
-                        <p><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
+                        <p id="user-${doc.id}"><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
                         <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
                         <p>${postData.post}</p>
                         ${postData.mediaURL ?
@@ -121,7 +121,16 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
             </article>
         `;
 
+
+
         postList.appendChild(postElement);
+
+        const bt = document.getElementById(`user-${doc.id}`);
+        bt.addEventListener('click', () => {
+            alert(postData.username)
+            
+        });
+
 
         const likeButton = document.getElementById(`likeBtn-${doc.id}`);
         likeButton.addEventListener('click', () => {

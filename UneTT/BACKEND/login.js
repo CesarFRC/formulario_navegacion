@@ -36,27 +36,54 @@ submit.addEventListener("click", function (event) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
+    //hacer una consulta a mysql para ver si los daton ingresados estan correcos
+    const datos = new FormData();
+    datos.append('email', email);
+    datos.append('Contraseña', password);
 
-
-            if (user.emailVerified) {
-
-                window.location.href = "../HTML/pInicial.html";
-                // Aquí puedes redirigir al usuario o realizar otras acciones
+    fetch('../BACKEND/log.php', {
+        method: 'POST',
+        body: datos
+    })
+        .then(Response => {
+            if (Response.ok) {
+                return Response.text();
             } else {
-                alert("Correo no verificado. Por favor, verifica tu correo.")
+                throw new Error('Error en la respuesta del servidor');
 
-                // ...
+
             }
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage)
-            alert(errorCode)
+        .then(data => {
+            console.log(data);
+            signInWithEmailAndPassword(auth, email,password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+
+
+                    if (user.emailVerified) {
+                        alert("se inicio session correctamente")
+                        window.location.href = "../HTML/pInicial.html";
+                    } else {
+                        alert("Correo no verificado. Por favor, verifica tu correo.")
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage)
+                    alert(errorCode)
+                });
+        })
+        .catch(error => {
+            console.error('hubo un problema con la solicitud fetch', error);
+            alert("error" + error)
+
         });
+
+
+
+
 
 })
