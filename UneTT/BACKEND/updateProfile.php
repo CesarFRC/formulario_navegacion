@@ -1,22 +1,11 @@
 <?php
 require 'conexion.php';
 
-
-
-// Comprobar si se han enviado los campos necesarios
-    var_dump($_POST); // Muestra todos los datos enviados
-
-
     $email = $conn->real_escape_string($_POST['correoelectronico']);
     $newUsername = $conn->real_escape_string($_POST['username']);
     $newPassword = isset($_POST['password']) ? $conn->real_escape_string($_POST['password']) : '';
     $newBio = isset($_POST['bio']) ? $conn->real_escape_string($_POST['bio']) : '';
 
- // Imprimir los valores recibidos
-echo "Correo electrónico recibido: " . $email . "<br>";
-echo "Nombre de usuario recibido: " . $newUsername . "<br>";
-echo "Nueva contraseña recibida: " . ($newPassword ? 'proporcionada' : 'no proporcionada') . "<br>";
-echo "Biografía recibida: " . $newBio . "<br>";
 
     // Preparar la consulta SQL
     $sql = "UPDATE usuario SET UserName = ?, biografia = ?";
@@ -51,8 +40,4 @@ echo "Biografía recibida: " . $newBio . "<br>";
     // Cerrar la conexión
     $stmt->close();
     $conn->close();
-
-   
-    echo "Error: Faltan campos necesarios.";
-
 ?>
