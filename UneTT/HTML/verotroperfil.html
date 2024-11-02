@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - UneTT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <script type="module" src="../BACKEND/logout.js"></script> <!--para cerrar sesion del usuario -->
-    <script type="module" src="../BACKEND/userview.js"></script> <!--para obtener los datos del usuario -->
+    <script type="module" src="../BACKEND/verotroperfil.js"></script> <!--para obtener los datos del usuario -->
     <style>
         img {
             display: inline-block;
@@ -162,7 +160,7 @@
     <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title" id="mis">Mi Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
+            <p class="title" id="mis"><img src="../imgs/Unettlogo.png" id="logoutt"></p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">
@@ -197,14 +195,6 @@
                         <p class="title  is-4" style="margin-left: -28rem; position: absolute;" id="name">Usuario1</p>
                         <!-- Aquí se coloca el nombre de usuario -->
                     </div>
-                    <!-- Botón de Editar Perfil -->
-                    <div id="editar">
-                        <a href="../HTML/editar_perfil.html" class="button is-small is-link"
-                            style="margin-top: -2rem; right: -31rem;">Editar Perfil</a>
-                    </div>
-
-                    <button class="button is-small is-link" style="margin-top: -1rem; right: -31rem;" id="cerrar">Cerrar
-                        Session</button>
                 </div>
 
                 <!-- Información de perfil -->
@@ -245,10 +235,8 @@
             </div>
         </div>
     </section>
+    </section>
 
-    <!-- Sección de publicaciones del usuario -->
-    <div class="box">
-        <h2 class="title is-4">Mis Publicaciones</h2>
 
     <!-- Footer -->
     <footer class="footer">

@@ -127,8 +127,10 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
 
         const bt = document.getElementById(`user-${doc.id}`);
         bt.addEventListener('click', () => {
-            alert(postData.username)
-            
+            //declaro una variable global para acceder desde otro javascript para ver el perfil dependiendo al correo 
+            localStorage.setItem("perfilemail", postData.username);
+            window.location.href = "../HTML/verotroperfil.html";
+
         });
 
 
