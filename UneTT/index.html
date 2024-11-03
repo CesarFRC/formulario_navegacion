@@ -10,22 +10,22 @@
     <script type="module" src="../BACKEND/login.js"></script>
 
     <script>
-        // Cambio de imágenes en el background
         const imagenes = [
             '../imgs/3.jpg',
             '../imgs/utt_arcoiris.jpg',
             '../imgs/background.jpg'
         ];
-
+    
         let indiceImagen = 0;
-
+    
         function cambiarFondo() {
             indiceImagen = (indiceImagen + 1) % imagenes.length;
             document.body.style.backgroundImage = `url(${imagenes[indiceImagen]})`;
         }
-
+    
         setInterval(cambiarFondo, 5000);
     </script>
+    
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
@@ -76,7 +76,7 @@
     
     <section class="sec">
         <div class="sec-content">
-            <img src="../imgs/slidetecnolo.jpg" class="slideimage">
+            <img src="imgs/slidetecnology.png" class="slideimage">
             <div class="text-content">
                 <h1 id="acerca" class="title">ACERCA DE</h1>
                 <h2 id="Enfocada" class="subtitle">

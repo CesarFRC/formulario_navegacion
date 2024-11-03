@@ -5,7 +5,7 @@ include 'conexion.php';
 // Obtener variables enviadas por JavaScript
 
 $correo = $_POST['email'];
-$password = $_POST['Contraseña'];
+$password = $_POST['password'];
 
 // Consulta a la base de datos
 $sql = "SELECT * FROM usuario WHERE Correo = '$correo' AND Contraseña = '$password'";
