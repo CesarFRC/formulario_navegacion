@@ -1,5 +1,5 @@
 const useremail = localStorage.getItem("perfilemail")
-alert("usuario seleccionado es " + useremail)
+let matricula = useremail.substring(0, 8);
 
 fetch('../BACKEND/viewperfileuser.php', {
     method: 'POST',
