@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - UneTT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <script type="module" src="../BACKEND/verotroperfil.js"></script> <!--para obtener los datos del usuario -->
+    <script type="module" src="../BACKEND/logout.js"></script>
+    <script type="module" src="../BACKEND/userview.js"></script>
     <style>
         img {
             display: inline-block;
@@ -25,8 +27,7 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            margin-bottom: 0.5rem;
-            /* Espacio entre imagen y nombre de usuario */
+            margin-bottom: 0.5rem; 
         }
 
         .publication-image {
@@ -44,40 +45,28 @@
 
         .profile-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Centra los elementos en el eje horizontal */
-            margin-bottom: 2rem;
-            /* Espacio debajo de la imagen */
+            align-items: flex-start; /* Cambiar a flex-start para mover botones hacia arriba */
+            justify-content: space-between;
+            margin-bottom: 2rem; 
         }
 
-        /* Contenedor de la imagen de perfil */
         .profile-pic-container {
-            margin-bottom: 1rem;
-            /* Espacio entre la imagen y el nombre */
+            margin-right: 1rem;
         }
 
-        /* Ajustar el tamaño de la imagen de perfil */
         .image.is-96x96 {
-            margin: 0;
-            /* Eliminar margen adicional */
+            margin: 0; 
         }
 
-        /* Contenedor de información de perfil */
         .profile-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            /* Dos columnas */
             gap: 1rem;
-            /* Espacio entre los campos */
             margin-top: 1rem;
-            /* Espacio entre el nombre y los inputs */
         }
 
-        /* Estilo para los campos (igual que antes) */
         .field {
-            margin-bottom: 0;
-            /* Eliminar margen inferior */
+            margin-bottom: 0; 
         }
 
         .input,
@@ -86,7 +75,6 @@
             background: none;
             font-weight: bold;
             width: 100%;
-            /* Asegura que los inputs ocupen todo el espacio disponible */
         }
 
         .input.is-small,
@@ -95,7 +83,6 @@
             padding: 0.25rem;
         }
 
-        /* Centrado de título */
         .title.is-4.has-text-centered {
             text-align: center;
         }
@@ -114,54 +101,71 @@
             margin-left: 14rem;
         }
 
-        /* Media query para pantallas pequeñas */
+        .username {
+            flex-grow: 1; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            align-self: center; /* Alinear verticalmente el nombre de usuario */
+        }
+
+       
+
+        #editar {
+            margin-bottom: 0.5rem; 
+        }
+
         @media (max-width: 768px) {
-            #mis {
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+            }
+
+            .title.is-4 {
                 font-size: 1.5rem;
-                margin-left: 8rem;
-            }
-
-            #logoutt {
-                top: -3rem;
-                /* Ajuste para que el logo no se superponga */
-                height: 10rem;
-                width: 10rem;
-                position: absolute;
-                left: 0%;
-            }
-
-            .icon-bar {
-                gap: 1rem;
-            }
-
-            .icon-bar img {
-                width: 2rem;
-                height: 2rem;
-            }
-
-            .profile-info {
-                grid-template-columns: 1fr;
-                /* Una sola columna en pantallas pequeñas */
             }
 
             #USUL {
-                margin-left: 30rem;
+                margin-left: 0; 
             }
 
-            #editar {
-                position: relative;
-                right: 21rem;
+            #editar, #logoutBtn {
+                margin: 0.5rem 0; 
+                width: 90%; 
+                text-align: center; 
+            }
+
+            .icon-bar {
+                gap: 0.5rem; 
+            }
+
+            .icon-bar img {
+                width: 1.5rem; 
+                height: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .profile-pic {
+                width: 120px; 
+                height: 120px;
+            }
+
+            .title.is-4 {
+                font-size: 1.75rem; 
+            }
+
+            #editar, #logoutBtn {
+                width: 80%; 
+
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Encabezado -->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
-            <p class="title" id="mis"><img src="../imgs/Unettlogo.png" id="logoutt"></p>
-            <!-- Barra de iconos -->
+            <p class="title" id="mis">Mi Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">
                     <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
@@ -172,34 +176,24 @@
             </div>
         </div>
     </section>
-    <!-- Sección de perfil de usuario -->
     <section class="section">
         <div class="container">
             <div class="box">
-                <!-- Imagen de portada -->
                 <div class="cover-banner" style="position: relative;">
                     <img src="../imgs/background.jpg" alt="Imagen de portada"
                         style="width: 100%; height: 200px; object-fit: cover ;">
-
-                    <!-- Foto de perfil encima de la imagen de portada -->
-                    <figure class="image is-96x96"
-                        style="position: absolute; bottom: -8rem; left: 10%; transform: translateX(-50%); border-radius: 50%; border: 4px solid white;">
+                    <figure class="image is-96x96 profile-pic-container">
                         <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
                             alt="Foto de perfil">
                     </figure>
                 </div>
-                <!-- Contenedor flex para nombre de usuario y botón de editar perfil -->
-                <div class="profile-container has-text-centered" style="margin-top: 3rem;">
-                    <!-- Nombre de Usuario -->
+                <div class="profile-container">
                     <div class="username" id="USUL">
-                        <p class="title  is-4" style="margin-left: -28rem; position: absolute;" id="name">Usuario1</p>
-                        <!-- Aquí se coloca el nombre de usuario -->
+                        <p class="title is-4" id="name">Usuario1</p>
                     </div>
                 </div>
 
-                <!-- Información de perfil -->
                 <div class="profile-info">
-                    <!-- Matrícula -->
                     <div class="field">
                         <label class="label is-small">Matrícula</label>
                         <div class="control">
@@ -207,7 +201,6 @@
                         </div>
                     </div>
 
-                    <!-- Correo Electrónico -->
                     <div class="field">
                         <label class="label is-small">Correo Electrónico</label>
                         <div class="control">
@@ -215,7 +208,6 @@
                         </div>
                     </div>
 
-                    <!-- Biografía -->
                     <div class="field">
                         <label class="label is-small">Biografía</label>
                         <div class="control">
@@ -224,28 +216,27 @@
                         </div>
                     </div>
 
-                    <!-- Fecha de creación de cuenta -->
                     <div class="field">
-                        <label class="label is-small" id="fechadecreacion">Fecha de creación de cuenta</label>
+                        <label class="label is-small">Fecha de creación de cuenta</label>
                         <div class="control">
-                            <input class="input is-small" type="text" value="xxx-xx-xx" disabled id="fecha">
+                            <input class="input is-small" type="text"  value="xxx-xx-xx" disabled id="fecha">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    </section>
 
+    <div class="box">
+        <h2 class="title is-4">Mis Publicaciones</h2>
+    </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="content has-text-centered">
             <p>UneTT &copy; 2024</p>
         </div>
     </footer>
 
-    <!-- Iconos de FontAwesome para los botones -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 
