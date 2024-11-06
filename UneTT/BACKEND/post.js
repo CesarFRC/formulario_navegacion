@@ -41,6 +41,8 @@ submit.addEventListener("click", async function (event) {
         return;
     }
 
+
+
     let mediaURL = null;
     if (file) {
         const storageRef = ref(storage, `posts/${user.uid}/${file.name}`);
@@ -53,7 +55,36 @@ submit.addEventListener("click", async function (event) {
             return;
         }
     }
+    // Enviar los datos a PHP usando fetch (guardar en MySQL)
+    const data = {
+        username: user.email,
+        post: content,
+        mediaURL: mediaURL,
+        date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
+    };
 
+    try {
+        // Enviar los datos de la publicación a PHP para guardarlos en MySQL
+        const response = await fetch('../BACKEND/guardarPublicacion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // Convertir los datos en JSON
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Publicación exitosa');
+            document.getElementById('postcontent').value = ''; // Limpiar el campo de texto
+            fileInput.value = ''; // Limpiar el campo de archivos
+        } else {
+            alert('Error al guardar la publicación en MySQL');
+        }
+    } catch (error) {
+        console.error('Error al enviar los datos a PHP:', error);
+        alert('Error al enviar los datos a PHP.');
+    }
     try {
         await addDoc(collection(db, 'post'), {
             username: user.email,
