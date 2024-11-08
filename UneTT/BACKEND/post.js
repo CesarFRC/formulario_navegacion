@@ -85,6 +85,8 @@ submit.addEventListener("click", async function (event) {
         console.error('Error al enviar los datos a PHP:', error);
         alert('Error al enviar los datos a PHP.');
     }
+
+    
     try {
         await addDoc(collection(db, 'post'), {
             username: user.email,
@@ -178,14 +180,12 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
         });
     });
 });
-
 // Función para verificar si es un video
 function fileIsVideo(url) {
     const videoExtensions = ['mp4', 'webm', 'ogg'];
     const extension = url.split('.').pop().toLowerCase();
     return videoExtensions.includes(extension);
 }
-
 // Función para manejar el "like"
 async function handleLike(postId, currentLikes, likedBy) {
     const postRef = doc(db, 'post', postId);
@@ -232,6 +232,33 @@ async function handleComment(postId) {
         alert("El comentario no puede estar vacío.");
         return;
     }
+    // Enviar comentario a MySQL a través de PHP
+ try {
+    const data = {
+        comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
+        comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
+        comentPost: postId,                 // Cambiar a 'comentPost' como espera el PHP
+        date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
+    };
+
+    const response = await fetch('../BACKEND/guardarComentario.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
+    const result = await response.json();
+    console.log("Resultado del servidor:", result); // Verifica el JSON de respuesta
+    if (result.success) {
+        console.log("Comentario guardado en MySQL");
+    } else {
+        console.error("Error al guardar el comentario en MySQL:", result.message);
+        alert("Error al guardar el comentario en MySQL.");
+    }
+} catch (error) {
+    console.error("Error al enviar el comentario a PHP:", error);
+    alert("Error al enviar el comentario a PHP.");
+}
 
     try {
         // Guardar el comentario en una subcolección 'comments' dentro de la publicación
@@ -248,7 +275,7 @@ async function handleComment(postId) {
         alert("Error al añadir el comentario.");
     }
 }
-
+ 
 // Cargar los comentarios de una publicación
 async function loadComments(postId) {
     const commentsDiv = document.getElementById(`comments-${postId}`);
