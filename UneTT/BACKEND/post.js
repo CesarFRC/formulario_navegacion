@@ -234,17 +234,18 @@ async function handleComment(postId) {
     }
     // Enviar comentario a MySQL a través de PHP
  try {
-    const data = {
+    const datacoment = {
         comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
         comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
         comentPost: postId,                 // Cambiar a 'comentPost' como espera el PHP
         date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
     };
-
-    const response = await fetch('../BACKEND/guardarComentario.php', {
+// Mostrar los datos en la consola antes de enviarlos
+    console.log("Datos que se enviarán a PHP:", datacoment);
+    const response = await fetch('../BACKEND/savecoment.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(datacoment)
     });
     console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
     const result = await response.json();
@@ -253,7 +254,7 @@ async function handleComment(postId) {
         console.log("Comentario guardado en MySQL");
     } else {
         console.error("Error al guardar el comentario en MySQL:", result.message);
-        alert("Error al guardar el comentario en MySQL.");
+        alert("Error al guardar el comentario en MySQL." + datacoment);
     }
 } catch (error) {
     console.error("Error al enviar el comentario a PHP:", error);
