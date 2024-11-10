@@ -186,36 +186,82 @@ function fileIsVideo(url) {
     const extension = url.split('.').pop().toLowerCase();
     return videoExtensions.includes(extension);
 }
+
+
 // Función para manejar el "like"
 async function handleLike(postId, currentLikes, likedBy) {
-    const postRef = doc(db, 'post', postId);
-    const userId = auth.currentUser.uid;
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Debes iniciar sesión para dar like.");
+        return;
+    }
+
+    const userEmail = user.email;  // Correo del usuario
 
     try {
-        if (likedBy && likedBy.includes(userId)) {
-            // Si el usuario ya ha dado like, lo quitamos
+        // Si el usuario ya ha dado like, lo quitamos
+        if (likedBy && likedBy.includes(userEmail)) {
             const updatedLikes = currentLikes > 0 ? currentLikes - 1 : 0;
-            const updatedLikedBy = likedBy.filter(id => id !== userId);
+            const updatedLikedBy = likedBy.filter(email => email !== userEmail);
 
-            await updateDoc(postRef, {
+            // Actualizar el like en Firebase
+            await updateDoc(doc(db, 'post', postId), {
                 likes: updatedLikes,
                 likedBy: updatedLikedBy
             });
 
             console.log('Like removido con éxito');
         } else {
-            // Si no ha dado like, lo agregamos
-            await updateDoc(postRef, {
+            // Si el usuario no ha dado like, lo agregamos
+            await updateDoc(doc(db, 'post', postId), {
                 likes: currentLikes + 1,
-                likedBy: [...(likedBy || []), userId]
+                likedBy: [...likedBy, userEmail]
             });
 
             console.log('Like añadido con éxito');
         }
+
+        // Enviar el like a MySQL
+        const dataLike = {
+            postId: postId,
+            comentUser: userEmail,
+            date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
+        };
+
+        // Imprimir los datos que se enviarán al servidor PHP
+        console.log("Datos que se enviarán a PHP:", JSON.stringify(dataLike));  // Esta línea muestra los datos en la consola
+
+        const response = await fetch('../BACKEND/savelike.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataLike)  // Enviar los datos en formato JSON
+        });
+
+        // Obtener la respuesta como texto
+        const textResponse = await response.text();  // Aquí obtenemos la respuesta como texto
+
+        console.log("Respuesta cruda del servidor:", textResponse);  // Mostrar la respuesta cruda en la consola
+
+        // Intentar convertirla a JSON
+        try {
+            const result = JSON.parse(textResponse);  // Intentar analizar como JSON
+            console.log("Respuesta procesada como JSON:", result);
+
+            // Verificar la respuesta procesada
+            if (result.success) {
+                console.log('Like guardado correctamente en MySQL');
+            } else {
+                console.error("Error al guardar el like en MySQL:", result.message);
+            }
+        } catch (error) {
+            console.error("Error al procesar la respuesta JSON:", error);
+        }
+
     } catch (error) {
         console.error('Error al manejar el like:', error);
     }
 }
+
 
 // Función para manejar el comentario
 async function handleComment(postId) {
