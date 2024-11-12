@@ -21,7 +21,7 @@ if ($data) {
     $matricula_usuario = substr($username, 0, 8);
 
     // Verificar si hay un archivo multimedia y asignar 'imagen' o NULL
-    $formato = ($mediaURL) ? 'imagen' : NULL;
+    $formato = ($mediaURL) ?  : NULL;
 
     // Asegurarse de que la fecha está en un formato adecuado para MySQL
     $date = date('Y-m-d H:i:s', strtotime($date));

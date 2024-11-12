@@ -4,137 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pantalla de Inicio - UneTT</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script type="module" src="../BACKEND/post.js"></script>
     <style>
-        .post-media {
-            width: 800px;
-            height: 800px;
+        /* Estilo para la barra de navegación */
+        .navbar {
+            background-color: #23c895;
+            height: 5rem; /* Altura fija de la barra de navegación */
+            display: flex;
+            align-items: center;
+            position: relative;
         }
 
-        img {
-            display: inline-block;
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .icon-bar {
+        /* Estilo del logo */
+        .navbar img#logoutt {
+            height: 12rem; /* Tamaño del logo */
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Contenedor para los iconos */
+        .icon-bar {
             display: flex;
             gap: 1rem;
-        }
-
-        .hero.is-custom-height {
-            height: 75px;
-        }
-
-        #logoutt {
-            display: inline-block;
             position: absolute;
-            top: -5.6rem;
-            left: 1%;
-            height: 16rem;
-            width: 15rem;
-            transform: scale(0.8);
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
-        /* Media query para pantallas pequeñas */
-        @media (max-width: 768px) {
-            .icon-bar {
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-                display: flex;
-                justify-content: center;
-                gap: 1rem;
-            }
+        /* Estilo de los iconos */
+        .icon-bar img {
+            width: 3rem;
+            height: 3rem; /* Tamaño de los iconos */
+        }
 
-            #logoutt {
-                top: -4rem; /* Ajuste para que el logo no se superponga */
-                height: 12rem;
-                width: 12rem;
-            }
+        /* Estilo para las publicaciones */
+        .post-item {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-            .icon-bar img {
-                width: 2rem;
-                height: 2rem;
-            }
+        .post-item .card-body {
+            text-align: center;
+        }
+
+        .post-media {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .post-media img {
+            width: 100%;
+            height: auto;
+        }
+
+        .post-text {
+            text-align: center;
+            margin-top: 15px;
         }
     </style>
 </head>
 
 <body>
     <!-- Encabezado -->
-    <section class="hero is-small is-primary is-custom-height">
-        <div class="hero-body">
-            <div class="header">
-                <p><img src="../imgs/Unettlogo.png" id="logoutt"> </p>
-            </div>
-            <!-- Barra de iconos -->
-            <div class="icon-bar">
-                <a href="../HTML/pInicial.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Home">
-                </a>
-                <a href="../HTML/ver_perfil.html" title="Ver perfil">
-                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
-                </a>
-            </div>
+    <nav class="navbar">
+        <img src="../imgs/Unettlogo.png" id="logoutt" alt="UneTT Logo">
+        <div class="icon-bar">
+            <a href="../HTML/pInicial.html" class="text-white">
+                <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Home">
+            </a>
+            <a href="../HTML/ver_perfil.html" title="Ver perfil" class="text-white">
+                <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+            </a>
         </div>
-    </section>
+    </nav>
 
     <!-- Sección de publicaciones -->
-    <section class="section">
+    <section class="section py-5">
         <div class="container">
             <!-- Subir publicación nueva -->
-            <div class="box">
-                <h2 class="title is-4">Crear nueva publicación</h2>
-                <div class="field">
-                    <label class="label">Escribe algo</label>
-                    <div class="control">
-                        <textarea class="textarea" placeholder="¿Qué estás pensando?" id="postcontent"></textarea>
+            <div class="card mx-auto" style="max-width: 600px;">
+                <div class="card-body">
+                    <h2 class="h4 text-center">Crear nueva publicación</h2>
+                    <div class="mb-3">
+                        <label for="postcontent" class="form-label">Escribe algo</label>
+                        <textarea class="form-control" placeholder="¿Qué estás pensando?" id="postcontent"></textarea>
                     </div>
-                </div>
-                <div class="field">
-                    <label class="label">Subir foto, video</label>
-                    <div class="file has-name">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="resume" multiple id="mediaUpload">
-                            <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">Elegir archivos…</span>
-                            </span>
-                        </label>
+                    <div class="mb-3">
+                        <label class="form-label">Subir foto, video</label>
+                        <input class="form-control" type="file" name="resume" multiple id="mediaUpload">
                         <p id="fileName" class="file-name"></p>
+                        <button id="deleteButton" class="btn btn-danger mt-2">Eliminar archivo</button>
                     </div>
-                    <button id="deleteButton" class="button is-danger">Eliminar archivo</button>
-                </div>
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-primary" id="submit">Publicar</button>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="submit">Publicar</button>
                     </div>
                 </div>
             </div>
 
             <!-- Zona de publicaciones -->
-            <div id="postList"></div>
-
+            <div id="postList" class="mt-5 d-flex flex-column align-items-center">
+                <!-- Publicación con imagen -->
+                <div class="post-item mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="post-text">Una publicación con imagen</p>
+                            <div class="post-media mb-3">
+                                <img src="https://via.placeholder.com/400" class="img-fluid" alt="Imagen de la publicación">
+                            </div>
+                            <div class="post-text">
+                                <p>Comentario de ejemplo para la publicación</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>UneTT &copy; 2024</p>
-        </div>
+    <footer class="bg-light py-3 text-center">
+        <p>UneTT &copy; 2024</p>
     </footer>
 
     <!-- Iconos de FontAwesome para los botones -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
 </body>
-
 </html>
