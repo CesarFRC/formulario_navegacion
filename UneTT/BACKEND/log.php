@@ -19,7 +19,7 @@ if ($result) {
         echo "Usuario no encontrado."; // Mensaje si no se encuentra el usuario
     }
 } else {
-    echo "Error en la consulta: " . $conn->error; // Mensaje de error en la consulta
+    echo "Error en la consulta:" . $conn->error; // Mensaje de error en la consulta
 }
 
 // Cerrar la conexión
