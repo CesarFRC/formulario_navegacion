@@ -1,84 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- Declara el documento como HTML5 -->
+<html lang="en"> <!-- Define el idioma de la página como inglés -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pantalla de Inicio - UneTT</title>
-    <!-- Bootstrap CDN -->
+    <meta charset="UTF-8"> <!-- Configura la codificación de caracteres a UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página sea responsiva en móviles -->
+    <title>Pantalla de Inicio - UneTT</title> <!-- Título de la página -->
+
+    <!-- Bootstrap CDN para estilos predeterminados -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Archivo JavaScript de tipo módulo -->
     <script type="module" src="../BACKEND/post.js"></script>
+
     <style>
         /* Estilo para las publicaciones */
         
-
         .post-item {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
+            width: 100%; /* Ancho completo */
+            max-width: 600px; /* Ancho máximo de 600px */
+            margin: 0 auto; /* Centra la publicación */
         }
 
         .post-item .card-body {
-            text-align: center;  /* Centra el contenido de la publicación */
+            text-align: center; /* Centra el contenido de la publicación */
         }
 
         /* Contenedor para las imágenes de las publicaciones */
         .post-media {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
+            width: 100%; /* Ancho completo */
+            max-width: 600px; /* Ancho máximo de 600px */
+            margin: 0 auto; /* Centra el contenedor */
         }
 
         .post-media img {
-            width: 100%;  /* Asegura que la imagen se ajuste al ancho del contenedor */
+            width: 100%;  /* Ajusta la imagen al ancho del contenedor */
             height: auto; /* Mantiene la proporción de la imagen */
         }
 
         /* Contenedor para los comentarios */
         .post-text {
-            text-align: center; /* Centra los comentarios */
-            margin-top: 15px;
+            text-align: center; /* Centra el texto de los comentarios */
+            margin-top: 15px; /* Espacio arriba de los comentarios */
         }
 
-        /* Icon-bar para los iconos de navegación */
+        /* Barra de iconos para navegación */
         .icon-bar {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 1rem;
+            position: absolute; /* Posiciona la barra de forma absoluta */
+            top: 1rem; /* Ubicación desde la parte superior */
+            right: 1rem; /* Ubicación desde la derecha */
+            display: flex; /* Alinea los iconos horizontalmente */
+            gap: 1rem; /* Espacio entre iconos */
         }
 
-        /* Asegura que los iconos no se agranden */
+        /* Estilo para iconos */
         .icon-bar img {
-            width: 3rem;
+            width: 3rem; /* Tamaño del icono */
             height: 3rem;
         }
 
         #logoutt {
             display: inline-block;
             position: absolute;
-            top: -5.6rem;
+            top: -5.6rem; /* Ubicación del logotipo */
             left: 1%;
             height: 16rem;
             width: 15rem;
-            transform: scale(0.8);
+            transform: scale(0.8); /* Escala del logotipo */
         }
 
-        /* Aumentar la altura de la barra azul del header */
+        /* Aumenta el tamaño de la barra azul del header */
         .bg-primary {
-            padding-top: 2rem;  /* Aumenta el relleno superior */
-            padding-bottom: 2rem;  /* Aumenta el relleno inferior */
+            padding-top: 2rem;  /* Relleno superior */
+            padding-bottom: 2rem;  /* Relleno inferior */
         }
 
-        /* Media query para pantallas pequeñas */
+        /* Estilos para pantallas pequeñas */
         @media (max-width: 768px) {
             #logoutt {
-                top: -4rem;
+                top: -4rem; /* Ajusta la posición del logotipo en móviles */
                 height: 12rem;
                 width: 12rem;
             }
           
-            /* Evita que los iconos cambien de tamaño */
+            /* Ajusta el tamaño de los iconos en móviles */
             .icon-bar img {
                 width: 2rem;
                 height: 2rem;
@@ -88,19 +91,20 @@
 </head>
 
 <body>
-    <!-- Encabezado -->
+    <!-- Sección de Encabezado -->
     <section style="background-color: #0fd4c7;" class="text-white py-5">
-
-        <div class="container">
+        <div class="container"> <!-- Contenedor centralizado de Bootstrap -->
             <div class="d-flex justify-content-between align-items-center">
+                <!-- Logotipo de UneTT -->
                 <div class="text-center">
                     <img src="../imgs/Unettlogo.png" id="logoutt"> 
                 </div>
+                <!-- Barra de iconos de navegación -->
                 <div class="icon-bar d-flex gap-3 justify-content-center">
-                    <a href="../HTML/pInicial.html" class="text-white">
+                    <a href="../HTML/pInicial.html" class="text-white"> <!-- Enlace a la página de inicio -->
                         <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Home">
                     </a>
-                    <a href="../HTML/ver_perfil.html" title="Ver perfil" class="text-white">
+                    <a href="../HTML/ver_perfil.html" title="Ver perfil" class="text-white"> <!-- Enlace al perfil del usuario -->
                         <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
                     </a>
                 </div>
@@ -108,42 +112,44 @@
         </div>
     </section>
 
-    <!-- Sección de publicaciones -->
+    <!-- Sección de Publicaciones -->
     <section class="section py-5">
         <div class="container">
-            <!-- Subir publicación nueva -->
+            <!-- Tarjeta para crear una nueva publicación -->
             <div class="card mx-auto" style="max-width: 600px;">
                 <div class="card-body">
                     <h2 class="h4 text-center">Crear nueva publicación</h2>
+                    <!-- Campo de texto para la publicación -->
                     <div class="mb-3">
                         <label for="postcontent" class="form-label">Escribe algo</label>
                         <textarea class="form-control" placeholder="¿Qué estás pensando?" id="postcontent"></textarea>
                     </div>
+                    <!-- Campo para subir archivos -->
                     <div class="mb-3">
                         <label class="form-label">Subir foto, video</label>
                         <input class="form-control" type="file" name="resume" multiple id="mediaUpload">
-                        <p id="fileName" class="file-name"></p>
-                        <button id="deleteButton" class="btn btn-danger mt-2">Eliminar archivo</button>
+                        <p id="fileName" class="file-name"></p> <!-- Muestra el nombre del archivo -->
+                        <button id="deleteButton" class="btn btn-danger mt-2">Eliminar archivo</button> <!-- Botón para eliminar archivos -->
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary" id="submit">Publicar</button>
+                        <button class="btn btn-primary" id="submit">Publicar</button> <!-- Botón para enviar la publicación -->
                     </div>
                 </div>
             </div>
 
-            <!-- Zona de publicaciones -->
+            <!-- Contenedor de publicaciones -->
             <div id="postList" class="mt-5 d-flex flex-column align-items-center">
-                <!-- Publicación con imagen -->
+                <!-- Publicación de ejemplo con imagen -->
                 <div class="post-item mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <!-- Comentario de la publicación centrado -->
+                            <!-- Texto de la publicación -->
                             <p class="post-text">Una publicación con imagen</p>
-                            <!-- Contenedor de la imagen centrado -->
+                            <!-- Imagen de la publicación -->
                             <div class="post-media mb-3">
                                 <img src="https://via.placeholder.com/400" class="img-fluid" alt="Imagen de la publicación">
                             </div>
-                            <!-- Otro comentario centrado -->
+                            <!-- Comentario de ejemplo para la publicación -->
                             <div class="post-text">
                                 <p>Comentario de ejemplo para la publicación</p>
                             </div>
@@ -151,17 +157,17 @@
                     </div>
                 </div>
 
-                <!-- Aquí puedes agregar más publicaciones dinámicamente -->
+                <!-- Aquí se pueden agregar más publicaciones dinámicamente -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Pie de página -->
     <footer class="bg-light py-3 text-center">
-        <p>UneTT &copy; 2024</p>
+        <p>UneTT &copy; 2024</p> <!-- Mensaje de derechos reservados -->
     </footer>
 
-    <!-- Iconos de FontAwesome para los botones -->
+    <!-- Carga de iconos de FontAwesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>

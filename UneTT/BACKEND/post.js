@@ -119,41 +119,36 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
         postElement.classList.add('post');
 
         postElement.innerHTML = ` 
-            <article class="media box">
-                <figure class="media-left">
-                    <p class="image is-64x64">
-                        <img src="https://bulma.io/assets/images/placeholders/128x128.png" />
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p id="user-${doc.id}"><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
-                        <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
-                        <p>${postData.post}</p>
-                        ${postData.mediaURL ?
-                (fileIsVideo(postData.mediaURL) ?
-                    `<video controls class="post-media" width="400">
-                                    <source src="${postData.mediaURL}" type="video/mp4">
-                                    Tu navegador no soporta la reproducción de video.
-                                </video>`
-                    :
-                    `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`)
-                : ''}
-                        <p><strong>Stars:</strong> <span id="likes-${doc.id}">${postData.likes || 0}</span></p>
-                        <br>
-                        <button id="likeBtn-${doc.id}"><img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;"></button>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <div id="comments-${doc.id}" class="comments"></div>
-                        </div>
-                    </nav>
-                    <input type="text" id="commentInput-${doc.id}" placeholder="Escribe un comentario..." />
-                    <button id="commentBtn-${doc.id}">Comentar</button>
+        <article class="media box">
+            <div class="media-content">
+                <div class="content">
+                    <p id="user-${doc.id}"><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
+                    <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
+                    <p>${postData.post}</p>
+                    ${postData.mediaURL ? 
+                        (fileIsVideo(postData.mediaURL) ? 
+                            `<video controls class="post-media" width="400">
+                                <source src="${postData.mediaURL}" type="video/mp4">
+                                Tu navegador no soporta la reproducción de video.
+                            </video>` 
+                        : 
+                            `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) 
+                        : ''}
+                    <p><strong>Stars:</strong> <span id="likes-${doc.id}">${postData.likes || 0}</span></p>
+                    <br>
+                    <button id="likeBtn-${doc.id}"><img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;"></button>
                 </div>
-            </article>
-        `;
-
+                <nav class="level is-mobile">
+                    <div class="level-left">
+                        <div id="comments-${doc.id}" class="comments"></div>
+                    </div>
+                </nav>
+                <input type="text" id="commentInput-${doc.id}" placeholder="Escribe un comentario..." />
+                <button id="commentBtn-${doc.id}">Comentar</button>
+            </div>
+        </article>
+    `;
+    
 
 
         postList.appendChild(postElement);
