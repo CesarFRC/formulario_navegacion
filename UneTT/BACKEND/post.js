@@ -118,7 +118,7 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
         const postElement = document.createElement('div');
         postElement.classList.add('post');
 
-        postElement.innerHTML = ` 
+        postElement.innerHTML = `
         <article class="media box">
             <div class="media-content">
                 <div class="content">
@@ -136,7 +136,9 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
                         : ''}
                     <p><strong>Stars:</strong> <span id="likes-${doc.id}">${postData.likes || 0}</span></p>
                     <br>
-                    <button id="likeBtn-${doc.id}"><img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;"></button>
+                    <button id="likeBtn-${doc.id}">
+                        <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
+                    </button>
                 </div>
                 <nav class="level is-mobile">
                     <div class="level-left">

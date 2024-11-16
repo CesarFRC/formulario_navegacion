@@ -12,81 +12,140 @@
     <script type="module" src="../BACKEND/post.js"></script>
 
     <style>
-        /* Estilo para las publicaciones */
-        
-        .post-item {
-            width: 100%; /* Ancho completo */
-            max-width: 600px; /* Ancho máximo de 600px */
-            margin: 0 auto; /* Centra la publicación */
-        }
+ /* Contenedor principal de la publicación */
+.media, .post-item {
+    width: 50rem;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+}
 
-        .post-item .card-body {
-            text-align: center; /* Centra el contenido de la publicación */
-        }
+/* Contenedor multimedia (imágenes/videos) */
+.post-media {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-        /* Contenedor para las imágenes de las publicaciones */
-        .post-media {
-            width: 100%; /* Ancho completo */
-            max-width: 600px; /* Ancho máximo de 600px */
-            margin: 0 auto; /* Centra el contenedor */
-        }
+.post-media img, .post-media video {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
 
-        .post-media img {
-            width: 100%;  /* Ajusta la imagen al ancho del contenedor */
-            height: auto; /* Mantiene la proporción de la imagen */
-        }
+/* Sección de comentarios */
+.comments, .post-text {
+    font-size: 0.9rem;
+    color: #555;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin-top: 1rem;
+    text-align: center;
+}
 
-        /* Contenedor para los comentarios */
-        .post-text {
-            text-align: center; /* Centra el texto de los comentarios */
-            margin-top: 15px; /* Espacio arriba de los comentarios */
-        }
+/* Input y botones */
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
 
-        /* Barra de iconos para navegación */
-        .icon-bar {
-            position: absolute; /* Posiciona la barra de forma absoluta */
-            top: 1rem; /* Ubicación desde la parte superior */
-            right: 1rem; /* Ubicación desde la derecha */
-            display: flex; /* Alinea los iconos horizontalmente */
-            gap: 1rem; /* Espacio entre iconos */
-        }
+button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-        /* Estilo para iconos */
-        .icon-bar img {
-            width: 3rem; /* Tamaño del icono */
-            height: 3rem;
-        }
+button:hover {
+    background-color: #0056b3;
+}
 
-        #logoutt {
-            display: inline-block;
-            position: absolute;
-            top: -5.6rem; /* Ubicación del logotipo */
-            left: 1%;
-            height: 16rem;
-            width: 15rem;
-            transform: scale(0.8); /* Escala del logotipo */
-        }
+/* Barra de iconos */
+.icon-bar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 1rem;
+}
 
-        /* Aumenta el tamaño de la barra azul del header */
-        .bg-primary {
-            padding-top: 2rem;  /* Relleno superior */
-            padding-bottom: 2rem;  /* Relleno inferior */
-        }
+.icon-bar img {
+    width: 3rem;
+    height: 3rem;
+}
 
-        /* Estilos para pantallas pequeñas */
-        @media (max-width: 768px) {
-            #logoutt {
-                top: -4rem; /* Ajusta la posición del logotipo en móviles */
-                height: 12rem;
-                width: 12rem;
-            }
-          
-            /* Ajusta el tamaño de los iconos en móviles */
-            .icon-bar img {
-                width: 2rem;
-                height: 2rem;
-            }
-        }
+@media (max-width: 768px) {
+    .icon-bar img {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+/* Logo */
+#logoutt {
+    position: absolute;
+    top: -5.6rem;
+    left: 1%;
+    height: 16rem;
+    width: 15rem;
+    transform: scale(0.8);
+}
+
+@media (max-width: 768px) {
+    #logoutt {
+        top: -4rem;
+        height: 12rem;
+        width: 12rem;
+    }
+    .media, .post-item {
+    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+    max-width: 100%; /* Evita restricciones de ancho */
+    padding: 1rem; /* Espaciado interno uniforme */
+    margin: 0 auto; /* Centra el elemento horizontalmente */
+    border: 1px solid #ddd; /* Agrega un borde para destacar */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo suave */
+    box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+    }
+
+    .icon-bar img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    /* Logo */
+    #logoutt {
+        top: -3rem;
+        height: 14rem;
+        width: 14rem;
+    }
+    .comments, .post-text {
+        font-size: 0.8rem;  /* Reducir tamaño de fuente si es necesario */
+        padding: 0.5rem; /* Un pequeño padding para los comentarios */
+        text-align: left; /* Alineación a la izquierda para una mejor legibilidad */
+        white-space: normal; /* Evita el desbordamiento del texto */
+        word-wrap: break-word; /* Rompe las palabras largas cuando sea necesario */
+        overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+    }
+}
+
+/* Header azul */
+.bg-primary {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
     </style>
 </head>
 
