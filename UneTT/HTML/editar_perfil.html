@@ -1,105 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - UneTT</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfil de Usuario - UneTT</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-<script type="module" src="../BACKEND/vieweditar.js"></script>
-<style>
-    img {
-        display: inline-block;
-        width: 3rem;
-        height: 3rem;
-    }
+    <!-- Script para Backend -->
+    <script type="module" src="../BACKEND/vieweditar.js"></script>
 
-    .icon-bar {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        display: flex;
-        gap: 1rem;
-    }
+    <style>
+        /* Hacer el contenedor más pequeño */
+        .custom-container {
+            max-width: 40%;  /* Ancho máximo del 40% */
+            margin: 0 auto;  /* Centrado horizontal */
+        }
 
-    .profile-pic {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        margin-bottom: 1rem;
-    }
+        /* Estilo para las imágenes */
+        img {
+            display: inline-block;
+            width: 3rem;
+            height: 3rem;
+        }
 
-    .hero.is-custom-height {
-        height: 75px;
-    }
+        /* Otros estilos de la página */
+        .icon-bar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
 
-    #logoutt {
-        display: inline-block;
-        position: absolute;
-        top: -5.6rem;
-        left: 1%;
-        height: 16rem;
-        width: 15rem;
-        transform: scale(0.8);
-    }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
 
-    #EPERFIL {
-        margin-left: 14rem;
-    }
-
-    /* Media query para pantallas pequeñas */
-    @media (max-width: 768px) {
-        #EPERFIL {
-            font-size: 1.5rem;
-            /* Ajusta el tamaño del texto */
-            margin-left: 7rem;
+        .hero.is-custom-height {
+            height: 75px;
         }
 
         #logoutt {
-            top: -2rem;
-            /* Ajusta la posición del logo */
-            height: 8rem;
-            /* Reduce el tamaño del logo */
-            width: 8rem;
-            left: 15%;
+            display: inline-block;
             position: absolute;
-            /* Asegura que el logo esté absoluto */
-            transform: translateX(-50%);
-            /* Ajuste para centrar el logo */
+            top: -5.6rem;
+            left: 1%;
+            height: 16rem;
+            width: 15rem;
+            transform: scale(0.8);
         }
 
-        .icon-bar {
-            justify-content: center;
-            /* Centra los íconos horizontalmente */
-            gap: 0.8rem;
-            /* Espacio entre íconos */
-            flex-wrap: wrap;
-            /* Permite que los íconos se ajusten en varias líneas si es necesario */
+        #EPERFIL {
+            margin-left: 14rem;
         }
 
-        .icon-bar img {
-            width: 2rem;
-            /* Ajusta el tamaño de los íconos */
-            height: 2rem;
+        /* Clase personalizada para el fondo verde */
+        .bg-green {
+            background-color: #0fd4c7; /* Puedes ajustar este valor si prefieres otro tono */
         }
-    }
-</style>
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            #EPERFIL {
+                font-size: 1.5rem;
+                margin-left: 7rem;
+            }
+
+            #logoutt {
+                top: -2rem;
+                height: 8rem;
+                width: 8rem;
+                left: 15%;
+                position: absolute;
+                transform: translateX(-50%);
+            }
+
+            .icon-bar {
+                justify-content: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+            }
+
+            .icon-bar img {
+                width: 2rem;
+                height: 2rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <!-- Encabezado -->
-    <section class="hero is-small is-primary is-custom-height">
-        <div class="hero-body">
-            <img src="../imgs/Unettlogo.png" id="logoutt">
-            <p class="title" id="EPERFIL">Editar Perfil</p>
+    <section class="bg-green text-white py-3" style="position: relative;">
+        <div class="container">
+            <img src="../imgs/Unettlogo.png" id="logoutt" class="position-absolute" alt="Logo">
+            <p class="h3" id="EPERFIL">Editar Perfil</p>
             <!-- Barra de iconos -->
             <div class="icon-bar">
                 <a href="../HTML/pInicial.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa">
+                    <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Ícono de Casa" class="icon">
                 </a>
                 <a href="../HTML/ver_perfil.html" title="Ver perfil">
-                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
+                    <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil" class="icon">
                 </a>
             </div>
         </div>
@@ -107,99 +115,76 @@
 
     <!-- Sección de perfil de usuario -->
     <form id="updateProfil" method="POST" action="../BACKEND/updateProfile.php">
-    <section class="section">
-        <div class="container">
-            <div class="box">
-                <h2 class="title is-4">Información de Perfil</h2>
+        <section class="section">
+            <!-- Aplicar la clase personalizada para reducir el tamaño -->
+            <div class="custom-container"> 
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Información de Perfil</h4>
 
-                <!-- Foto de perfil -->
-                 
-                <div class="field has-text-centered">
-                    <figure class="image is-128x128">
-                        <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
-                            alt="Foto de perfil">
-                    </figure>
-                    <label class="label">Cambiar foto de perfil</label>
-                    <div class="file has-name is-centered">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="foto_perfil">
-                            <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">Elegir archivo</span>
-                            </span>
-                        </label>
+                        <!-- Foto de perfil -->
+                        <div class="text-center">
+                            <figure class="figure">
+                                <img class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Foto de perfil" class="figure-img img-fluid rounded-circle">
+                            </figure>
+                            <label for="foto_perfil" class="form-label">Cambiar foto de perfil</label>
+                            <input class="form-control" type="file" name="foto_perfil" id="foto_perfil">
+                        </div>
+
+                        <!-- Matrícula -->
+                        <div class="mb-3">
+                            <label for="matricula" class="form-label">Matrícula</label>
+                            <input type="text" class="form-control" id="matricula" name="matricula" readonly>
+                        </div>
+
+                        <!-- Nombre de Usuario -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="name" name="username" placeholder="Escribe tu nombre de usuario">
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="mb-3">
+                            <label for="correoelectronico" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="correoelectronico" name="correoelectronico" placeholder="Escribe tu correo" readonly>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="****">
+                        </div>
+
+                        <!-- Biografía -->
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Biografía</label>
+                            <textarea class="form-control" name="bio" id="bio" placeholder="Escribe una breve biografía">Soy un estudiante apasionado por el desarrollo de software.</textarea>
+                        </div>
+
+                        <!-- Fecha de creación de cuenta -->
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha de creación de cuenta</label>
+                            <input type="text" class="form-control" id="fecha" value="2024-10-07" disabled>
+                        </div>
+
+                        <!-- Botón para actualizar información -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Actualizar perfil</button>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Matricula -->
-                <div class="field">
-                    <label class="label">Matrícula</label>
-                    <div class="control">
-                        <input id="matricula" name="matricula" class="input" type="text" readonly>
-                    </div>
-                </div>
-
-                <!-- Nombre de Usuario -->
-                <div class="field">
-                    <label class="label">Nombre de Usuario</label>
-                    <div class="control">
-                        <input id="name"  name="username" class="input" type="text" placeholder="Escribe tu nombre de usuario">
-                    </div>
-                </div>
-
-                <!-- Correo Electrónico -->
-                <div class="field">
-                    <label class="label">Correo Electrónico</label>
-                    <div class="control">
-                        <input name="correoelectronico" class="input" type="email" id="correoelectronico" placeholder="Escribe tu correo" readonly>
-                    </div>
-                </div>
-
-                <!-- Contraseña -->
-                <div class="field">
-                    <label class="label">Contraseña</label>
-                    <div class="control">
-                        <input id="password" name="password" class="input" type="password" placeholder="**********">
-                    </div>
-                </div>
-
-                <!-- Biografía -->
-                <div class="field">
-                    <label class="label">Biografía</label>
-                    <div class="control">
-                        <textarea class="textarea"
-                        name="bio"
-                            placeholder="Escribe una breve biografía" id="bio" >Soy un estudiante apasionado por el desarrollo de software.</textarea>
-                    </div>
-                </div>
-
-                <!-- Fecha de creación de cuenta -->
-                <div class="field">
-                    <label class="label">Fecha de creación de cuenta</label>
-                    <div class="control">
-                        <input class="input" type="text" value="2024-10-07"  id="fecha" disabled>
-                    </div>
-                </div>
-
-                <!-- Botón para actualizar información -->
-                <div class="field has-text-centered">
-                    <button class="button is-primary"  type="submit">Actualizar perfil</button>
                 </div>
             </div>
-        </div>
-    </section>
-</form>
+        </section>
+    </form>
+
     <!-- Footer -->
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>UneTT &copy; 2024</p>
-        </div>
+    <footer class="footer mt-5 bg-light text-center py-3">
+        <p>UneTT &copy; 2024</p>
     </footer>
 
-    <!-- Iconos de FontAwesome para los botones -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

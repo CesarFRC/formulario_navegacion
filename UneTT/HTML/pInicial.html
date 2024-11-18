@@ -33,7 +33,8 @@
 
 .post-media img, .post-media video {
     width: 100%;
-    height: auto;
+    height: 300px;
+    object-fit: cover; /* Mantiene las proporciones al recortar */
     border-radius: 5px;
     margin-top: 0.5rem;
 }
@@ -86,12 +87,7 @@ button:hover {
     height: 3rem;
 }
 
-@media (max-width: 768px) {
-    .icon-bar img {
-        width: 2rem;
-        height: 2rem;
-    }
-}
+
 
 /* Logo */
 #logoutt {
@@ -104,48 +100,160 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+    /* Ajuste del logo */
     #logoutt {
-        top: -4rem;
-        height: 12rem;
-        width: 12rem;
-    }
-    .media, .post-item {
-    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
-    max-width: 100%; /* Evita restricciones de ancho */
-    padding: 1rem; /* Espaciado interno uniforme */
-    margin: 0 auto; /* Centra el elemento horizontalmente */
-    border: 1px solid #ddd; /* Agrega un borde para destacar */
-    border-radius: 5px; /* Bordes redondeados */
-    background-color: #f9f9f9; /* Fondo suave */
-    box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+        top: -5rem;
+        height: 16rem; /* Mantiene tamaño similar a escritorio */
+        width: 15rem;  /* Mantiene tamaño similar a escritorio */
+        transform: scale(0.8); /* Escalado ligero */
     }
 
+    /* Ajuste de la barra de iconos */
     .icon-bar img {
-        width: 2rem;
+        width: 3rem; /* Mismo tamaño que escritorio */
+        height: 3rem;
+    }
+
+   /* Publicaciones */
+   .media, .post-item {
+        width: 100%; /* Las publicaciones ocupan el 100% del ancho disponible */
+        max-width: 600px; /* Asegura que no se reduzcan demasiado */
+        padding: 1rem;
+        margin: 1rem auto; /* Separación entre publicaciones */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        box-sizing: border-box;
+        margin-bottom: 1rem; /* Separación adicional entre publicaciones */
+    }
+
+    /* Multimedia (imágenes/videos) */
+    .post-media img, .post-media video {
+        width: 100%;
+        height: 300px; /* Mantiene la altura igual que en el escritorio */
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 1rem; /* Separación entre la imagen y los comentarios */
+    }
+
+    /* Comentarios y texto */
+    .comments, .post-text {
+        font-size: 0.9rem; /* Igual que en escritorio */
+        color: #555;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        text-align: left; /* Cambié de 'center' a 'left' para mejorar la legibilidad */
+        margin-top: 1rem; /* Espacio superior antes de los comentarios */
+        padding: 0 1rem; /* Asegura que los comentarios no se peguen a los bordes */
+    }
+
+    /* Input y botones */
+    input[type="text"] {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        margin-top: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+}
+
+@media (max-width: 480px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Contenedor principal de las publicaciones */
+    .media, .post-item {
+        width: 90%; /* Usa 90% del ancho del contenedor padre */
+        max-width: 400px; /* Limita el ancho máximo */
+        margin: 0 auto;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        box-sizing: border-box;
+        display: flex; /* Flex para estructurar contenido interno */
+        flex-direction: column; /* Alinea verticalmente */
+        align-items: stretch; /* Fuerza elementos internos al ancho del contenedor */
+        min-height: 200px; /* Fija una altura mínima para evitar que publicaciones cortas sean demasiado pequeñas */
+        background-color: #f9f9f9; /* Fondo para uniformidad */
+        border: 1px solid #ddd; /* Añade borde para separar visualmente */
+        border-radius: 5px; /* Esquinas redondeadas */
+        min-width: 0; /* Previene que el contenedor se haga más pequeño que su contenido */
+    }
+
+    /* Multimedia (Imágenes/Vídeos) */
+    .post-media {
+        display: flex;
+        justify-content: center; /* Centra la imagen/video */
+        align-items: center; /* Centra la imagen/video verticalmente */
+        width: 100%; /* Asegura que ocupe el 100% del contenedor */
+        max-height: 180px; /* Límite de altura */
+        overflow: hidden; /* Evita desbordamientos */
+        margin-bottom: 0.5rem; /* Espaciado entre imagen/video y texto */
+    }
+
+    .post-media img, .post-media video {
+        width: 100%; /* Ajusta al ancho del contenedor */
+        height: 100%; /* Mantiene la imagen o video cubriendo todo el contenedor */
+        object-fit: cover; /* Asegura que el contenido multimedia se adapte al espacio sin distorsionarse */
+        border-radius: 5px; /* Redondea esquinas */
+    }
+
+    /* Comentarios y texto */
+    .comments, .post-text {
+        font-size: 0.9rem; /* Tamaño adecuado para lectura */
+        line-height: 1.4; /* Espaciado entre líneas */
+        text-align: justify; /* Mejora legibilidad */
+        word-wrap: break-word; /* Evita desbordamientos de texto */
+        width: 100%; /* Forza a ocupar todo el ancho del contenedor */
+        margin: 0; /* Elimina márgenes innecesarios */
+        padding: 0.5rem; /* Espaciado interno */
+        background-color: transparent; /* Transparente para cohesión visual */
+        flex-shrink: 0; /* Evita que se encoja el contenedor de texto/comentarios */
+    }
+
+    /* Iconos */
+    .icon-bar img {
+        width: 2rem; /* Ajusta el tamaño de los iconos */
         height: 2rem;
     }
 
     /* Logo */
     #logoutt {
         top: -3rem;
-        height: 14rem;
-        width: 14rem;
+        height: 10rem; /* Tamaño más pequeño */
+        width: 10rem;
     }
-    .comments, .post-text {
-        font-size: 0.8rem;  /* Reducir tamaño de fuente si es necesario */
-        padding: 0.5rem; /* Un pequeño padding para los comentarios */
-        text-align: left; /* Alineación a la izquierda para una mejor legibilidad */
-        white-space: normal; /* Evita el desbordamiento del texto */
-        word-wrap: break-word; /* Rompe las palabras largas cuando sea necesario */
-        overflow-wrap: break-word; /* Asegura que las palabras largas se dividan */
+
+    /* Lista de publicaciones */
+    #postList {
+        gap: 1.5rem; /* Ajusta espacio entre publicaciones */
+    }
+
+    /* Header azul */
+    .bg-primary {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 }
 
-/* Header azul */
-.bg-primary {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-}
+
     </style>
 </head>
 
