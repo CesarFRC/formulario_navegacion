@@ -118,6 +118,11 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
         const postElement = document.createElement('div');
         postElement.classList.add('post');
 
+         // Aquí verificamos si el usuario es el autor de la publicación
+            const user = auth.currentUser;
+            const isAuthor = postData.username === user?.email;
+
+          
         postElement.innerHTML = `
         <article class="media box">
             <div class="media-content">
@@ -139,7 +144,8 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
                     <button id="likeBtn-${doc.id}">
                         <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
                     </button>
-                </div>
+                    ${isAuthor ? `<button id="deleteBtn-${doc.id}" style="background-color: red;">Eliminar</button>` : ''}
+                    </div>
                 <nav class="level is-mobile">
                     <div class="level-left">
                         <div id="comments-${doc.id}" class="comments"></div>
@@ -154,6 +160,35 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
 
 
         postList.appendChild(postElement);
+
+         // Si es el autor, agrega la funcionalidad del botón de eliminar
+    if (isAuthor) {
+        const deleteButton = document.getElementById(`deleteBtn-${doc.id}`);
+        deleteButton.addEventListener('click', async () => {
+            try {
+                // Eliminar publicación de Firestore
+                await deleteDoc(doc(db, 'post', doc.id));
+
+                // Eliminar publicación de MySQL (si es necesario)
+                const response = await fetch('../BACKEND/eliminarPublicacion.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ postId: doc.id })  // Enviar el ID de la publicación
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    alert('Publicación eliminada correctamente.');
+                } else {
+                    alert('Error al eliminar la publicación en MySQL.');
+                }
+
+            } catch (error) {
+                console.error('Error al eliminar la publicación:', error);
+                alert('Error al eliminar la publicación.');
+            }
+        });
+    }
 
         const bt = document.getElementById(`user-${doc.id}`);
         bt.addEventListener('click', () => {
