@@ -1,7 +1,7 @@
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -41,8 +41,6 @@ submit.addEventListener("click", async function (event) {
         return;
     }
 
-
-
     let mediaURL = null;
     if (file) {
         const storageRef = ref(storage, `posts/${user.uid}/${file.name}`);
@@ -55,38 +53,8 @@ submit.addEventListener("click", async function (event) {
             return;
         }
     }
-    // Enviar los datos a PHP usando fetch (guardar en MySQL)
-    const data = {
-        username: user.email,
-        post: content,
-        mediaURL: mediaURL,
-        date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
-    };
 
-    try {
-        // Enviar los datos de la publicación a PHP para guardarlos en MySQL
-        const response = await fetch('../BACKEND/guardarPublicacion.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // Convertir los datos en JSON
-        });
-
-        const result = await response.json();
-        if (result.success) {
-            alert('Publicación exitosa');
-            document.getElementById('postcontent').value = ''; // Limpiar el campo de texto
-            fileInput.value = ''; // Limpiar el campo de archivos
-        } else {
-            alert('Error al guardar la publicación en MySQL');
-        }
-    } catch (error) {
-        console.error('Error al enviar los datos a PHP:', error);
-        alert('Error al enviar los datos a PHP.');
-    }
-
-    
+    // Guardar publicación en Firestore
     try {
         await addDoc(collection(db, 'post'), {
             username: user.email,
@@ -102,7 +70,7 @@ submit.addEventListener("click", async function (event) {
         fileInput.value = ''; // Limpiar el campo de archivos
     } catch (error) {
         console.error('Error al publicar:', error);
-        alert(error);
+        alert('Error al publicar en Firestore.');
     }
 });
 
@@ -111,114 +79,87 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
     const postList = document.getElementById('postList');
     postList.innerHTML = ''; // Limpiar la lista antes de volver a llenarla
 
-    snapshot.forEach((doc) => {
-        const postData = doc.data();
+    snapshot.forEach((postSnapshot) => {
+        const postData = postSnapshot.data();
+        const postId = postSnapshot.id;
 
-        // Crear un nuevo elemento para mostrar la publicación
         const postElement = document.createElement('div');
         postElement.classList.add('post');
 
-         // Aquí verificamos si el usuario es el autor de la publicación
-            const user = auth.currentUser;
-            const isAuthor = postData.username === user?.email;
+        const user = auth.currentUser;
+        const isAuthor = postData.username === user?.email;
 
-          
         postElement.innerHTML = `
-        <article class="media box">
-            <div class="media-content">
-                <div class="content">
-                    <p id="user-${doc.id}"><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
-                    <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
-                    <p>${postData.post}</p>
-                    ${postData.mediaURL ? 
-                        (fileIsVideo(postData.mediaURL) ? 
-                            `<video controls class="post-media" width="400">
-                                <source src="${postData.mediaURL}" type="video/mp4">
-                                Tu navegador no soporta la reproducción de video.
-                            </video>` 
-                        : 
-                            `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) 
-                        : ''}
-                    <p><strong>Stars:</strong> <span id="likes-${doc.id}">${postData.likes || 0}</span></p>
-                    <br>
-                    <button id="likeBtn-${doc.id}">
-                        <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
-                    </button>
-                    ${isAuthor ? `<button id="deleteBtn-${doc.id}" style="background-color: red;">Eliminar</button>` : ''}
+            <article class="media box">
+                <div class="media-content">
+                    <div class="content">
+                        <p><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
+                        <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
+                        <p>${postData.post}</p>
+                        ${postData.mediaURL ? (fileIsVideo(postData.mediaURL) ?
+            `<video controls class="post-media" width="400">
+                            <source src="${postData.mediaURL}" type="video/mp4">
+                            Tu navegador no soporta la reproducción de video.
+                        </video>` :
+            `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) : ''}
+                        <p><strong>Likes:</strong> <span id="likes-${postId}">${postData.likes || 0}</span></p>
+                        <button id="likeBtn-${postId}">
+                            <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
+                        </button>
+                        ${isAuthor ? `<button class="delete-btn" data-id="${postId}" style="background-color: red;">Eliminar</button>` : ''}
+                        
+                        <!-- Comentarios -->
+                        <div id="comments-${postId}">
+                            <input type="text" id="commentInput-${postId}" placeholder="Escribe un comentario..." style="width: 100%; margin-bottom: 10px;">
+                            <button id="commentBtn-${postId}" style="cursor: pointer;">Comentar</button>
+                        </div>
                     </div>
-                <nav class="level is-mobile">
-                    <div class="level-left">
-                        <div id="comments-${doc.id}" class="comments"></div>
-                    </div>
-                </nav>
-                <input type="text" id="commentInput-${doc.id}" placeholder="Escribe un comentario..." />
-                <button id="commentBtn-${doc.id}">Comentar</button>
-            </div>
-        </article>
-    `;
-    
-
+                </div>
+            </article>
+        `;
 
         postList.appendChild(postElement);
 
-         // Si es el autor, agrega la funcionalidad del botón de eliminar
-    if (isAuthor) {
-        const deleteButton = document.getElementById(`deleteBtn-${doc.id}`);
-        deleteButton.addEventListener('click', async () => {
-            try {
-                // Eliminar publicación de Firestore
-                await deleteDoc(doc(db, 'post', doc.id));
-
-                // Eliminar publicación de MySQL (si es necesario)
-                const response = await fetch('../BACKEND/eliminarPublicacion.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ postId: doc.id })  // Enviar el ID de la publicación
-                });
-                
-                const result = await response.json();
-                if (result.success) {
-                    alert('Publicación eliminada correctamente.');
-                } else {
-                    alert('Error al eliminar la publicación en MySQL.');
+        // Eliminar publicación
+        if (isAuthor) {
+            const deleteButton = postElement.querySelector(`.delete-btn[data-id="${postId}"]`);
+            deleteButton.addEventListener('click', async () => {
+                const confirmDelete = confirm("¿Estás seguro de que deseas eliminar la publicación?");
+                if (confirmDelete) {
+                    try {
+                        await deleteDoc(doc(db, 'post', postId)); // Usa 'postId' en lugar de 'doc.id'
+                        alert("Publicación eliminada correctamente");
+                    } catch (error) {
+                        console.error('Error al eliminar la publicación:', error);
+                        alert('Error al eliminar la publicación: ' + error.message);
+                    }
                 }
+            });
+        }
 
-            } catch (error) {
-                console.error('Error al eliminar la publicación:', error);
-                alert('Error al eliminar la publicación.');
-            }
-        });
-    }
-
-        const bt = document.getElementById(`user-${doc.id}`);
-        bt.addEventListener('click', () => {
-            //declaro una variable global para acceder desde otro javascript para ver el perfil dependiendo al correo 
-            localStorage.setItem("perfilemail", postData.username);
-            window.location.href = "../HTML/verotroperfil.html";
-
-        });
-
-
-        const likeButton = document.getElementById(`likeBtn-${doc.id}`);
+        // Like
+        const likeButton = document.getElementById(`likeBtn-${postId}`);
         likeButton.addEventListener('click', () => {
-            handleLike(doc.id, postData.likes, postData.likedBy);
+            handleLike(postId, postData.likes, postData.likedBy);
         });
 
-        loadComments(doc.id); // Cargar comentarios para cada publicación
-
-        const commentButton = document.getElementById(`commentBtn-${doc.id}`);
+        // Comentario
+        const commentButton = document.getElementById(`commentBtn-${postId}`);
         commentButton.addEventListener('click', () => {
-            handleComment(doc.id);
+            handleComment(postId);
         });
+
+        // Cargar los comentarios
+        loadComments(postId);
     });
 });
+
 // Función para verificar si es un video
 function fileIsVideo(url) {
     const videoExtensions = ['mp4', 'webm', 'ogg'];
     const extension = url.split('.').pop().toLowerCase();
     return videoExtensions.includes(extension);
 }
-
 
 // Función para manejar el "like"
 async function handleLike(postId, currentLikes, likedBy) {
@@ -228,7 +169,7 @@ async function handleLike(postId, currentLikes, likedBy) {
         return;
     }
 
-    const userEmail = user.email;  // Correo del usuario
+    const userEmail = user.email;
 
     try {
         // Si el usuario ya ha dado like, lo quitamos
@@ -252,48 +193,10 @@ async function handleLike(postId, currentLikes, likedBy) {
 
             console.log('Like añadido con éxito');
         }
-
-        // Enviar el like a MySQL
-        const dataLike = {
-            postId: postId,
-            comentUser: userEmail,
-            date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
-        };
-
-        // Imprimir los datos que se enviarán al servidor PHP
-        console.log("Datos que se enviarán a PHP:", JSON.stringify(dataLike));  // Esta línea muestra los datos en la consola
-
-        const response = await fetch('../BACKEND/savelike.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataLike)  // Enviar los datos en formato JSON
-        });
-
-        // Obtener la respuesta como texto
-        const textResponse = await response.text();  // Aquí obtenemos la respuesta como texto
-
-        console.log("Respuesta cruda del servidor:", textResponse);  // Mostrar la respuesta cruda en la consola
-
-        // Intentar convertirla a JSON
-        try {
-            const result = JSON.parse(textResponse);  // Intentar analizar como JSON
-            console.log("Respuesta procesada como JSON:", result);
-
-            // Verificar la respuesta procesada
-            if (result.success) {
-                console.log('Like guardado correctamente en MySQL');
-            } else {
-                console.error("Error al guardar el like en MySQL:", result.message);
-            }
-        } catch (error) {
-            console.error("Error al procesar la respuesta JSON:", error);
-        }
-
     } catch (error) {
         console.error('Error al manejar el like:', error);
     }
 }
-
 
 // Función para manejar el comentario
 async function handleComment(postId) {
@@ -310,34 +213,6 @@ async function handleComment(postId) {
         alert("El comentario no puede estar vacío.");
         return;
     }
-    // Enviar comentario a MySQL a través de PHP
- try {
-    const datacoment = {
-        comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
-        comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
-        comentPost: postId,                 // Cambiar a 'comentPost' como espera el PHP
-        date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
-    };
-// Mostrar los datos en la consola antes de enviarlos
-    console.log("Datos que se enviarán a PHP:", datacoment);
-    const response = await fetch('../BACKEND/savecoment.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datacoment)
-    });
-    console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
-    const result = await response.json();
-    console.log("Resultado del servidor:", result); // Verifica el JSON de respuesta
-    if (result.success) {
-        console.log("Comentario guardado en MySQL");
-    } else {
-        console.error("Error al guardar el comentario en MySQL:", result.message);
-        alert("Error al guardar el comentario en MySQL." + datacoment);
-    }
-} catch (error) {
-    console.error("Error al enviar el comentario a PHP:", error);
-    alert("Error al enviar el comentario a PHP.");
-}
 
     try {
         // Guardar el comentario en una subcolección 'comments' dentro de la publicación
@@ -354,28 +229,21 @@ async function handleComment(postId) {
         alert("Error al añadir el comentario.");
     }
 }
- 
+
 // Cargar los comentarios de una publicación
 async function loadComments(postId) {
     const commentsDiv = document.getElementById(`comments-${postId}`);
 
-    try {
-        const commentsQuery = query(
-            collection(db, 'post', postId, 'comments'),
-            orderBy('date', 'asc') // Ordenar por fecha ascendente
-        );
+    const commentsQuery = query(collection(db, 'post', postId, 'comments'), orderBy('date', 'desc'));
+    const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
+        commentsDiv.innerHTML = ''; // Limpiar antes de cargar los nuevos comentarios
 
-        onSnapshot(commentsQuery, (snapshot) => {
-            commentsDiv.innerHTML = ''; // Limpiar los comentarios antes de mostrarlos
-
-            snapshot.forEach((doc) => {
-                const commentData = doc.data();
-                const commentElement = document.createElement('p');
-                commentElement.innerHTML = `<strong>${commentData.username}:</strong> ${commentData.comment} <em>${commentData.date ? commentData.date.toDate().toLocaleString() : ''}</em>`;
-                commentsDiv.appendChild(commentElement);
-            });
+        snapshot.forEach((doc) => {
+            const commentData = doc.data();
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `<p><strong>${commentData.username}</strong>: ${commentData.comment}</p>`;
+            commentsDiv.appendChild(commentElement);
         });
-    } catch (error) {
-        console.error("Error al cargar los comentarios:", error);
-    }
+    });
 }

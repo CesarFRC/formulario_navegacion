@@ -1,8 +1,10 @@
 <!DOCTYPE html> <!-- Declara el documento como HTML5 -->
 <html lang="en"> <!-- Define el idioma de la página como inglés -->
+
 <head>
     <meta charset="UTF-8"> <!-- Configura la codificación de caracteres a UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página sea responsiva en móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hace que la página sea responsiva en móviles -->
     <title>Pantalla de Inicio - UneTT</title> <!-- Título de la página -->
 
     <!-- Bootstrap CDN para estilos predeterminados -->
@@ -12,247 +14,303 @@
     <script type="module" src="../BACKEND/post.js"></script>
 
     <style>
- /* Contenedor principal de la publicación */
-.media, .post-item {
-    width: 50rem;
-    max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background-color: #f9f9f9;
-}
+        /* Contenedor principal de la publicación */
+        .media,
+        .post-item {
+            width: 50rem;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f9f9f9;
+        }
 
-/* Contenedor multimedia (imágenes/videos) */
-.post-media {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
+        /* Contenedor multimedia (imágenes/videos) */
+        .post-media {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-.post-media img, .post-media video {
-    width: 100%;
-    height: 300px;
-    object-fit: cover; /* Mantiene las proporciones al recortar */
-    border-radius: 5px;
-    margin-top: 0.5rem;
-}
+        .post-media img,
+        .post-media video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            /* Mantiene las proporciones al recortar */
+            border-radius: 5px;
+            margin-top: 0.5rem;
+        }
 
-/* Sección de comentarios */
-.comments, .post-text {
-    font-size: 0.9rem;
-    color: #555;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin-top: 1rem;
-    text-align: center;
-}
+        /* Sección de comentarios */
+        .comments,
+        .post-text {
+            font-size: 0.9rem;
+            color: #555;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            margin-top: 1rem;
+            text-align: center;
+        }
 
-/* Input y botones */
-input[type="text"] {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 0.9rem;
-}
+        /* Input y botones */
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
 
-button {
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        button {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-button:hover {
-    background-color: #0056b3;
-}
+        button:hover {
+            background-color: #0056b3;
+        }
 
-/* Barra de iconos */
-.icon-bar {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    display: flex;
-    gap: 1rem;
-}
+        /* Barra de iconos */
+        .icon-bar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
 
-.icon-bar img {
-    width: 3rem;
-    height: 3rem;
-}
+        .icon-bar img {
+            width: 3rem;
+            height: 3rem;
+        }
 
 
 
-/* Logo */
-#logoutt {
-    position: absolute;
-    top: -5.6rem;
-    left: 1%;
-    height: 16rem;
-    width: 15rem;
-    transform: scale(0.8);
-}
+        /* Logo */
+        #logoutt {
+            position: absolute;
+            top: -5.6rem;
+            left: 1%;
+            height: 16rem;
+            width: 15rem;
+            transform: scale(0.8);
+        }
 
-@media (max-width: 768px) {
-    /* Ajuste del logo */
-    #logoutt {
-        top: -5rem;
-        height: 16rem; /* Mantiene tamaño similar a escritorio */
-        width: 15rem;  /* Mantiene tamaño similar a escritorio */
-        transform: scale(0.8); /* Escalado ligero */
-    }
+        @media (max-width: 768px) {
 
-    /* Ajuste de la barra de iconos */
-    .icon-bar img {
-        width: 3rem; /* Mismo tamaño que escritorio */
-        height: 3rem;
-    }
+            /* Ajuste del logo */
+            #logoutt {
+                top: -5rem;
+                height: 16rem;
+                /* Mantiene tamaño similar a escritorio */
+                width: 15rem;
+                /* Mantiene tamaño similar a escritorio */
+                transform: scale(0.8);
+                /* Escalado ligero */
+            }
 
-   /* Publicaciones */
-   .media, .post-item {
-        width: 100%; /* Las publicaciones ocupan el 100% del ancho disponible */
-        max-width: 600px; /* Asegura que no se reduzcan demasiado */
-        padding: 1rem;
-        margin: 1rem auto; /* Separación entre publicaciones */
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-        box-sizing: border-box;
-        margin-bottom: 1rem; /* Separación adicional entre publicaciones */
-    }
+            /* Ajuste de la barra de iconos */
+            .icon-bar img {
+                width: 3rem;
+                /* Mismo tamaño que escritorio */
+                height: 3rem;
+            }
 
-    /* Multimedia (imágenes/videos) */
-    .post-media img, .post-media video {
-        width: 100%;
-        height: 300px; /* Mantiene la altura igual que en el escritorio */
-        object-fit: cover;
-        border-radius: 5px;
-        margin-bottom: 1rem; /* Separación entre la imagen y los comentarios */
-    }
+            /* Publicaciones */
+            .media,
+            .post-item {
+                width: 100%;
+                /* Las publicaciones ocupan el 100% del ancho disponible */
+                max-width: 600px;
+                /* Asegura que no se reduzcan demasiado */
+                padding: 1rem;
+                margin: 1rem auto;
+                /* Separación entre publicaciones */
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+                box-sizing: border-box;
+                margin-bottom: 1rem;
+                /* Separación adicional entre publicaciones */
+            }
 
-    /* Comentarios y texto */
-    .comments, .post-text {
-        font-size: 0.9rem; /* Igual que en escritorio */
-        color: #555;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        text-align: left; /* Cambié de 'center' a 'left' para mejorar la legibilidad */
-        margin-top: 1rem; /* Espacio superior antes de los comentarios */
-        padding: 0 1rem; /* Asegura que los comentarios no se peguen a los bordes */
-    }
+            /* Multimedia (imágenes/videos) */
+            .post-media img,
+            .post-media video {
+                width: 100%;
+                height: 300px;
+                /* Mantiene la altura igual que en el escritorio */
+                object-fit: cover;
+                border-radius: 5px;
+                margin-bottom: 1rem;
+                /* Separación entre la imagen y los comentarios */
+            }
 
-    /* Input y botones */
-    input[type="text"] {
-        width: 100%;
-        padding: 0.5rem;
-        margin-top: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 0.9rem;
-    }
+            /* Comentarios y texto */
+            .comments,
+            .post-text {
+                font-size: 0.9rem;
+                /* Igual que en escritorio */
+                color: #555;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                text-align: left;
+                /* Cambié de 'center' a 'left' para mejorar la legibilidad */
+                margin-top: 1rem;
+                /* Espacio superior antes de los comentarios */
+                padding: 0 1rem;
+                /* Asegura que los comentarios no se peguen a los bordes */
+            }
 
-    button {
-        margin-top: 0.5rem;
-        padding: 0.5rem 1rem;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+            /* Input y botones */
+            input[type="text"] {
+                width: 100%;
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 0.9rem;
+            }
 
-    button:hover {
-        background-color: #0056b3;
-    }
-}
+            button {
+                margin-top: 0.5rem;
+                padding: 0.5rem 1rem;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
 
-@media (max-width: 480px) {
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+            button:hover {
+                background-color: #0056b3;
+            }
+        }
 
-    /* Contenedor principal de las publicaciones */
-    .media, .post-item {
-        width: 90%; /* Usa 90% del ancho del contenedor padre */
-        max-width: 400px; /* Limita el ancho máximo */
-        margin: 0 auto;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-        box-sizing: border-box;
-        display: flex; /* Flex para estructurar contenido interno */
-        flex-direction: column; /* Alinea verticalmente */
-        align-items: stretch; /* Fuerza elementos internos al ancho del contenedor */
-        min-height: 200px; /* Fija una altura mínima para evitar que publicaciones cortas sean demasiado pequeñas */
-        background-color: #f9f9f9; /* Fondo para uniformidad */
-        border: 1px solid #ddd; /* Añade borde para separar visualmente */
-        border-radius: 5px; /* Esquinas redondeadas */
-        min-width: 0; /* Previene que el contenedor se haga más pequeño que su contenido */
-    }
+        @media (max-width: 480px) {
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-    /* Multimedia (Imágenes/Vídeos) */
-    .post-media {
-        display: flex;
-        justify-content: center; /* Centra la imagen/video */
-        align-items: center; /* Centra la imagen/video verticalmente */
-        width: 100%; /* Asegura que ocupe el 100% del contenedor */
-        max-height: 180px; /* Límite de altura */
-        overflow: hidden; /* Evita desbordamientos */
-        margin-bottom: 0.5rem; /* Espaciado entre imagen/video y texto */
-    }
+            /* Contenedor principal de las publicaciones */
+            .media,
+            .post-item {
+                width: 90%;
+                /* Usa 90% del ancho del contenedor padre */
+                max-width: 400px;
+                /* Limita el ancho máximo */
+                margin: 0 auto;
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                box-sizing: border-box;
+                display: flex;
+                /* Flex para estructurar contenido interno */
+                flex-direction: column;
+                /* Alinea verticalmente */
+                align-items: stretch;
+                /* Fuerza elementos internos al ancho del contenedor */
+                min-height: 200px;
+                /* Fija una altura mínima para evitar que publicaciones cortas sean demasiado pequeñas */
+                background-color: #f9f9f9;
+                /* Fondo para uniformidad */
+                border: 1px solid #ddd;
+                /* Añade borde para separar visualmente */
+                border-radius: 5px;
+                /* Esquinas redondeadas */
+                min-width: 0;
+                /* Previene que el contenedor se haga más pequeño que su contenido */
+            }
 
-    .post-media img, .post-media video {
-        width: 100%; /* Ajusta al ancho del contenedor */
-        height: 100%; /* Mantiene la imagen o video cubriendo todo el contenedor */
-        object-fit: cover; /* Asegura que el contenido multimedia se adapte al espacio sin distorsionarse */
-        border-radius: 5px; /* Redondea esquinas */
-    }
+            /* Multimedia (Imágenes/Vídeos) */
+            .post-media {
+                display: flex;
+                justify-content: center;
+                /* Centra la imagen/video */
+                align-items: center;
+                /* Centra la imagen/video verticalmente */
+                width: 100%;
+                /* Asegura que ocupe el 100% del contenedor */
+                max-height: 180px;
+                /* Límite de altura */
+                overflow: hidden;
+                /* Evita desbordamientos */
+                margin-bottom: 0.5rem;
+                /* Espaciado entre imagen/video y texto */
+            }
 
-    /* Comentarios y texto */
-    .comments, .post-text {
-        font-size: 0.9rem; /* Tamaño adecuado para lectura */
-        line-height: 1.4; /* Espaciado entre líneas */
-        text-align: justify; /* Mejora legibilidad */
-        word-wrap: break-word; /* Evita desbordamientos de texto */
-        width: 100%; /* Forza a ocupar todo el ancho del contenedor */
-        margin: 0; /* Elimina márgenes innecesarios */
-        padding: 0.5rem; /* Espaciado interno */
-        background-color: transparent; /* Transparente para cohesión visual */
-        flex-shrink: 0; /* Evita que se encoja el contenedor de texto/comentarios */
-    }
+            .post-media img,
+            .post-media video {
+                width: 100%;
+                /* Ajusta al ancho del contenedor */
+                height: 100%;
+                /* Mantiene la imagen o video cubriendo todo el contenedor */
+                object-fit: cover;
+                /* Asegura que el contenido multimedia se adapte al espacio sin distorsionarse */
+                border-radius: 5px;
+                /* Redondea esquinas */
+            }
 
-    /* Iconos */
-    .icon-bar img {
-        width: 2rem; /* Ajusta el tamaño de los iconos */
-        height: 2rem;
-    }
+            /* Comentarios y texto */
+            .comments,
+            .post-text {
+                font-size: 0.9rem;
+                /* Tamaño adecuado para lectura */
+                line-height: 1.4;
+                /* Espaciado entre líneas */
+                text-align: justify;
+                /* Mejora legibilidad */
+                word-wrap: break-word;
+                /* Evita desbordamientos de texto */
+                width: 100%;
+                /* Forza a ocupar todo el ancho del contenedor */
+                margin: 0;
+                /* Elimina márgenes innecesarios */
+                padding: 0.5rem;
+                /* Espaciado interno */
+                background-color: transparent;
+                /* Transparente para cohesión visual */
+                flex-shrink: 0;
+                /* Evita que se encoja el contenedor de texto/comentarios */
+            }
 
-    /* Logo */
-    #logoutt {
-        top: -3rem;
-        height: 10rem; /* Tamaño más pequeño */
-        width: 10rem;
-    }
+            /* Iconos */
+            .icon-bar img {
+                width: 2rem;
+                /* Ajusta el tamaño de los iconos */
+                height: 2rem;
+            }
 
-    /* Lista de publicaciones */
-    #postList {
-        gap: 1.5rem; /* Ajusta espacio entre publicaciones */
-    }
+            /* Logo */
+            #logoutt {
+                top: -3rem;
+                height: 10rem;
+                /* Tamaño más pequeño */
+                width: 10rem;
+            }
 
-    /* Header azul */
-    .bg-primary {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-}
+            /* Lista de publicaciones */
+            #postList {
+                gap: 1.5rem;
+                /* Ajusta espacio entre publicaciones */
+            }
 
+            /* Header azul */
+            .bg-primary {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+        }
 
     </style>
 </head>
@@ -264,14 +322,15 @@ button:hover {
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Logotipo de UneTT -->
                 <div class="text-center">
-                    <img src="../imgs/Unettlogo.png" id="logoutt"> 
+                    <img src="../imgs/Unettlogo.png" id="logoutt">
                 </div>
                 <!-- Barra de iconos de navegación -->
                 <div class="icon-bar d-flex gap-3 justify-content-center">
                     <a href="../HTML/pInicial.html" class="text-white"> <!-- Enlace a la página de inicio -->
                         <img src="https://cdn-icons-png.flaticon.com/512/37/37489.png" alt="Home">
                     </a>
-                    <a href="../HTML/ver_perfil.html" title="Ver perfil" class="text-white"> <!-- Enlace al perfil del usuario -->
+                    <a href="../HTML/ver_perfil.html" title="Ver perfil" class="text-white">
+                        <!-- Enlace al perfil del usuario -->
                         <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" alt="Perfil">
                     </a>
                 </div>
@@ -296,10 +355,12 @@ button:hover {
                         <label class="form-label">Subir foto, video</label>
                         <input class="form-control" type="file" name="resume" multiple id="mediaUpload">
                         <p id="fileName" class="file-name"></p> <!-- Muestra el nombre del archivo -->
-                        <button id="deleteButton" class="btn btn-danger mt-2">Eliminar archivo</button> <!-- Botón para eliminar archivos -->
+                        <button id="deleteButton" class="btn btn-danger mt-2">Eliminar archivo</button>
+                        <!-- Botón para eliminar archivos -->
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary" id="submit">Publicar</button> <!-- Botón para enviar la publicación -->
+                        <button class="btn btn-primary" id="submit">Publicar</button>
+                        <!-- Botón para enviar la publicación -->
                     </div>
                 </div>
             </div>
@@ -314,7 +375,8 @@ button:hover {
                             <p class="post-text">Una publicación con imagen</p>
                             <!-- Imagen de la publicación -->
                             <div class="post-media mb-3">
-                                <img src="https://via.placeholder.com/400" class="img-fluid" alt="Imagen de la publicación">
+                                <img src="https://via.placeholder.com/400" class="img-fluid"
+                                    alt="Imagen de la publicación">
                             </div>
                             <!-- Comentario de ejemplo para la publicación -->
                             <div class="post-text">
@@ -337,4 +399,5 @@ button:hover {
     <!-- Carga de iconos de FontAwesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
+
 </html>
