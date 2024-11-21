@@ -93,32 +93,42 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
             <article class="media box">
                 <div class="media-content">
                     <div class="content">
-                        <p><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
+                        <p id="otheruser-${postId}"><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
                         <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
                         <p>${postData.post}</p>
                         ${postData.mediaURL ? (fileIsVideo(postData.mediaURL) ?
-            `<video controls class="post-media" width="400">
+                `<video controls class="post-media" width="400">
                             <source src="${postData.mediaURL}" type="video/mp4">
                             Tu navegador no soporta la reproducción de video.
                         </video>` :
-            `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) : ''}
+                `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) : ''}
                         <p><strong>Likes:</strong> <span id="likes-${postId}">${postData.likes || 0}</span></p>
                         <button id="likeBtn-${postId}">
                             <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
                         </button>
                         ${isAuthor ? `<button class="delete-btn" data-id="${postId}" style="background-color: red;">Eliminar</button>` : ''}
+                        <nav class="level is-mobile">
+                    <div class="level-left">
+                        <div id="comments-${postId}" ></div>
+                    </div>
+                </nav>
+                        <input type="text" id="commentInput-${postId}" placeholder="Escribe un comentario..." style="width: 100%; margin-bottom: 10px;">
+                        <button id="commentBtn-${postId}" style="cursor: pointer;">Comentar</button>
                         
-                        <!-- Comentarios -->
-                        <div id="comments-${postId}">
-                            <input type="text" id="commentInput-${postId}" placeholder="Escribe un comentario..." style="width: 100%; margin-bottom: 10px;">
-                            <button id="commentBtn-${postId}" style="cursor: pointer;">Comentar</button>
-                        </div>
                     </div>
                 </div>
             </article>
         `;
 
         postList.appendChild(postElement);
+
+        const btotrouser = document.getElementById(`otheruser-${postId}`);
+        btotrouser.addEventListener('click', () => {
+            //declaro una variable global para acceder desde otro javascript para ver el perfil dependiendo al correo 
+            localStorage.setItem("perfilemail", postData.username);
+            window.location.href = "../HTML/verotroperfil.html";
+        });
+
 
         // Eliminar publicación
         if (isAuthor) {
@@ -247,3 +257,4 @@ async function loadComments(postId) {
         });
     });
 }
+
