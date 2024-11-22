@@ -6,17 +6,17 @@ $data = json_decode(file_get_contents('php://input'), true);
 if ($data) {
     $username = $data['username'];
     $post = $data['post'];
+    $postId = $data['postId'];
     $mediaURL = $data['mediaURL'];
     $date = $data['date'];
-
     $matricula_usuario = substr($username, 0, 8);
     $formato = $mediaURL ? 'imagen' : NULL;
     $date = date('Y-m-d H:i:s', strtotime($date));
 
     try {
-        $sql = "CALL InsertarPublicacionConTransaccion(?, ?, ?, ?)";
+        $sql = "CALL InsertarPublicacionConTransaccion(?, ?, ?, ?,? )";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $matricula_usuario, $date, $post, $formato);
+        $stmt->bind_param("sssss", $matricula_usuario, $date, $post, $formato,$postId);
 
         if ($stmt->execute()) {
             echo json_encode(['success' => true]);

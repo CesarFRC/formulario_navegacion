@@ -21,6 +21,9 @@ const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+
+
+
 // Botón submit para publicar
 const submit = document.getElementById('submit');
 submit.addEventListener("click", async function (event) {
@@ -53,15 +56,27 @@ submit.addEventListener("click", async function (event) {
             return;
         }
     }
- // Enviar los datos a PHP usando fetch (guardar en MySQL)
- const data = {
-    username: user.email,
-    post: content,
-    mediaURL: mediaURL,
-    date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
-};
 
-try {
+ // Primero, publica en Firebase y obtén el postId
+ try {
+    const docRef = await addDoc(collection(db, 'post'), {
+        username: user.email,
+        date: serverTimestamp(),
+        likes: 0,
+        likedBy: [],
+        post: content,
+        mediaURL: mediaURL
+    });
+
+    // Ahora que el postId está disponible, prepararemos los datos para enviarlos a PHP
+    const data = {
+        username: user.email,
+        post: content,
+        mediaURL: mediaURL,
+        date: new Date().toISOString(), // Formato ISO para compatibilidad con PHP
+        postId: docRef.id // Asignamos el postId generado en Firebase
+    };
+
     // Enviar los datos de la publicación a PHP para guardarlos en MySQL
     const response = await fetch('../BACKEND/guardarPublicacion.php', {
         method: 'POST',
@@ -80,27 +95,8 @@ try {
         alert('Error al guardar la publicación en MySQL');
     }
 } catch (error) {
-    console.error('Error al enviar los datos a PHP:', error);
-    alert('Error al enviar los datos a PHP.');
-}
-
-
-try {
-    await addDoc(collection(db, 'post'), {
-        username: user.email,
-        date: serverTimestamp(),
-        likes: 0,
-        likedBy: [],
-        post: content,
-        mediaURL: mediaURL
-    });
-
-    alert('Publicación exitosa');
-    document.getElementById('postcontent').value = ''; // Limpiar el campo de texto
-    fileInput.value = ''; // Limpiar el campo de archivos
-} catch (error) {
-    console.error('Error al publicar:', error);
-    alert(error);
+    console.error('Error al publicar o enviar los datos:', error);
+    alert('Error al publicar o enviar los datos.');
 }
 });
 
@@ -110,6 +106,7 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
     postList.innerHTML = ''; // Limpiar la lista antes de volver a llenarla
 
     snapshot.forEach((postSnapshot) => {
+
         const postData = postSnapshot.data();
         const postId = postSnapshot.id;
 
@@ -160,38 +157,24 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
         });
 
 
-      // Eliminar publicación
-if (isAuthor) {
-    const deleteButton = postElement.querySelector(`.delete-btn[data-id="${postId}"]`);
-    deleteButton.addEventListener('click', async () => {
-        const confirmDelete = confirm("¿Estás seguro de que deseas eliminar la publicación?");
-        if (confirmDelete) {
-            try {
-                const response = await fetch('eliminar_publicacion.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: `postId=${postId}&matricula_usuario=${matricula_usuario}` // Aquí estamos enviando 'postId' y 'matricula_usuario'
-                });
-
-                const result = await response.text(); // Obtener la respuesta del servidor
-                if (response.ok) {
-                    alert("Publicación eliminada correctamente");
-                    // Opcional: Aquí puedes actualizar la interfaz (como eliminar la publicación del DOM)
-                    postElement.remove(); // Ejemplo de eliminar la publicación del DOM
-                } else {
-                    alert('Error al eliminar la publicación: ' + result);
+        // Eliminar publicación
+        if (isAuthor) {
+            const deleteButton = postElement.querySelector(`.delete-btn[data-id="${postId}"]`);
+            deleteButton.addEventListener('click', async () => {
+                const confirmDelete = confirm("¿Estás seguro de que deseas eliminar la publicación?");
+                if (confirmDelete) {
+                    try {
+                        await deleteDoc(doc(db, 'post', postId)); // Usa 'postId' en lugar de 'doc.id'
+                        alert("Publicación eliminada correctamente");
+                    } catch (error) {
+                        console.error('Error al eliminar la publicación:', error);
+                        alert('Error al eliminar la publicación: ' + error.message);
+                    }
                 }
-            } catch (error) {
-                console.error('Error al eliminar la publicación:', error);
-                alert('Error al eliminar la publicación: ' + error.message);
-            }
+            });
+            //SE ELIMINA DE MYSQL 
         }
-    });
-}
-
-
+        
         // Like
         const likeButton = document.getElementById(`likeBtn-${postId}`);
         likeButton.addEventListener('click', () => {
@@ -306,6 +289,7 @@ async function handleComment(postId) {
     }
     // Enviar comentario a MySQL a través de PHP
  try {
+    
     const datacoment = {
         comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
         comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
@@ -329,8 +313,8 @@ async function handleComment(postId) {
         alert("Error al guardar el comentario en MySQL." + datacoment);
     }
 } catch (error) {
-    console.error("Error al enviar el comentario a PHP:", error);
-    alert("Error al enviar el comentario a PHP.");
+  
+    alert("Error al enviar el comentario a PHP." + error);
 }
 
     try {
@@ -365,4 +349,6 @@ async function loadComments(postId) {
         });
     });
 }
+
+
 

@@ -4,17 +4,18 @@ require 'conexion.php';
 
 // Leer los datos JSON enviados desde JavaScript
 $datacoment = json_decode(file_get_contents('php://input'), true);
-
+error_log("Datos recibidos: " . json_encode($datacoment));
 // Verificar que los datos requeridos están presentes
 if (isset($datacoment['comentario']) && isset($datacoment['comentUser']) && isset($datacoment['comentPost'])) {
     $comentario = $datacoment['comentario']; // Cambiar 'comentario' a 'comentario'
     $comentUser = $datacoment['comentUser']; // Cambiar 'comentUser' a 'comentUser'
     $comentPost = $datacoment['comentPost']; // Cambiar 'comentPost' a 'comentPost'
     $fecha_comentario = date("Y-m-d H:i:s"); // Usar fecha actual
-
+    
     // Extraer los primeros 8 caracteres de comentUser para usarlo como matrícula
     $matricula = substr($comentUser, 0, 8);
 
+  
     // Preparar la consulta SQL para insertar el comentario
     $sql = "INSERT INTO comentarios (comentario, comentUser, fecha_comentario, comentPost) VALUES (?, ?, ?, ?)";
 
