@@ -184,7 +184,6 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
             });
         }
 
-        // Like
         const likeButton = document.getElementById(`likeBtn-${postId}`);
         likeButton.addEventListener('click', () => {
             handleLike(postId, postData.likes, postData.likedBy);
@@ -207,7 +206,6 @@ function fileIsVideo(url) {
     const extension = url.split('.').pop().toLowerCase();
     return videoExtensions.includes(extension);
 }
-
 // Función para manejar el "like"
 async function handleLike(postId, currentLikes, likedBy) {
     const user = auth.currentUser;
@@ -216,112 +214,146 @@ async function handleLike(postId, currentLikes, likedBy) {
         return;
     }
 
-    const userEmail = user.email;
+    const userEmail = user.email;  // Correo del usuario
 
     try {
-        const updatedLikes = likedBy && likedBy.includes(userEmail)
-            ? currentLikes - 1
-            : currentLikes + 1;
-        const updatedLikedBy = likedBy ? (likedBy.includes(userEmail) 
-            ? likedBy.filter(email => email !== userEmail)
-            : [...likedBy, userEmail])
-            : [userEmail];
+        // Si el usuario ya ha dado like, lo quitamos
+        if (likedBy && likedBy.includes(userEmail)) {
+            const updatedLikes = currentLikes > 0 ? currentLikes - 1 : 0;
+            const updatedLikedBy = likedBy.filter(email => email !== userEmail);
 
-        // Actualizar Firebase
-        await updateDoc(doc(db, 'post', postId), {
-            likes: updatedLikes,
-            likedBy: updatedLikedBy
-        });
+            // Actualizar el like en Firebase
+            await updateDoc(doc(db, 'post', postId), {
+                likes: updatedLikes,
+                likedBy: updatedLikedBy
+            });
 
-        // Actualizar el número de likes
-        document.getElementById(`likes-${postId}`).textContent = updatedLikes;
+            console.log('Like removido con éxito');
+        } else {
+            // Si el usuario no ha dado like, lo agregamos
+            await updateDoc(doc(db, 'post', postId), {
+                likes: currentLikes + 1,
+                likedBy: [...likedBy, userEmail]
+            });
 
-        // Enviar a MySQL
+            console.log('Like añadido con éxito');
+        }
+
+        // Enviar el like a MySQL
         const dataLike = {
             postId: postId,
             comentUser: userEmail,
-            date: new Date().toISOString()
+            date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
         };
+
+        // Imprimir los datos que se enviarán al servidor PHP
+        console.log("Datos que se enviarán a PHP:", JSON.stringify(dataLike));  // Esta línea muestra los datos en la consola
 
         const response = await fetch('../BACKEND/savelike.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataLike)
+            body: JSON.stringify(dataLike)  // Enviar los datos en formato JSON
         });
 
-        const result = await response.json();
-        if (result.success) {
-            console.log('Like guardado correctamente en MySQL');
-        } else {
-            console.error("Error al guardar el like en MySQL:", result.message);
+        // Obtener la respuesta como texto
+        const textResponse = await response.text();  // Aquí obtenemos la respuesta como texto
+
+        console.log("Respuesta cruda del servidor:", textResponse);  // Mostrar la respuesta cruda en la consola
+
+        // Intentar convertirla a JSON
+        try {
+            const result = JSON.parse(textResponse);  // Intentar analizar como JSON
+            console.log("Respuesta procesada como JSON:", result);
+
+            // Verificar la respuesta procesada
+            if (result.success) {
+                console.log('Like guardado correctamente en MySQL');
+            } else {
+                console.error("Error al guardar el like en MySQL:", result.message);
+            }
+        } catch (error) {
+            console.error("Error al procesar la respuesta JSON:", error);
         }
+
     } catch (error) {
         console.error('Error al manejar el like:', error);
     }
 }
 
-// Función para manejar los comentarios
+// Función para manejar el comentario
 async function handleComment(postId) {
-    const commentInput = document.getElementById(`commentInput-${postId}`);
-    const commentText = commentInput.value.trim();
     const user = auth.currentUser;
     if (!user) {
         alert("Debes iniciar sesión para comentar.");
         return;
     }
 
-    if (!commentText) {
-        alert("No puedes publicar un comentario vacío.");
+    const commentInput = document.getElementById(`commentInput-${postId}`);
+    const commentText = commentInput.value.trim();
+
+    if (commentText === '') {
+        alert("El comentario no puede estar vacío.");
         return;
     }
-
-    try {
-        const dataComment = {
-            postId: postId,
-            comentUser: user.email,
-            comentario: commentText,
-            date: new Date().toISOString()
-        };
-
-        // Enviar comentario a Firebase
-        await addDoc(collection(db, 'comments'), dataComment);
-
-        // Enviar comentario a MySQL
-        const response = await fetch('../BACKEND/savecoment.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dataComment)
-        });
-
-        const result = await response.json();
-        if (result.success) {
-            console.log('Comentario guardado correctamente en MySQL');
-        } else {
-            console.error('Error al guardar el comentario en MySQL:', result.message);
-        }
-
-        commentInput.value = ''; // Limpiar el campo de comentario
-    } catch (error) {
-        console.error('Error al guardar el comentario:', error);
-        alert('Error al guardar el comentario.');
+    // Enviar comentario a MySQL a través de PHP
+ try {
+    
+    const datacoment = {
+        comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
+        comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
+        comentPost: postId,                 // Cambiar a 'comentPost' como espera el PHP
+        date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
+    };
+// Mostrar los datos en la consola antes de enviarlos
+    console.log("Datos que se enviarán a PHP:", datacoment);
+    const response = await fetch('../BACKEND/savecoment.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datacoment)
+    });
+    console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
+    const result = await response.json();
+    console.log("Resultado del servidor:", result); // Verifica el JSON de respuesta
+    if (result.success) {
+        console.log("Comentario guardado en MySQL");
+    } else {
+        console.error("Error al guardar el comentario en MySQL:", result.message);
+        alert("Error al guardar el comentario en MySQL." + datacoment);
     }
+} catch (error) {
+  
+    alert("Error al enviar el comentario a PHP." + error);
 }
 
-// Función para cargar los comentarios
-async function loadComments(postId) {
-    const commentsContainer = document.getElementById(`comments-${postId}`);
-    commentsContainer.innerHTML = ''; // Limpiar los comentarios antes de cargar nuevos
+    try {
+        // Guardar el comentario en una subcolección 'comments' dentro de la publicación
+        await addDoc(collection(db, 'post', postId, 'comments'), {
+            username: user.email,
+            comment: commentText,
+            date: serverTimestamp()
+        });
 
-    const querySnapshot = await getDocs(collection(db, 'comments'));
-    querySnapshot.forEach(doc => {
-        const commentData = doc.data();
-        if (commentData.postId === postId) {
+        commentInput.value = ''; // Limpiar el campo de comentarios
+        alert("Comentario añadido con éxito");
+    } catch (error) {
+        console.error("Error al añadir el comentario:", error);
+        alert("Error al añadir el comentario.");
+    }
+}
+// Cargar los comentarios de una publicación
+async function loadComments(postId) {
+    const commentsDiv = document.getElementById(`comments-${postId}`);
+
+    const commentsQuery = query(collection(db, 'post', postId, 'comments'), orderBy('date', 'desc'));
+    const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
+        commentsDiv.innerHTML = ''; // Limpiar antes de cargar los nuevos comentarios
+
+        snapshot.forEach((doc) => {
+            const commentData = doc.data();
             const commentElement = document.createElement('div');
-            commentElement.innerHTML = `
-                <p><strong>${commentData.comentUser}:</strong> ${commentData.comentario}</p>
-                <p><small>${new Date(commentData.date).toLocaleString()}</small></p>
-            `;
-            commentsContainer.appendChild(commentElement);
-        }
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `<p><strong>${commentData.username}</strong>: ${commentData.comment}</p>`;
+            commentsDiv.appendChild(commentElement);
+        });
     });
 }
