@@ -170,14 +170,14 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
                             Tu navegador no soporta la reproducción de video.
                         </video>` :
                 `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) : ''}
-                        <p><strong>Likes:</strong> <span id="likes-${postId}">${postData.likes || 0}</span></p>
+                        <p><strong>Stars:</strong> <span id="likes-${postId}">${postData.likes || 0}</span></p>
                         <button id="likeBtn-${postId}">
                             <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
                         </button>
                         ${isAuthor ? `<button class="delete-btn" data-id="${postId}" style="background-color: red;">Eliminar</button>` : ''}
                         <nav class="level is-mobile">
                             <div class="level-left">
-                                <div id="comments-${postId}"></div>
+                                <div id="comments-${postId}" class="overflow-auto"></div>
                             </div>
                         </nav>
                         <input type="text" id="commentInput-${postId}" placeholder="Escribe un comentario..." style="width: 100%; margin-bottom: 10px;">
