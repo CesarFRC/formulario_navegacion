@@ -1,6 +1,6 @@
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 
 // Configuración de Firebase
@@ -20,6 +20,46 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
+
+
+//obtiene los datos del usuario desde la base de datos de mysql
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        const email = user.email;
+        let matricula = email.substring(0, 8); // Extract matricula from email
+
+        fetch('../BACKEND/viewperfileuser.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'email': email
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data.startsWith("Usuario no encontrado") || data.startsWith("Error") || data.startsWith("Email no proporcionado")) {
+                    alert(data); // Display error message if data is invalid
+                } else {
+                    const resultados = data.split("\n");
+                    let nameu = resultados[0];
+                    
+                    // Store data in localStorage
+                    localStorage.setItem("userName", nameu);
+                  
+                    
+                }
+            })
+            .catch(error => {
+                alert('Error:' + error); // Handle any request errors
+            });
+    }
+});
+
+const un = localStorage.getItem("userName");
+
+
 
 // Botón submit para publicar
 const submit = document.getElementById('submit');
@@ -57,6 +97,7 @@ submit.addEventListener("click", async function (event) {
     // Publicar en Firebase
     try {
         const docRef = await addDoc(collection(db, 'post'), {
+            name : un,
             username: user.email,
             date: serverTimestamp(),
             likes: 0,
@@ -94,7 +135,7 @@ submit.addEventListener("click", async function (event) {
 
     } catch (error) {
         console.error('Error al publicar o enviar los datos:', error);
-        alert('Error al publicar o enviar los datos.');
+        alert('Error al publicar o enviar los datos.' + error);
     }
 });
 
@@ -117,15 +158,18 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
             <article class="media box">
                 <div class="media-content">
                     <div class="content">
-                        <p id="otheruser-${postId}"><strong>Usuario:</strong> ${postData.username || 'Anónimo'}</p>
+                        <div id="otheruser-${postId}">
+                        <p ><strong>Usuario:</strong> ${postData.name || 'Anónimo'}</p>
+                        <p ><strong>Correo:</strong> ${postData.username || 'Anónimo'}</p>
+                        </div>
                         <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
                         <p>${postData.post}</p>
-                        ${postData.mediaURL ? (fileIsVideo(postData.mediaURL) ? 
-                        `<video controls class="post-media" width="400">
+                        ${postData.mediaURL ? (fileIsVideo(postData.mediaURL) ?
+                `<video controls class="post-media" width="400">
                             <source src="${postData.mediaURL}" type="video/mp4">
                             Tu navegador no soporta la reproducción de video.
                         </video>` :
-                        `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) : ''}
+                `<img src="${postData.mediaURL}" alt="Publicación multimedia" class="post-media">`) : ''}
                         <p><strong>Likes:</strong> <span id="likes-${postId}">${postData.likes || 0}</span></p>
                         <button id="likeBtn-${postId}">
                             <img src="../imgs/staricon.png" style="cursor: pointer; width: 30px; height: 30px;">
@@ -296,34 +340,34 @@ async function handleComment(postId) {
         return;
     }
     // Enviar comentario a MySQL a través de PHP
- try {
-    
-    const datacoment = {
-        comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
-        comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
-        comentPost: postId,                 // Cambiar a 'comentPost' como espera el PHP
-        date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
-    };
-// Mostrar los datos en la consola antes de enviarlos
-    console.log("Datos que se enviarán a PHP:", datacoment);
-    const response = await fetch('../BACKEND/savecoment.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datacoment)
-    });
-    console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
-    const result = await response.json();
-    console.log("Resultado del servidor:", result); // Verifica el JSON de respuesta
-    if (result.success) {
-        console.log("Comentario guardado en MySQL");
-    } else {
-        console.error("Error al guardar el comentario en MySQL:", result.message);
-        alert("Error al guardar el comentario en MySQL." + datacoment);
+    try {
+
+        const datacoment = {
+            comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
+            comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
+            comentPost: postId,                 // Cambiar a 'comentPost' como espera el PHP
+            date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
+        };
+        // Mostrar los datos en la consola antes de enviarlos
+        console.log("Datos que se enviarán a PHP:", datacoment);
+        const response = await fetch('../BACKEND/savecoment.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datacoment)
+        });
+        console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
+        const result = await response.json();
+        console.log("Resultado del servidor:", result); // Verifica el JSON de respuesta
+        if (result.success) {
+            console.log("Comentario guardado en MySQL");
+        } else {
+            console.error("Error al guardar el comentario en MySQL:", result.message);
+            alert("Error al guardar el comentario en MySQL." + datacoment);
+        }
+    } catch (error) {
+
+        alert("Error al enviar el comentario a PHP." + error);
     }
-} catch (error) {
-  
-    alert("Error al enviar el comentario a PHP." + error);
-}
 
     try {
         // Guardar el comentario en una subcolección 'comments' dentro de la publicación
