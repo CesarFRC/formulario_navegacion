@@ -17,6 +17,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+
+//CODIGO PARA SI NO TIENE LA COOKIE GUARDADA DIRIGE AL INICIO
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../index.html"; // Redirige a la página de inicio
+    } 
+});
 // Escucha el estado de autenticación y carga el perfil
 document.addEventListener("DOMContentLoaded", () => {
     onAuthStateChanged(auth, (user) => {
@@ -101,3 +108,5 @@ document.addEventListener("DOMContentLoaded", () => {
         } 
     });
 });
+
+

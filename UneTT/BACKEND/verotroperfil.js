@@ -1,3 +1,29 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+// Configuración de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U",
+    authDomain: "unett-4074c.firebaseapp.com",
+    databaseURL: "https://unett-4074c-default-rtdb.firebaseio.com",
+    projectId: "unett-4074c",
+    storageBucket: "unett-4074c.appspot.com",
+    messagingSenderId: "401481887315",
+    appId: "1:401481887315:web:fb8ff023da1ddb427020a6",
+    measurementId: "G-M3JLBLZX7R"
+};
+
+// Inicializa Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+//CODIGO PARA SI NO TIENE LA COOKIE GUARDADA DIRIGE AL INICIO
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../index.html"; // Redirige a la página de inicio
+    } 
+});
+
 const useremail = localStorage.getItem("perfilemail")
 let matricula = useremail.substring(0, 8);
 

@@ -22,6 +22,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 
+
 //obtiene los datos del usuario desde la base de datos de mysql
 auth.onAuthStateChanged((user) => {
     if (user) {
@@ -401,3 +402,10 @@ async function loadComments(postId) {
         });
     });
 }
+
+//CODIGO PARA SI NO TIENE LA COOKIE GUARDADA DIRIGE AL INICIO
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "../index.html"; // Redirige a la página de inicio
+    } 
+});
