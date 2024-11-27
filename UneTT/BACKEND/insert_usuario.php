@@ -1,5 +1,5 @@
 <?php
-// Datos de conexión
+// //invocamos el archivo php que creamos anterior mente en la carpeta backend 
 require 'conexion.php';
 
 // Verificar la conexión
@@ -13,19 +13,21 @@ function obtenerMatricula($Correo) {
 }
 
 // Recibir datos del formulario
-$Correo = $_POST['email'] ?? '';
-$UserName = $_POST['username'] ?? ''; // Cambia esto si se agrega al formulario
+$Correo = $_POST['email'] ?? ''; //Aqui esta el correo
+$UserName = $_POST['username'] ?? ''; // Aqui esta el nombre de usuario
 $Matricula = obtenerMatricula($Correo);
 $Contraseña = $_POST['password'] ?? ''; // Aquí puedes manejar la contraseña
 
-// Validar datos recibidos
+// Validar datos recibidos: Verifica si los campos de correo, nombre de usuario y contraseña están vacíos
 if (empty($Correo) || empty($UserName) || empty($Contraseña)) {
+        // Si alguno de los campos está vacío, muestra un mensaje y detiene la ejecución del script
     die("Por favor complete todos los campos.");
 }
 
-// Preparar la consulta SQL
+// Preparar la consulta SQL: La consulta inserta un nuevo registro en la tabla 'usuario'
 $sql = "INSERT INTO usuario (Matricula, UserName, Correo, Contraseña, fecha, foto_perfil, biografia)
         VALUES (?, ?, ?, ?, CURDATE(), NULL, 'Nuevo Usuario de UneTT')";
+        // La consulta SQL usa valores placeholders (?) para evitar inyecciones SQL
 $stmt = $conn->prepare($sql);
 
 // Verificar errores en la preparación de la consulta
@@ -33,15 +35,17 @@ if ($stmt === false) {
     die("Error en la preparación de la consulta: " . $conn->error);
 }
 
-// Vincular parámetros
+// Vincular parámetros: Asocia los valores de las variables a los placeholders en la consulta SQL
+// 'ssss' indica que los parámetros son de tipo string
 $stmt->bind_param("ssss", $Matricula, $UserName, $Correo, $Contraseña);
 
-// Ejecutar la consulta y manejar errores
+// Ejecutar la consulta y manejar errores: Ejecuta la consulta preparada
 if ($stmt->execute()) {
-    // Redirigir a la página de éxito
+    // Si la consulta se ejecuta correctamente, redirige al usuario a la página de éxito (index.html)
     header("Location: ../index.html");
     exit();
 } else {
+        // Si ocurre un error al insertar el registro, muestra un mensaje de error
     echo "Error al insertar el registro: " . $stmt->error;
 }
 

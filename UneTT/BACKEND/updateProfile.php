@@ -1,10 +1,12 @@
 <?php
+// Incluir el archivo que contiene la conexión a la base de datos
 require 'conexion.php';
 
-    $email = $conn->real_escape_string($_POST['correoelectronico']);
-    $newUsername = $conn->real_escape_string($_POST['username']);
-    $newPassword = isset($_POST['password']) ? $conn->real_escape_string($_POST['password']) : '';
-    $newBio = isset($_POST['bio']) ? $conn->real_escape_string($_POST['bio']) : '';
+// Escapar los datos recibidos del formulario para prevenir inyecciones SQL
+    $email = $conn->real_escape_string($_POST['correoelectronico']); // Correo del usuario
+    $newUsername = $conn->real_escape_string($_POST['username']); // Nuevo nombre de usuario
+    $newPassword = isset($_POST['password']) ? $conn->real_escape_string($_POST['password']) : ''; // Nueva contraseña (opcional)
+    $newBio = isset($_POST['bio']) ? $conn->real_escape_string($_POST['bio']) : '';   // Nueva biografía (opcional)
 
 
     // Preparar la consulta SQL
@@ -15,25 +17,27 @@ require 'conexion.php';
         $sql .= ", Contraseña = ?";
     }
 
-    // Completar la consulta
+// Agregar la cláusula `WHERE` para asegurar que se actualice el registro correcto
     $sql .= " WHERE Correo = ?";
 
-    // Preparar la declaración
+    // Preparar la declaración sql 
     $stmt = $conn->prepare($sql);
 
     // Verificar si se ha proporcionado una nueva contraseña
     if (!empty($newPassword)) {
-        // Si hay nueva contraseña, vincular todos los parámetros
+    // Si hay nueva contraseña, vincular todos los parámetros (nombre de usuario, biografía, contraseña, correo)
         $stmt->bind_param("ssss", $newUsername, $newBio, $newPassword, $email);
     } else {
-        // Si no hay nueva contraseña, vincular solo el nombre de usuario y la biografía
+    // Si no hay nueva contraseña, vincular solo nombre de usuario, biografía y correo
         $stmt->bind_param("sss", $newUsername, $newBio, $email);
     }
 
     // Ejecutar la declaración
     if ($stmt->execute()) {
+            // Si la ejecución es exitosa, imprimir un mensaje de éxito
         echo "Perfil actualizado con éxito.";
     } else {
+            // Si ocurre un error, mostrar el mensaje correspondiente
         echo "Error al actualizar el perfil: " . $stmt->error;
     }
 

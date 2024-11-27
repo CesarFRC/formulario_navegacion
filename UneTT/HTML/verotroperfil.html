@@ -5,16 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UneTT</title>
+        <!-- Enlace al framework Bulma para estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+        <!-- Scripts externos necesarios para funcionalidades -->
     <script type="module" src="../BACKEND/logout.js"></script>
     <script type="module" src="../BACKEND/verotroperfil.js"></script>
+        <!-- Estilos personalizados -->
     <style>
+                /* Configuración general de imágenes */
         img {
             display: inline-block;
             width: 3rem;
             height: 3rem;
         }
-
+                /* Barra de íconos en la parte superior derecha */
         .icon-bar {
             position: absolute;
             top: 1rem;
@@ -22,6 +26,7 @@
             display: flex;
             gap: 1rem;
         }
+        /* Estilos de la imagen de perfil */
 
         .profile-pic {
             width: 150px;
@@ -29,20 +34,20 @@
             border-radius: 50%;
             margin-bottom: 0.5rem; 
         }
-
+        /* Imagen en publicaciones */
         .publication-image {
             max-width: 100%;
             height: auto;
         }
-
+        /* Espaciado entre publicaciones */
         .publication-card {
             margin-bottom: 2rem;
         }
-
+        /* Configuración del tamaño del hero (encabezado) */
         .hero.is-custom-height {
             height: 75px;
         }
-
+        /* Contenedor principal del perfil */
         .profile-container {
             display: flex;
             align-items: flex-start; /* Cambiar a flex-start para mover botones hacia arriba */
@@ -86,7 +91,7 @@
         .title.is-4.has-text-centered {
             text-align: center;
         }
-
+        /* Otros estilos personalizados */
         #logoutt {
             display: inline-block;
             position: absolute;
@@ -113,7 +118,7 @@
         #editar {
             margin-bottom: 0.5rem; 
         }
-
+        /* Estilos responsivos para pantallas pequeñas */
         @media (max-width: 768px) {
             .profile-pic {
                 width: 100px;
@@ -143,7 +148,7 @@
                 height: 1.5rem;
             }
         }
-
+        /* Estilos responsivos para pantallas pequeñas */
         @media (min-width: 769px) and (max-width: 1024px) {
             .profile-pic {
                 width: 120px; 
@@ -163,6 +168,7 @@
 </head>
 
 <body>
+        <!-- Sección superior de encabezado (hero)-->
     <section class="hero is-small is-primary is-custom-height">
         <div class="hero-body">
             <p class="title" id="mis">Perfil <img src="../imgs/Unettlogo.png" id="logoutt"></p>
@@ -177,6 +183,7 @@
         </div>
     </section>
     <section class="section">
+        <!--Imagen predeterminada del logo utt-->
         <div class="container">
             <div class="box">
                 <div class="cover-banner" style="position: relative;">
@@ -187,6 +194,7 @@
                             alt="Foto de perfil">
                     </figure>
                 </div>
+                <!--Datos de usuario-->
                 <div class="profile-container">
                     <div class="username" id="USUL">
                         <p class="title is-4" id="name">Usuario1</p>
@@ -226,7 +234,7 @@
             </div>
         </div>
     </section>
-
+<!--Pie de pagina al final y donde muestran las publicaciones-->
     <div class="box">
         <h2 class="title is-4">Publicaciones</h2>
     </div>

@@ -7,27 +7,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario - UTT</title>
+    <!--Link para los estilos-->
     <link rel="stylesheet" href="../estilos/registro.css"> <!-- Enlaza el CSS aquí -->
+    <!--Funcionalidad con java scrip-->
     <script type="module" src="../BACKEND/register.js"></script>
     
 </head>
 <body>
+    <!--Inicia el contenedor-->
     <div class="container">
         <h1>Registro de Usuario</h1>
+        <!--action de php para mandar los datos a ese php y verificarlos-->
         <form action="../BACKEND/insert_usuario.php" method="POST">
-
+            <!--Campo nombre de usuario-->
             <label for="username">Nombre de Usuario:</label>
             <input type="text" id="username"  name="username" pattern="[a-zA-Z0-9._%+-]+@uttcampus\.edu\.mx" required maxlength="30">
-
+            <!--Campo de correo electronico-->
             <label for="correo">Correo Electrónico:</label>
             <input type="email" id="email" name="email" required maxlength="30">
-
+            <!--Campo de contraseña-->
             <label for="contrasena">Contraseña:</label>
             <input type="password" id="password" name="password" required maxlength="255">
-
+            <!--Boton para registrar el usuario-->
             <button type="submit" id="submit">Registrar</button>
             
-
+            <!--Enlaze para redirigir al usuario para el login -->
             <a href="../index.html">Ya tengo cuenta. Iniciar sesión</a>
         </form>
     </div>

@@ -1,30 +1,34 @@
 <?php
 // Configurar el encabezado de respuesta para JSON
 header('Content-Type: application/json');
+// Incluir el archivo que contiene la conexión a la base de datos
 require 'conexion.php';
 
-// Función para extraer los primeros 8 caracteres del correo
+// Función para extraer los primeros 8 caracteres de un correo electrónico o cadena
+// Generalmente, se usa para obtener la matrícula de un usuario a partir de su correo
 function extractMatricula($comentUser) {
-    return substr($comentUser, 0, 8);  // Extrae los primeros 8 caracteres
+    return substr($comentUser, 0, 8);  // Extrae y devuelve los primeros 8 caracteres
 }
 
-// Obtener los datos del cuerpo de la solicitud (los datos JSON enviados por el cliente)
+// Leer los datos enviados en el cuerpo de la solicitud (en formato JSON)
+// `file_get_contents('php://input')` obtiene los datos sin procesar de la solicitud
+// `json_decode` los convierte en un array asociativo PHP
 $data = json_decode(file_get_contents('php://input'), true);
 
 // Mostrar los datos que se están recibiendo (solo para depuración)
 echo json_encode(['received_data' => $data]);  // Esto imprimirá los datos recibidos como JSON
 
-// Comprobar si los datos están correctamente recibidos
+// Verificar si los datos necesarios están presentes en la solicitud
+// Si faltan `postId`, `comentUser` o `date`, se devuelve un mensaje de error y se detiene la ejecución
 if (!isset($data['postId']) || !isset($data['comentUser']) || !isset($data['date'])) {
     echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
     exit();
 }
-
-$postId = $data['postId'];
-$comentUser = $data['comentUser'];
-$date = $data['date'];
-
-// Extraer la matrícula a partir del correo electrónico
+// Asignar los datos recibidos a variables individuales para su procesamiento
+$postId = $data['postId'];   // Identificador de la publicación a la que se da "me gusta"
+$comentUser = $data['comentUser']; // Usuario que da "me gusta"
+$date = $data['date']; // Fecha y hora de la reacción
+// Extraer la matrícula del usuario a partir de su correo usando la función definida anteriormente
 $matricula = extractMatricula($comentUser);
 
 // Convertir la fecha al formato adecuado para MySQL
@@ -37,10 +41,10 @@ if ($conn->connect_error) {
     exit();
 }
 
-// Preparar la consulta para insertar los datos del "like" en la base de datos
+// Preparar la consulta para insertar los datos del "megusta" en la base de datos
 $sql = "INSERT INTO megusta (reacionUser, fecha_reacion, reacionPost) VALUES (?, ?, ?)";
 
-// Preparar la sentencia
+// Preparar la consulta utilizando una sentencia preparada
 $stmt = $conn->prepare($sql);
 
 if ($stmt === false) {
