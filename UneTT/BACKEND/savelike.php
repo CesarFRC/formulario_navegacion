@@ -15,8 +15,6 @@ function extractMatricula($comentUser) {
 // `json_decode` los convierte en un array asociativo PHP
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Mostrar los datos que se están recibiendo (solo para depuración)
-echo json_encode(['received_data' => $data]);  // Esto imprimirá los datos recibidos como JSON
 
 // Verificar si los datos necesarios están presentes en la solicitud
 // Si faltan `postId`, `comentUser` o `date`, se devuelve un mensaje de error y se detiene la ejecución

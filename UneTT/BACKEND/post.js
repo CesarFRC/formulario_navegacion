@@ -17,7 +17,7 @@ const firebaseConfig = {
     measurementId: "G-M3JLBLZX7R" // ID para medición y análisis (opcional)
 };
 
-// Inicializar Firebase
+
 // Inicializar Firebase con la configuración especificada
 const app = initializeApp(firebaseConfig);
 // Obtener la instancia de autenticación de Firebase
@@ -138,7 +138,6 @@ submit.addEventListener("click", async function (event) {  // Agrega un evento a
 
         const result = await response.json(); // Procesa la respuesta como JSON
         if (result.success) {
-            alert('Publicación exitosa'); // Notifica éxito en la publicación
             document.getElementById('postcontent').value = ''; // Limpiar el campo de texto
             fileInput.value = ''; // Limpiar el campo de archivos
         } else {
@@ -228,7 +227,6 @@ onSnapshot(query(collection(db, 'post') // Consulta a la colección 'post'
                     try {
                     // Eliminar la publicación de Firestore
                         await deleteDoc(doc(db, 'post', postId));
-                        alert("Publicación eliminada correctamente"); // Notifica al usuario que la publicación fue eliminada en Firebase
 
                          // Enviar solicitud para eliminar la publicación en MySQL
                         const data = { idFB: postId };  // Datos a enviar: ID de la publicación en Firebase
@@ -240,7 +238,6 @@ onSnapshot(query(collection(db, 'post') // Consulta a la colección 'post'
 
                         const result = await response.json();  // Convierte la respuesta en JSON
                         if (result.success) {
-                            alert("Publicación eliminada correctamente en MySQL"); // Confirma la eliminación en MySQL
                         } else {
                             alert(result.message);  // Muestra un mensaje de error proporcionado por el servidor
                         }
@@ -297,7 +294,6 @@ async function handleLike(postId, currentLikes, likedBy) {
                 likedBy: updatedLikedBy // Actualiza la lista de usuarios que han dado like
             });
 
-            console.log('Like removido con éxito'); // Mensaje en la consola para confirmar la acción
         } else {
              // El usuario no ha dado "like", por lo que se añadirá
             await updateDoc(doc(db, 'post', postId), {
@@ -305,7 +301,6 @@ async function handleLike(postId, currentLikes, likedBy) {
                 likedBy: [...likedBy, userEmail] // Agrega el correo del usuario a la lista de "likedBy"
             });
 
-            console.log('Like añadido con éxito'); // Mensaje en la consola para confirmar la acción
         }
 
         // Preparar los datos del "like" para enviarlos a MySQL
@@ -412,7 +407,6 @@ async function handleComment(postId) {
         // Limpiar el campo de texto del comentario una vez que se haya enviado
         commentInput.value = ''; // Limpiar el campo de comentarios
          // Mostrar un mensaje de éxito al usuario
-        alert("Comentario añadido con éxito");
     } 
     // Si hubo un error al añadir el comentario en Firestore, mostrar un mensaje de error
     catch (error) {
