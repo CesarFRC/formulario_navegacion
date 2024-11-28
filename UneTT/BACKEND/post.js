@@ -1,24 +1,30 @@
+// Importar las funciones necesarias desde los SDK de Firebase
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 
-// Configuración de Firebase
+// Configuración de Firebase para la aplicación web
+// Contiene claves y datos de conexión necesarios para integrar Firebase con el proyecto
 const firebaseConfig = {
-    apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U",
-    authDomain: "unett-4074c.firebaseapp.com",
-    databaseURL: "https://unett-4074c-default-rtdb.firebaseio.com",
-    projectId: "unett-4074c",
-    storageBucket: "unett-4074c.appspot.com",
-    messagingSenderId: "401481887315",
-    appId: "1:401481887315:web:fb8ff023da1ddb427020a6",
-    measurementId: "G-M3JLBLZX7R"
+    apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U", // Clave para autenticación de Firebase
+    authDomain: "unett-4074c.firebaseapp.com", // Dominio autorizado para el proyecto
+    databaseURL: "https://unett-4074c-default-rtdb.firebaseio.com",  // URL de la base de datos en tiempo real (opcional)
+    projectId: "unett-4074c",  // ID único del proyecto en Firebase
+    storageBucket: "unett-4074c.appspot.com", // URL para almacenamiento de archivos
+    messagingSenderId: "401481887315", // ID para mensajería en la nube (Firebase Cloud Messaging)
+    appId: "1:401481887315:web:fb8ff023da1ddb427020a6", // ID de la aplicación Firebase
+    measurementId: "G-M3JLBLZX7R" // ID para medición y análisis (opcional)
 };
 
 // Inicializar Firebase
+// Inicializar Firebase con la configuración especificada
 const app = initializeApp(firebaseConfig);
+// Obtener la instancia de autenticación de Firebase
 const auth = getAuth();
+//Iniciar servicio de base de datos en tiempo real 
 const db = getFirestore(app);
+//Iniciar servicio para guardar el contenido como imagenes, videos etc..
 const storage = getStorage(app);
 
 
@@ -29,132 +35,143 @@ auth.onAuthStateChanged((user) => {
         const email = user.email;
         let matricula = email.substring(0, 8); // Extract matricula from email
 
+        //Iniciamos el fetch para mandar los datos al php viewperfileuser 
         fetch('../BACKEND/viewperfileuser.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/x-www-form-urlencoded', // Tipo de contenido para la solicitud 
             },
             body: new URLSearchParams({
-                'email': email
+                'email': email //Variable email donde extraemos para los datos de matricula 
             })
         })
-            .then(response => response.text())
+        // Primera promesa: Manejo de la respuesta del servidor
+            .then(response => response.text()) // Convierte la respuesta del servidor a texto plano
             .then(data => {
+                // Verifica si hay errores en los datos recibidos
                 if (data.startsWith("Usuario no encontrado") || data.startsWith("Error") || data.startsWith("Email no proporcionado")) {
-                    alert(data); // Display error message if data is invalid
+                    alert(data); // Muestra un mensaje de error si hay problemas con los datos
                 } else {
-                    const resultados = data.split("\n");
-                    let nameu = resultados[0];
+                    const resultados = data.split("\n"); // Divide los datos recibidos por líneas
+                    let nameu = resultados[0]; // Toma la primera línea como el nombre del usuario
                     
-                    // Store data in localStorage
+                    // Guarda el nombre del usuario en localStorage
                     localStorage.setItem("userName", nameu);
                   
                     
                 }
             })
             .catch(error => {
-                alert('Error:' + error); // Handle any request errors
+                alert('Error:' + error); // Maneja errores que puedan ocurrir durante la petición
             });
     }
 });
-
+// Recupera el nombre de usuario almacenado en localStorage
 const un = localStorage.getItem("userName");
 
 
 
-// Botón submit para publicar
-const submit = document.getElementById('submit');
-submit.addEventListener("click", async function (event) {
-    event.preventDefault();
+// Configuración del botón de publicar
+const submit = document.getElementById('submit'); // Obtiene el botón de submit
+submit.addEventListener("click", async function (event) {  // Agrega un evento al botón
+    event.preventDefault(); // Evita el comportamiento por defecto del formulario
 
-    const user = auth.currentUser;
+    const user = auth.currentUser; // Obtiene el usuario autenticado en Firebase
     if (!user) {
-        alert("Debes iniciar sesión para publicar.");
+        alert("Debes iniciar sesión para publicar."); // Avisa si no hay sesión activa
         return;
     }
-
+     // Obtiene el contenido de la publicación
     let content = document.getElementById('postcontent').value;
-    const fileInput = document.getElementById('mediaUpload');
-    const file = fileInput.files[0];
+    const fileInput = document.getElementById('mediaUpload'); // Obtiene el input de archivo
+    const file = fileInput.files[0]; // Selecciona el archivo cargado (si existe)
 
+    // Verifica que no esté vacío el contenido ni falten archivos
     if (content === '' && !file) {
         alert("No puedes publicar contenido vacío.");
         return;
     }
 
-    let mediaURL = null;
+    let mediaURL = null; // URL del archivo cargado (si aplica)
     if (file) {
+        // Configura la referencia en Firebase Storage para subir el archivo
         const storageRef = ref(storage, `posts/${user.uid}/${file.name}`);
         try {
-            const snapshot = await uploadBytes(storageRef, file);
-            mediaURL = await getDownloadURL(snapshot.ref);
+            const snapshot = await uploadBytes(storageRef, file); // Sube el archivo a Firebase
+            mediaURL = await getDownloadURL(snapshot.ref);  // Obtiene la URL pública del archivo
         } catch (error) {
-            console.error("Error al subir el archivo:", error);
+            console.error("Error al subir el archivo:", error); // Muestra el error en consola
             alert("Error al subir el archivo.");
             return;
         }
     }
 
-    // Publicar en Firebase
+  // Publica los datos en Firebase Firestore
     try {
         const docRef = await addDoc(collection(db, 'post'), {
-            name : un,
-            username: user.email,
-            date: serverTimestamp(),
-            likes: 0,
-            likedBy: [],
-            post: content,
-            mediaURL: mediaURL
+            name : un, // Nombre del usuario
+            username: user.email, // Email del usuario autenticado
+            date: serverTimestamp(), // Fecha actual del servidor
+            likes: 0,  // Número inicial de "me gusta"
+            likedBy: [], // Lista inicial de usuarios que dieron "me gusta"
+            post: content, // Contenido de la publicación
+            mediaURL: mediaURL  // URL del archivo subido, si existe
         });
 
-        // Datos para enviar a PHP
+         // Prepara los datos para enviar al backend en PHP
         const data = {
-            username: user.email,
-            post: content,
-            mediaURL: mediaURL,
-            date: new Date().toISOString(),
-            postId: docRef.id
+            username: user.email,  // Email del usuario
+            post: content, // Contenido de la publicación
+            mediaURL: mediaURL, // URL del archivo subido
+            date: new Date().toISOString(), // Fecha en formato ISO
+            postId: docRef.id  // ID del documento creado en Firestore
         };
 
-        // Enviar datos de la publicación a PHP para MySQL
+        // Envia la publicación al backend (PHP) para almacenarla en MySQL
         const response = await fetch('../BACKEND/guardarPublicacion.php', {
-            method: 'POST',
+            method: 'POST', // Método POST para enviar datos
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json' // Tipo de contenido JSON
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data) // Convierte los datos a JSON para enviar
         });
 
-        const result = await response.json();
+        const result = await response.json(); // Procesa la respuesta como JSON
         if (result.success) {
-            alert('Publicación exitosa');
+            alert('Publicación exitosa'); // Notifica éxito en la publicación
             document.getElementById('postcontent').value = ''; // Limpiar el campo de texto
             fileInput.value = ''; // Limpiar el campo de archivos
         } else {
-            alert('Error al guardar la publicación en MySQL');
+            alert('Error al guardar la publicación en MySQL'); // Notifica errores en MySQL
         }
 
     } catch (error) {
+        // Maneja errores en la publicación o al enviar datos
         console.error('Error al publicar o enviar los datos:', error);
         alert('Error al publicar o enviar los datos.' + error);
     }
 });
 
-// Escuchar los cambios en la colección 'post' y mostrar las publicaciones
-onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) => {
-    const postList = document.getElementById('postList');
-    postList.innerHTML = ''; // Limpiar la lista antes de volver a llenarla
+// Escuchar los cambios en la colección 'post' de Firestore y actualizar la interfaz en tiempo real
+onSnapshot(query(collection(db, 'post') // Consulta a la colección 'post'
+, orderBy('date', 'desc')) // Ordena las publicaciones por fecha en orden descendente (más recientes primero) 
+, (snapshot) => { // Callback que se ejecuta cuando hay cambios en los datos
+    const postList = document.getElementById('postList'); // Obtiene el contenedor donde se mostrarán las publicaciones
+    postList.innerHTML = ''; // Limpia el contenido actual de la lista de publicaciones
 
+    // Itera sobre cada documento en el snapshot
     snapshot.forEach((postSnapshot) => {
-        const postData = postSnapshot.data();
-        const postId = postSnapshot.id;
+        const postData = postSnapshot.data();  // Obtiene los datos de la publicación
+        const postId = postSnapshot.id;  // Obtiene el ID único de la publicación
 
+        // Crea un elemento 'div' para representar una publicación
         const postElement = document.createElement('div');
-        postElement.classList.add('post');
+        postElement.classList.add('post'); // Añade una clase CSS al div
 
-        const user = auth.currentUser;
-        const isAuthor = postData.username === user?.email;
+        const user = auth.currentUser; // Obtiene el usuario actualmente autenticado
+        const isAuthor = postData.username === user?.email; // Verifica si el usuario autenticado es el autor de la publicación
 
+         // Define el contenido HTML de la publicación
         postElement.innerHTML = `
             <article class="media box">
                 <div class="media-content">
@@ -187,108 +204,115 @@ onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (snapshot) =>
                 </div>
             </article>
         `;
-
+        
+        // Agrega la publicación al contenedor principal
         postList.appendChild(postElement);
-
+        
+        // Navegación al perfil de otro usuario
         const btotrouser = document.getElementById(`otheruser-${postId}`);
         btotrouser.addEventListener('click', () => {
+            // Almacena el correo del usuario en localStorage para abrir su perfil
             localStorage.setItem("perfilemail", postData.username);
+            // Redirige a la página de perfil de otro usuario
             window.location.href = "../HTML/verotroperfil.html";
         });
 
         // Eliminar publicación
+        // Verificar si el usuario autenticado es el autor de la publicación para mostrar la opción de eliminar
         if (isAuthor) {
             const deleteButton = postElement.querySelector(`.delete-btn[data-id="${postId}"]`);
+            // Escucha el evento de clic en el botón de eliminar
             deleteButton.addEventListener('click', async () => {
                 const confirmDelete = confirm("¿Estás seguro de que deseas eliminar la publicación?");
-                if (confirmDelete) {
+                if (confirmDelete) { // Si el usuario confirma la eliminación
                     try {
-                        // Eliminar en Firebase
+                    // Eliminar la publicación de Firestore
                         await deleteDoc(doc(db, 'post', postId));
-                        alert("Publicación eliminada correctamente");
+                        alert("Publicación eliminada correctamente"); // Notifica al usuario que la publicación fue eliminada en Firebase
 
-                        // Eliminar en MySQL
-                        const data = { idFB: postId };
+                         // Enviar solicitud para eliminar la publicación en MySQL
+                        const data = { idFB: postId };  // Datos a enviar: ID de la publicación en Firebase
                         const response = await fetch('../BACKEND/eliminar_publicacion.php', {
-                            method: 'DELETE',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
+                            method: 'DELETE', // Método DELETE para la solicitud HTTP
+                            headers: { 'Content-Type': 'application/json' },  // Especifica que los datos enviados son JSON
+                            body: JSON.stringify(data) // Convierte los datos a formato JSON
                         });
 
-                        const result = await response.json();
+                        const result = await response.json();  // Convierte la respuesta en JSON
                         if (result.success) {
-                            alert("Publicación eliminada correctamente en MySQL");
+                            alert("Publicación eliminada correctamente en MySQL"); // Confirma la eliminación en MySQL
                         } else {
-                            alert(result.message);
+                            alert(result.message);  // Muestra un mensaje de error proporcionado por el servidor
                         }
                     } catch (error) {
-                        console.error('Error al eliminar la publicación:', error);
-                        alert('Error al eliminar la publicación: ' + error.message);
+                        console.error('Error al eliminar la publicación:', error); // Registra el error en la consola
+                        alert('Error al eliminar la publicación: ' + error.message); // Muestra un mensaje de error al usuario
                     }
                 }
             });
         }
 
-        const likeButton = document.getElementById(`likeBtn-${postId}`);
+        const likeButton = document.getElementById(`likeBtn-${postId}`); // Obtiene el botón de "me gusta" por ID
         likeButton.addEventListener('click', () => {
-            handleLike(postId, postData.likes, postData.likedBy);
+            handleLike(postId, postData.likes, postData.likedBy); // Llama a la función para manejar el "me gusta"
         });
 
         // Comentario
-        const commentButton = document.getElementById(`commentBtn-${postId}`);
+        const commentButton = document.getElementById(`commentBtn-${postId}`);  // Obtiene el botón para agregar un comentario
         commentButton.addEventListener('click', () => {
-            handleComment(postId);
+            handleComment(postId); // Llama a la función para manejar el envío del comentario
         });
 
-        // Cargar los comentarios
-        loadComments(postId);
+        // Cargar comentarios existentes
+        loadComments(postId); // Llama a la función para cargar los comentarios de la publicación
     });
 });
 
-// Función para verificar si es un video
+// Función para verificar si un archivo es un video basado en su extensión
 function fileIsVideo(url) {
-    const videoExtensions = ['mp4', 'webm', 'ogg'];
-    const extension = url.split('.').pop().toLowerCase();
-    return videoExtensions.includes(extension);
+    const videoExtensions = ['mp4', 'webm', 'ogg'];  // Extensiones de video permitidas
+    const extension = url.split('.').pop().toLowerCase(); // Obtiene la extensión del archivo en minúsculas
+    return videoExtensions.includes(extension); // Verifica si la extensión está en la lista permitida
 }
-// Función para manejar el "like"
+// Función para manejar el "like" en una publicación
 async function handleLike(postId, currentLikes, likedBy) {
-    const user = auth.currentUser;
-    if (!user) {
-        alert("Debes iniciar sesión para dar like.");
-        return;
+    const user = auth.currentUser; // Obtiene el usuario actualmente autenticado
+    if (!user) { // Si no hay un usuario autenticado
+        alert("Debes iniciar sesión para dar like."); // Muestra un mensaje de advertencia
+        return; // Sale de la función
     }
 
-    const userEmail = user.email;  // Correo del usuario
+    const userEmail = user.email;  // Correo del usuario autenticado
 
     try {
-        // Si el usuario ya ha dado like, lo quitamos
+        // Verificar si el usuario ya ha dado "like" a la publicación
         if (likedBy && likedBy.includes(userEmail)) {
-            const updatedLikes = currentLikes > 0 ? currentLikes - 1 : 0;
-            const updatedLikedBy = likedBy.filter(email => email !== userEmail);
+             // El usuario ya dio "like", por lo que se removerá
+            const updatedLikes = currentLikes > 0 ? currentLikes - 1 : 0; // Resta un "like" si es posible (nunca por debajo de 0)
+            const updatedLikedBy = likedBy.filter(email => email !== userEmail); // Remueve el correo del usuario de la lista de "likedBy"
 
             // Actualizar el like en Firebase
             await updateDoc(doc(db, 'post', postId), {
-                likes: updatedLikes,
-                likedBy: updatedLikedBy
+                likes: updatedLikes, // Actualiza el conteo de likes
+                likedBy: updatedLikedBy // Actualiza la lista de usuarios que han dado like
             });
 
-            console.log('Like removido con éxito');
+            console.log('Like removido con éxito'); // Mensaje en la consola para confirmar la acción
         } else {
-            // Si el usuario no ha dado like, lo agregamos
+             // El usuario no ha dado "like", por lo que se añadirá
             await updateDoc(doc(db, 'post', postId), {
-                likes: currentLikes + 1,
-                likedBy: [...likedBy, userEmail]
+                likes: currentLikes + 1, // Incrementa el conteo de likes
+                likedBy: [...likedBy, userEmail] // Agrega el correo del usuario a la lista de "likedBy"
             });
 
-            console.log('Like añadido con éxito');
+            console.log('Like añadido con éxito'); // Mensaje en la consola para confirmar la acción
         }
 
-        // Enviar el like a MySQL
+        // Preparar los datos del "like" para enviarlos a MySQL
         const dataLike = {
-            postId: postId,
-            comentUser: userEmail,
-            date: new Date().toISOString() // Formato ISO para compatibilidad con PHP
+            postId: postId, // ID de la publicación
+            comentUser: userEmail,  // Correo del usuario que dio "like"
+            date: new Date().toISOString() // Fecha actual en formato ISO (compatible con PHP)
         };
 
         // Imprimir los datos que se enviarán al servidor PHP
@@ -327,22 +351,26 @@ async function handleLike(postId, currentLikes, likedBy) {
 
 // Función para manejar el comentario
 async function handleComment(postId) {
+        // Obtener el usuario actualmente autenticado desde Firebase
     const user = auth.currentUser;
+        // Si no hay un usuario autenticado, mostramos un mensaje y detenemos el proceso
+
     if (!user) {
         alert("Debes iniciar sesión para comentar.");
         return;
     }
-
+    // Obtener el campo de entrada del comentario en el formulario correspondiente a la publicación
     const commentInput = document.getElementById(`commentInput-${postId}`);
+        // Obtener el texto del comentario y eliminar los espacios en blanco al principio y al final
     const commentText = commentInput.value.trim();
-
+    // Si el campo de comentario está vacío, mostramos una alerta
     if (commentText === '') {
         alert("El comentario no puede estar vacío.");
         return;
     }
-    // Enviar comentario a MySQL a través de PHP
+        // Intentar enviar el comentario a través de una petición POST al backend en PHP
     try {
-
+ // Crear un objeto con los datos que se enviarán a PHP
         const datacoment = {
             comentario: commentText,           // Cambiar a 'comentario' como espera el PHP
             comentUser: user.email,            // Cambiar a 'comentUser' como espera el PHP
@@ -351,61 +379,72 @@ async function handleComment(postId) {
         };
         // Mostrar los datos en la consola antes de enviarlos
         console.log("Datos que se enviarán a PHP:", datacoment);
+        // Enviar la petición POST a 'savecoment.php' usando fetch
         const response = await fetch('../BACKEND/savecoment.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datacoment)
+            headers: { 'Content-Type': 'application/json' }, // Indicamos que los datos se envían como JSON
+            body: JSON.stringify(datacoment) // Convertimos el objeto JavaScript a JSON
         });
-        console.log("Estado de la respuesta:", response.status); // Verifica el estado de la respuesta
-        const result = await response.json();
-        console.log("Resultado del servidor:", result); // Verifica el JSON de respuesta
+         // Mostrar el estado de la respuesta para ver si la petición fue exitosa
+        console.log("Estado de la respuesta:", response.status);   // 200 significa éxito
+        const result = await response.json();  // Parseamos la respuesta como JSON
+        console.log("Resultado del servidor:", result); // Verificar el JSON de respuesta
+        // Si el servidor indicó que el comentario se guardó correctamente, mostramos un mensaje
         if (result.success) {
+// Si hubo un error en el servidor, mostramos un mensaje con la descripción del error
             console.log("Comentario guardado en MySQL");
         } else {
             console.error("Error al guardar el comentario en MySQL:", result.message);
             alert("Error al guardar el comentario en MySQL." + datacoment);
         }
     } catch (error) {
-
+// Si hubo un error al hacer la petición a PHP, mostramos una alerta
         alert("Error al enviar el comentario a PHP." + error);
     }
-
+     // Intentar guardar el comentario también en Firestore en la subcolección de comentarios
     try {
-        // Guardar el comentario en una subcolección 'comments' dentro de la publicación
+        // Guardar el comentario en Firestore en la subcolección 'comments' de la publicación
         await addDoc(collection(db, 'post', postId, 'comments'), {
-            username: user.email,
-            comment: commentText,
-            date: serverTimestamp()
+            username: user.email,  // El correo del usuario que realiza el comentario
+            comment: commentText, // El contenido del comentario
+            date: serverTimestamp() // Usamos el timestamp de servidor para la fecha
         });
-
+        // Limpiar el campo de texto del comentario una vez que se haya enviado
         commentInput.value = ''; // Limpiar el campo de comentarios
+         // Mostrar un mensaje de éxito al usuario
         alert("Comentario añadido con éxito");
-    } catch (error) {
+    } 
+    // Si hubo un error al añadir el comentario en Firestore, mostrar un mensaje de error
+    catch (error) {
         console.error("Error al añadir el comentario:", error);
         alert("Error al añadir el comentario.");
     }
 }
-// Cargar los comentarios de una publicación
+// Función para cargar los comentarios de una publicación desde Firestore
 async function loadComments(postId) {
+     // Obtener el contenedor donde se mostrarán los comentarios de la publicación
     const commentsDiv = document.getElementById(`comments-${postId}`);
-
+ // Crear una consulta para obtener los comentarios ordenados por fecha de manera descendente
     const commentsQuery = query(collection(db, 'post', postId, 'comments'), orderBy('date', 'desc'));
+    // Establecer un 'onSnapshot' para escuchar los cambios en la colección de comentarios en tiempo real
     const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
-        commentsDiv.innerHTML = ''; // Limpiar antes de cargar los nuevos comentarios
-
+        // Limpiar el contenedor de comentarios antes de cargar los nuevos
+        commentsDiv.innerHTML = ''; 
+        // Iterar sobre los comentarios obtenidos del snapshot
         snapshot.forEach((doc) => {
-            const commentData = doc.data();
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
-            commentElement.innerHTML = `<p><strong>${commentData.username}</strong>: ${commentData.comment}</p>`;
-            commentsDiv.appendChild(commentElement);
+            const commentData = doc.data(); // Obtener los datos de cada comentario
+            const commentElement = document.createElement('div'); // Crear un elemento div para el comentario
+            commentElement.classList.add('comment'); // Añadir una clase CSS para estilizar los comentarios
+            commentElement.innerHTML = `<p><strong>${commentData.username}</strong>: ${commentData.comment}</p>`;  // Establecer el contenido del comentario
+            commentsDiv.appendChild(commentElement);  // Añadir el comentario al contenedor
         });
     });
 }
 
-//CODIGO PARA SI NO TIENE LA COOKIE GUARDADA DIRIGE AL INICIO
+// Función que verifica si el usuario está autenticado, y si no, redirige a la página de inicio
 onAuthStateChanged(auth, (user) => {
     if (!user) {
+        // Si no hay usuario autenticado, redirige a la página de inicio
         window.location.href = "../index.html"; // Redirige a la página de inicio
     } 
 });

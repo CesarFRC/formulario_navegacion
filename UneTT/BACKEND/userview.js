@@ -15,12 +15,12 @@ const firebaseConfig = {
     measurementId: "G-M3JLBLZX7R"
 };
 
-// Initialize Firebase
+// Inicializa Firebase con la configuración proporcionada
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const analytics = getAnalytics(app); // Inicializa Analytics para el seguimiento de eventos
 
 
-
+// Obtén la instancia de autenticación de Firebase
 const auth = getAuth();
 //CODIGO PARA SI NO TIENE LA COOKIE GUARDADA DIRIGE AL INICIO
 onAuthStateChanged(auth, (user) => {
@@ -31,48 +31,55 @@ onAuthStateChanged(auth, (user) => {
 
 
 
-// Check if user is authenticated
+// Verifica si el usuario está autenticado y obtiene sus datos
 auth.onAuthStateChanged((user) => {
     if (user) {
+        // Extrae el correo electrónico del usuario
         const email = user.email;
-        let matricula = email.substring(0, 8); // Extract matricula from email
+         // Obtén la matrícula a partir del correo (los primeros 8 caracteres)
+        let matricula = email.substring(0, 8); 
 
+        // Realiza una solicitud al servidor para obtener el perfil del usuario
         fetch('../BACKEND/viewperfileuser.php', {
-            method: 'POST',
+            method: 'POST', 
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/x-www-form-urlencoded', // Tipo de contenido para la solicitud 
             },
             body: new URLSearchParams({
-                'email': email
+                'email': email // Envía el correo como parámetro
             })
         })
-        .then(response => response.text())
+        .then(response => response.text()) // Convierte la respuesta en texto
         .then(data => {
+             // Verifica si los datos devueltos contienen errores
             if (data.startsWith("Usuario no encontrado") || data.startsWith("Error") || data.startsWith("Email no proporcionado")) {
-                alert(data); // Display error message if data is invalid
+                alert(data);  // Muestra un mensaje de error si es el caso
             } else {
+                // Divide los datos recibidos en líneas para extraer la información
                 const resultados = data.split("\n");
+                 // Asigna valores recibidos a variables (con valores predeterminados si faltan)
                 let username = resultados[0];
                 let biografia = resultados.length > 1 ? resultados[1] : 'No biografia';
                 let fecha = resultados.length > 2 ? resultados[2] : 'No fecha';
 
-                // Store data in localStorage
+                // Almacena los datos en localStorage para uso futuro
                 localStorage.setItem("userName", username);
                 localStorage.setItem("bio", biografia);
                 localStorage.setItem("fecha", fecha);
                 localStorage.setItem("email", email);
                 localStorage.setItem("matricula", matricula);
 
-                // Display data on the current page
-                document.getElementById('name').textContent = username;
-                document.getElementById('correoelectronico').value = email;
-                document.getElementById('matricula').value = matricula;
-                document.getElementById('bio').value = biografia;
-                document.getElementById('fecha').value = fecha;
+                 // Muestra los datos en la página actual
+                document.getElementById('name').textContent = username; // Nombre de usuario
+                document.getElementById('correoelectronico').value = email; // Correo electrónico
+                document.getElementById('matricula').value = matricula; // Matrícula
+                document.getElementById('bio').value = biografia; // Biografía
+                document.getElementById('fecha').value = fecha;  // Fecha de creación
             }
         })
         .catch(error => {
-            alert('Error:' + error); // Handle any request errors
+                        // Maneja cualquier error en la solicitud al servidor
+            alert('Error:' + error); 
         });
     }
 });
