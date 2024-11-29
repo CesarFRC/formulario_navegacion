@@ -6,8 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - UneTT</title>
     <link rel="stylesheet" href="../estilos/styles.css"> <!-- archivo CSS personalizado -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"> <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <!-- Bulma CSS -->
     <script type="module" src="../BACKEND/login.js"></script>
+
+    <script>
+        //boton de descargar la app desde el boton de descarga
+        const fileUrl = 'http://34.224.27.117/UneTT.apk';
+
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        downloadBtn.addEventListener("click", function (event) {
+            alert(10);
+            
+        })
+
+
+        /*downloadBtn.addEventListener('click', () => {
+            // Crear un enlace temporal
+            const link = document.createElement('a');
+            link.href = fileUrl; // Establecer la URL del archivo
+            link.download = ''; // Este atributo sugiere descargar el archivo
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); // Eliminar el enlace después de usarlo
+        }); */
+
+    </script>
 
     <script>
         const imagenes = [
@@ -15,20 +40,20 @@
             '../imgs/utt_arcoiris.jpg',
             '../imgs/background.jpg'
         ];
-    
+
         let indiceImagen = 0;
-    
+
         function cambiarFondo() {
             indiceImagen = (indiceImagen + 1) % imagenes.length;
             document.body.style.backgroundImage = `url(${imagenes[indiceImagen]})`;
         }
-    
+
         setInterval(cambiarFondo, 5000);
     </script>
-    
 
-     <!-- scrip para iniciar session cuando ya este activo el usuario  -->
-     <script type="module">
+
+    <!-- scrip para iniciar session cuando ya este activo el usuario  -->
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
@@ -55,11 +80,11 @@
                 if (user.emailVerified) {
                     window.location.href = "../HTML/pInicial.html"; // Redirige a la página principal
                 } else {
-                    
+
                 }
             } else {
                 // Si no está autenticado, redirigir al login
-                
+
             }
         });
 
@@ -70,7 +95,7 @@
     <header class="encabezado">
         <img src="../imgs/banner_2024_aniversario_logo.jpg" class="ban">
     </header>
-    
+
     <div class="form-container">
         <img src="../imgs/Unettlogo.png" class="logoutt">
         <h2>La Universidad Tecnológica de Torreón te conecta con el futuro y te impulsa hacia el éxito.</h2>
@@ -81,20 +106,22 @@
             <a href="../HTML/registro.html">Crear cuenta nueva</a>
         </form>
     </div>
-    
+
     <section class="sec">
         <div class="sec-content">
             <img src="imgs/slidetecnology.png" class="slideimage">
             <div class="text-content">
                 <h1 id="acerca" class="title">ACERCA DE</h1>
                 <h2 id="Enfocada" class="subtitle">
-                    UneTT es una red social enfocada a los estudiantes de la Universidad Tecnología de Torreón, con el fin de que los estudiantes encuentren una comunidad donde se vean identificados y logren compartir sus ideas a los demás.
+                    UneTT es una red social enfocada a los estudiantes de la Universidad Tecnología de Torreón, con el
+                    fin de que los estudiantes encuentren una comunidad donde se vean identificados y logren compartir
+                    sus ideas a los demás.
                 </h2>
             </div>
         </div>
         <div class="buttons">
-            <button class="button is-primary">Descargar Aplicacion</button>
-          </div>
+            <button class="button is-primary" id="downloadBtn">Descargar Aplicacion</button>
+        </div>
     </section>
     <script>
         document.addEventListener("DOMContentLoaded", () => {

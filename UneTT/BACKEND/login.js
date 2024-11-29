@@ -25,9 +25,9 @@ const submit = document.getElementById('submit');
 // Agregar un evento 'click' al botón de envío
 submit.addEventListener("click", function (event) {
     event.preventDefault()// Evitar el envío predeterminado del formulario
-        // Obtener la instancia de autenticación de Firebase
+    // Obtener la instancia de autenticación de Firebase
     const auth = getAuth();
-        // Capturar los valores del formulario (correo y contraseña)
+    // Capturar los valores del formulario (correo y contraseña)
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
@@ -55,11 +55,11 @@ submit.addEventListener("click", function (event) {
             // Imprimir en consola los datos recibidos desde el backend
             console.log(data);
             // Usar Firebase para iniciar sesión con correo y contraseña
-            signInWithEmailAndPassword(auth, email,password)
+            signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-            // Si el inicio de sesión es exitoso, obtener el usuario 
+                    // Si el inicio de sesión es exitoso, obtener el usuario 
                     const user = userCredential.user;
-            // Verificar si el correo del usuario está verificado
+                    // Verificar si el correo del usuario está verificado
                     if (user.emailVerified) {
                         // Si está verificado, redirigir al usuario a la página inicial
                         window.location.href = "../HTML/pInicial.html";
@@ -69,7 +69,7 @@ submit.addEventListener("click", function (event) {
                     }
                 })
                 .catch((error) => {
-            // Manejo de errores al iniciar sesión con Firebase
+                    // Manejo de errores al iniciar sesión con Firebase
                     const errorCode = error.code; // Código del error
                     const errorMessage = error.message; // Mensaje descriptivo del error
                     alert(errorMessage) // Mostrar mensaje de error al usuario
@@ -81,4 +81,22 @@ submit.addEventListener("click", function (event) {
             alert("error" + error)
 
         });
+})
+
+
+//boton para descargar la apk
+const downloadBtn = document.getElementById('downloadBtn');
+
+downloadBtn.addEventListener("click", function (event) {
+    const fileUrl = 'http://34.224.27.117/UneTT.apk';
+
+    // Crear un enlace temporal
+    const link = document.createElement('a');
+    link.href = fileUrl; // Establecer la URL del archivo
+    link.download = ''; // Este atributo sugiere descargar el archivo
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link); // Eliminar el enlace después de usarlo
+
+
 })
