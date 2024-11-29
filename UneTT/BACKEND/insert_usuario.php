@@ -25,8 +25,8 @@ if (empty($Correo) || empty($UserName) || empty($Contraseña)) {
 }
 
 // Preparar la consulta SQL: La consulta inserta un nuevo registro en la tabla 'usuario'
-$sql = "INSERT INTO usuario (Matricula, UserName, Correo, Contraseña, fecha, foto_perfil, biografia)
-        VALUES (?, ?, ?, ?, CURDATE(), NULL, 'Nuevo Usuario de UneTT')";
+$sql = "INSERT INTO usuario (Matricula, UserName, Correo, Contraseña, fecha, biografia)
+        VALUES (?, ?, ?, ?, CURDATE(),'Nuevo Usuario de UneTT')";
         // La consulta SQL usa valores placeholders (?) para evitar inyecciones SQL
 $stmt = $conn->prepare($sql);
 
