@@ -43,7 +43,6 @@ submit.addEventListener("click", function (event) {
             .then((userCredential) => {
                 // Usuario creado exitosamente
                 const user = userCredential.user;
-                alert("Registrado correctamente en firebase")
                  // Enviar correo de verificación al usuario
                 sendEmailVerification(user)
                     .then(() => {
@@ -74,7 +73,6 @@ submit.addEventListener("click", function (event) {
                     })
                     .then(data => {
                         console.log(data); // Mostrar la respuesta del servidor en la consola
-                        alert("se registro correctamente en la base de datos")
                         window.location.href = "../index.html"; // Redirigir al usuario a la página de inicio
 
 
