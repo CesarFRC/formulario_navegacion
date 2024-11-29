@@ -140,3 +140,9 @@ a:hover {
         max-height: 100px;
     }
 }
+
+.buttons{
+    text-align: center; 
+    width: 13rem; 
+    margin: 0 auto;
+}
