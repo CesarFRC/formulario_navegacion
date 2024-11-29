@@ -31,7 +31,7 @@ submit.addEventListener("click", function (event) {
         // Llamar a la función `signOut` para cerrar sesión del usuario actual
     signOut(auth).then(() => {
         // Cierre de sesión exitoso
-        alert("Has cerrado sesión exitosamente.");  // Mostrar mensaje de confirmación al usuario
+        
         window.location.href = "../index.html";  // Redirigir al usuario a la página de inicio
     }).catch((error) => {
 // Manejar errores durante el cierre de sesión
