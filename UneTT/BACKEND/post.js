@@ -400,7 +400,7 @@ async function handleComment(postId) {
     try {
         // Guardar el comentario en Firestore en la subcolección 'comments' de la publicación
         await addDoc(collection(db, 'post', postId, 'comments'), {
-            username: user.email,  // El correo del usuario que realiza el comentario
+            username: un,  // El correo del usuario que realiza el comentario
             comment: commentText, // El contenido del comentario
             date: serverTimestamp() // Usamos el timestamp de servidor para la fecha
         });
