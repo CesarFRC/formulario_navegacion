@@ -92,18 +92,18 @@ document.addEventListener("DOMContentLoaded", () => {
                                         window.location.href = "../HTML/ver_perfil.html"; // Redirige al perfil después de la actualización
                                     })
                                     .catch((error) => {
-                                        alert("Error al actualizar los datos " + error.message); // Muestra error si falla la actualización
+                                        alert("Error al actualizar los datos "); // Muestra error si falla la actualización
                                     });
                             })
                             .catch((error) => {
-                                alert("Error al reautenticar: " + error.message); // Muestra error si la reautenticación falla
+                                alert("Error al reautenticar: "); // Muestra error si la reautenticación falla
                             });
                     } else {
                         alert("La contraseña actual es necesaria para actualizar tus datos");  // Si no se ingresa la contraseña actual
                     }
                 })
                 .catch(error => {
-                    alert("Error al actualizar perfil: " + error.message); // Muestra error si falla la actualización del perfil
+                    alert("Error al actualizar perfil: "); // Muestra error si falla la actualización del perfil
                 });
             });
         } 

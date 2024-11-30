@@ -92,7 +92,16 @@ submit.addEventListener("click", function (event) {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert(errorMessage)
+                if (errorCode === "auth/weak-password") {
+                    // Caso: La contraseña es demasiado corta
+                    alert("La contraseña es demasiado corta. Debe tener al menos 6 caracteres.");
+                } else if (errorCode === "auth/email-already-in-use") {
+                    // Caso: El correo ya está registrado
+                    alert("El correo ya está registrado en otra cuenta.");
+                } else {
+                    // Otros errores
+                    alert("Ocurrió un error. Por favor, intenta nuevamente.");
+                }
                 // ..
             });
 
