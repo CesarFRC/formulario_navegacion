@@ -14,6 +14,7 @@
     <script type="module" src="../BACKEND/post.js"></script>
 
     <style>
+        
         /* Contenedor principal de la publicación */
         .media,
         .post-item {
@@ -104,6 +105,19 @@
             width: 15rem;
             transform: scale(0.8);
         }
+        /* Efecto por defecto */
+.hover-effect {
+    color: inherit; /* Mantiene el color actual */
+    cursor: pointer; /* Cambia el cursor a mano */
+    transition: color 0.3s ease, transform 0.3s ease; /* Suaviza la transición */
+}
+
+/* Efecto hover */
+.hover-effect:hover {
+    color: #007bff; /* Cambia el color a un azul tipo enlace */
+    text-decoration: underline; /* Subraya el texto */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
 
         @media (max-width: 768px) {
 
@@ -314,6 +328,16 @@
 
     </style>
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Inicializar tooltips
+  document.addEventListener('DOMContentLoaded', function () {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+  });
+</script>
 
 <body>
     <!-- Sección de Encabezado -->

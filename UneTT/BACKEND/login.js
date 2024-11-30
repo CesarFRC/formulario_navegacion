@@ -72,8 +72,7 @@ submit.addEventListener("click", function (event) {
                     // Manejo de errores al iniciar sesión con Firebase
                     const errorCode = error.code; // Código del error
                     const errorMessage = error.message; // Mensaje descriptivo del error
-                    alert(errorMessage) // Mostrar mensaje de error al usuario
-                    alert(errorCode) // Mostrar el código del error (opcional)
+                    alert("Hubo un error al intentar iniciar sesión.") // Mostrar mensaje de error al usuario
                 });
         })
         .catch(error => {
