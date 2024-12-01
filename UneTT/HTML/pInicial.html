@@ -463,7 +463,35 @@ submitButton.addEventListener('click', (event) => {
         submitButton.disabled = true; // Deshabilita el botón hasta que haya contenido nuevo
     }
 });
+    </script>
 
+    <script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const fileInput = document.getElementById('mediaUpload');
+    const fileNameDisplay = document.getElementById('fileName');
+    const deleteButton = document.getElementById('deleteButton');
+    
+    // Inicializa el estado del archivo, para que no haya nombres duplicados
+    fileNameDisplay.textContent = '';
+
+    // Cuando se selecciona un archivo
+    fileInput.addEventListener('change', function () {
+        const files = fileInput.files;
+        if (files.length > 0) {
+        } else {
+            // Si no hay archivos seleccionados, limpiar el nombre
+            fileNameDisplay.textContent = '';
+        }
+    });
+    
+    // Cuando se hace clic en el botón "Eliminar archivo"
+    deleteButton.addEventListener('click', function () {
+        // Limpiar el archivo seleccionado
+        fileInput.value = '';
+        // Limpiar el nombre mostrado
+        fileNameDisplay.textContent = '';
+    });
+});
     </script>
 </body>
 
