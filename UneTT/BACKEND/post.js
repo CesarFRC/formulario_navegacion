@@ -176,10 +176,10 @@ onSnapshot(query(collection(db, 'post') // Consulta a la colección 'post'
                 <div class="media-content">
                     <div class="content">
                         <div id="otheruser-${postId}">
-                        <p class="hover-effect"><strong>Usuario:</strong> ${postData.name || 'Anónimo'}</p>
-                        <p class="hover-effect"><strong>Correo:</strong> ${postData.username || 'Anónimo'}</p>
+                        <p class="hover-effect"><strong></strong> ${postData.name || 'Anónimo'}</p>
+                        <p class="hover-effect"><strong></strong> ${postData.username || 'Anónimo'}</p>
                         </div>
-                        <p><strong>Fecha:</strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
+                        <p><strong></strong> ${postData.date ? postData.date.toDate().toLocaleString() : 'Sin fecha'}</p>
                         <p>${postData.post}</p>
                         ${postData.mediaURL ? (fileIsVideo(postData.mediaURL) ?
                 `<video controls class="post-media" width="400">

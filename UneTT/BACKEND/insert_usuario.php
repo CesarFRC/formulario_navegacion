@@ -48,7 +48,6 @@ if ($stmt->execute()) {
         // Si ocurre un error al insertar el registro, muestra un mensaje de error
     echo "Error al insertar el registro: " . $stmt->error;
 }
-
 // Cerrar la conexión
 $stmt->close();
 $conn->close();
