@@ -18,9 +18,9 @@ $UserName = $_POST['username'] ?? ''; // Aqui esta el nombre de usuario
 $Matricula = obtenerMatricula($Correo);
 $Contraseña = $_POST['password'] ?? ''; // Aquí puedes manejar la contraseña
 
-// Validar datos recibidos: Verifica si los campos de correo, nombre de usuario y contraseña están vacíos
+// Validar datos recibidos: coreo,contraseña y nombre 
 if (empty($Correo) || empty($UserName) || empty($Contraseña)) {
-        // Si alguno de los campos está vacío, muestra un mensaje y detiene la ejecución del script
+        // Si alguno de los campos está vacío, muestra un mensaje y dietiene scrip
     die("Por favor complete todos los campos.");
 }
 
@@ -39,7 +39,7 @@ if ($stmt === false) {
 // 'ssss' indica que los parámetros son de tipo string
 $stmt->bind_param("ssss", $Matricula, $UserName, $Correo, $Contraseña);
 
-// Ejecutar la consulta y manejar errores: Ejecuta la consulta preparada
+// Ejecutar la consulta y manejar errores
 if ($stmt->execute()) {
     // Si la consulta se ejecuta correctamente, redirige al usuario a la página de éxito (index.html)
     header("Location: ../index.html");

@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/fireba
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-// Firebase configuration
+// Firebase configuracion
 const firebaseConfig = {
     apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U",
     authDomain: "unett-4074c.firebaseapp.com",

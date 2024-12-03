@@ -4,7 +4,6 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebas
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 // Configuración de Firebase para la aplicación web
-// Contiene las claves y valores necesarios para conectar el proyecto con los servicios de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U", // Clave API para la autenticación de Firebase
     authDomain: "unett-4074c.firebaseapp.com", // Dominio de autenticación

@@ -1,5 +1,5 @@
 <?php
-// Incluir el archivo que contiene la conexión a la base de datos
+// conexión a la base de datos
 require 'conexion.php';
 
 // Escapar los datos recibidos del formulario para prevenir inyecciones SQL
@@ -34,10 +34,10 @@ require 'conexion.php';
 
     // Ejecutar la declaración
     if ($stmt->execute()) {
-            // Si la ejecución es exitosa, imprimir un mensaje de éxito
+            // Si la ejecución es exitosa
         echo "Perfil actualizado con éxito.";
     } else {
-            // Si ocurre un error, mostrar el mensaje correspondiente
+            // Si ocurre un error
         echo "Error al actualizar el perfil: " . $stmt->error;
     }
 

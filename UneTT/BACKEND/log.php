@@ -1,8 +1,8 @@
 <?php
-// Incluir el archivo de conexión: Establece la conexión con la base de datos utilizando un archivo externo
+// Conexión a la base de datos
 include 'conexion.php';
 
-// Obtener variables enviadas por JavaScript: Recoge los datos enviados desde el formulario a través del método POST
+// Obtener variables enviadas por JavaScript
 $correo = $_POST['email']; // Captura el correo electrónico del usuario
 $password = $_POST['password']; // Captura la contraseña del usuario
 

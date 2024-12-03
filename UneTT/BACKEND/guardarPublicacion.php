@@ -5,9 +5,9 @@ require 'conexion.php';
 //Traemos los datos que nos pasa el fecht de java scrip del archivo post
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Verifica si se recibieron datos en el array $data (generalmente de una solicitud POST)
+// Verifica si se recibieron datos del fetch
 if ($data) {
-        // Asigna los valores de los campos recibidos en el array $data a variables locales
+        // Asigna los valores de los campos recibidos del fetch 
     $username = $data['username']; //Correo electronico
     $post = $data['post'];  //Contenido de la publicacion 
     $postId = $data['postId']; //Identificador de la publicacion 
@@ -40,7 +40,7 @@ if ($data) {
         // Si ocurre un error, responde con un mensaje de error en formato JSON
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     } finally {
-        // Asegura que la conexión se cierre independientemente de que haya éxito o error
+        //Cerarr seccion de la base de datos
         $conn->close();
     }
 } else {

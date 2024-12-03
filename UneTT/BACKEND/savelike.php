@@ -1,23 +1,20 @@
 <?php
 // Configurar el encabezado de respuesta para JSON
 header('Content-Type: application/json');
-// Incluir el archivo que contiene la conexión a la base de datos
+// Conexion a la base de datos 
 require 'conexion.php';
 
 // Función para extraer los primeros 8 caracteres de un correo electrónico o cadena
-// Generalmente, se usa para obtener la matrícula de un usuario a partir de su correo
 function extractMatricula($comentUser) {
-    return substr($comentUser, 0, 8);  // Extrae y devuelve los primeros 8 caracteres
+    return substr($comentUser, 0, 8);
 }
 
 // Leer los datos enviados en el cuerpo de la solicitud (en formato JSON)
-// `file_get_contents('php://input')` obtiene los datos sin procesar de la solicitud
-// `json_decode` los convierte en un array asociativo PHP
+// convierte un aray relacionado al php 
 $data = json_decode(file_get_contents('php://input'), true);
 
 
 // Verificar si los datos necesarios están presentes en la solicitud
-// Si faltan `postId`, `comentUser` o `date`, se devuelve un mensaje de error y se detiene la ejecución
 if (!isset($data['postId']) || !isset($data['comentUser']) || !isset($data['date'])) {
     echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
     exit();

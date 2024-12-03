@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-// Configuración de Firebase con las credenciales del proyecto
+// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAloGZG6lewuNahVlw5HJSwl2KSljDhq9U", // Clave de API para interactuar con Firebase
     authDomain: "unett-4074c.firebaseapp.com", // Dominio autorizado para la autenticación
