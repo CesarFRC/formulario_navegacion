@@ -372,7 +372,8 @@
                     <!-- Campo de texto para la publicación -->
                     <div class="mb-3">
                         <label for="postcontent" class="form-label">Escribe algo</label>
-                        <textarea class="form-control" placeholder="¿Qué estás pensando?" id="postcontent" ></textarea>
+                        <textarea class="form-control" placeholder="¿Qué estás pensando?" id="postcontent"  required 
+                        minlength="1" pattern="\S.*"></textarea>
                     </div>
                     <!-- Campo para subir archivos -->
                     <div class="mb-3">
@@ -383,7 +384,7 @@
                         <!-- Botón para eliminar archivos -->
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary" id="submit" disabled>Publicar</button>
+                        <button class="btn btn-primary" id="submit">Publicar</button>
                         <!-- Botón para enviar la publicación -->
                     </div>
                 </div>
@@ -422,49 +423,7 @@
 
     <!-- Carga de iconos de FontAwesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script>
-        // Referencias a elementos del DOM
-const submitButton = document.getElementById('submit'); // Botón de "Publicar"
-const postContent = document.getElementById('postcontent'); // Campo de texto (textarea)
-const postList = document.getElementById('postList'); // Contenedor de publicaciones
-
-// Habilitar/deshabilitar el botón de publicar dependiendo del contenido del textarea
-postContent.addEventListener('input', () => {
-    const content = postContent.value.trim(); // Elimina espacios al inicio y al final
-    submitButton.disabled = content === ""; // Deshabilita el botón si no hay contenido
-});
-
-// Evento al hacer clic en "Publicar"
-submitButton.addEventListener('click', (event) => {
-    event.preventDefault(); // Evita comportamiento predeterminado del botón
-
-    const content = postContent.value.trim(); // Obtiene el contenido sin espacios
-
-    if (content === "") {
-        // Mostrar una alerta si el contenido es inválido
-        alert("No puedes publicar contenido vacío o solo espacios en blanco.");
-    } else {
-        // Crear la tarjeta para la publicación
-        const postCard = document.createElement('div');
-        postCard.classList.add('post-item', 'mb-4');
-        postCard.innerHTML = `
-            <div class="card">
-                <div class="card-body">
-                    <p class="post-text">${content}</p> <!-- Publicación -->
-                </div>
-            </div>
-        `;
-
-        // Agregar la nueva publicación al inicio del contenedor
-        postList.prepend(postCard);
-
-        // Limpiar el campo de texto
-        postContent.value = "";
-        submitButton.disabled = true; // Deshabilita el botón hasta que haya contenido nuevo
-    }
-});
-    </script>
-
+   
     <script>
    document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('mediaUpload');
@@ -493,6 +452,46 @@ submitButton.addEventListener('click', (event) => {
     });
 });
     </script>
+
+
+<script>
+    // Referencias a los elementos
+    const postContent = document.getElementById('postcontent');
+    const submitButton = document.getElementById('submit');
+
+    // Deshabilitar el botón de envío al cargar la página
+    submitButton.disabled = true;
+
+    // Función para verificar el contenido del textarea
+    function validateInput() {
+        const text = postContent.value.trim();
+
+        if (text === "") {
+            // Si el contenido está vacío o solo tiene espacios, deshabilitar el botón
+            submitButton.disabled = true;
+        } else {
+            // Si el contenido es válido, habilitar el botón
+            submitButton.disabled = false;
+        }
+    }
+
+    // Agregar un evento 'input' para validar mientras el usuario escribe
+    postContent.addEventListener('input', validateInput);
+
+    // Evento de clic en el botón de submit
+    submitButton.addEventListener('click', function (event) {
+        const postContentValue = postContent.value.trim();
+
+        if (postContentValue === "") {
+            alert("La publicación no puede estar vacía ni contener solo espacios.");
+            event.preventDefault(); // Evitar el envío si es inválido
+        } else {
+            console.log("Publicación válida:", postContentValue);
+        }
+    });
+</script>
+
+
 </body>
 
 </html>
